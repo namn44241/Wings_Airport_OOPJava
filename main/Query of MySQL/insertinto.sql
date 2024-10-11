@@ -1,11 +1,11 @@
-﻿---- Nhập dữ liệu khách hàng
--- Thêm 15 bản ghi vào bảng "KhachHang"
-USE [QuanLiSanBay]
+/* Nhập dữ liệu khách hàng */
+-- Thêm 15 bản ghi vào bảng "KhachHang"    
+USE QuanLiSanBay;
 
--- Ví dụ cách thêm tài khoản admin với mật khẩu được mã hóa bằng MD5
+-- Ví dụ cách thêm tài khoản admin với mật khẩu được mã hóa bằng MD5 
 INSERT INTO Admins (UserName, PasswordHash)
 VALUES 
-('1', dbo.HashPassword('1'));
+('1', HashPassword('1'));
 
 
 INSERT INTO KhachHang (MaKH, SDT, HoDem, TEN, DiaChi) VALUES
@@ -23,8 +23,8 @@ INSERT INTO KhachHang (MaKH, SDT, HoDem, TEN, DiaChi) VALUES
 ('KH000012', '0876543210', N'Hoàng', N'Văn M', N'369 Đường CDE, Quận 12, Thành phố Hồ Chí Minh'),
 ('KH000013', '0321456987', N'Lê', N'Thị N', N'951 Đường FGH, Quận Gò Vấp, Thành phố Hồ Chí Minh'),
 ('KH000014', '0798641235', N'Võ', N'Văn O', N'753 Đường IJK, Quận Bình Thạnh, Thành phố Hồ Chí Minh'),
-('KH000015', '0978652143', N'Nguyễn', N'Thị P', N'246 Đường LMN, Quận Tân Bình, Thành phố Hồ Chí Minh')
------------------------
+('KH000015', '0978652143', N'Nguyễn', N'Thị P', N'246 Đường LMN, Quận Tân Bình, Thành phố Hồ Chí Minh');
+--
 INSERT INTO NhanVien (MaNV, DiaChi, HoDem, SDT, Ten, LUONG, LOAINV) VALUES
 ('NV000001', N'123 Đường ABC, Quận 1, Thành phố Hồ Chí Minh', N'Nguyễn', '0123456789', N'Văn A', 15000000.00, 'Tiếp viên'),
 ('NV000002', N'456 Đường XYZ, Quận 2, Thành phố Hồ Chí Minh', N'Trần', '0987654321', N'Thị B', 18000000.00, 'Phi công'),
@@ -95,7 +95,7 @@ INSERT INTO ChuyenBay (MaChuyenBay, TenSanBayDi, TenSanBayDen, GioDi, GioDen) VA
     ('CB000012', N'Sân Bay Nội Bài', N'Sân bay Tân Sơn Nhất', '2024-04-30 19:00:00', '2024-04-30 21:00:00'),
     ('CB000013', N'Sân Bay Nội Bài', N'Sân Bay Hải Phòng', '2024-04-30 20:00:00', '2024-04-30 22:00:00'),
     ('CB000014', N'Sân Bay Điện Biên', N'Sân Bay Nội Bài', '2024-04-30 21:00:00', '2024-04-30 23:00:00'),
-    ('CB000015', N'Sân Bay Nội Bài', N'Sân Bay Điện Biên', '2024-04-30 22:00:00', '2024-05-01 00:00:00')
+    ('CB000015', N'Sân Bay Nội Bài', N'Sân Bay Điện Biên', '2024-04-30 22:00:00', '2024-05-01 00:00:00');
 
 
 
