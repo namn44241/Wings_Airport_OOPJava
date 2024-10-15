@@ -1,5 +1,4 @@
-﻿CREATE DATABASE QuanLiSanBay
-USE QuanLiSanBay
+﻿-- Chọn CSDL ở thanh bên trái
 
 -- Tạo bảng KhachHang
 CREATE TABLE KhachHang (

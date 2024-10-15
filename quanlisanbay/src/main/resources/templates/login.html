@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Đăng nhập</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body onload="showLoginDialog()">
+    <script>
+        function showLoginDialog() {
+            Swal.fire({
+                title: 'Đăng nhập',
+                html: `
+                    <input id="username" class="swal2-input" placeholder="Tài khoản">
+                    <input id="password" type="password" class="swal2-input" placeholder="Mật khẩu">
+                `,
+                confirmButtonText: 'Đăng nhập',
+                preConfirm: () => {
+                    const username = document.getElementById('username').value;
+                    const password = document.getElementById('password').value;
+                    if (!username || !password) {
+                        Swal.showValidationMessage('Vui lòng nhập tài khoản và mật khẩu.');
+                    }
+                    return { username, password };
+                },
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const { username, password } = result.value;
+                    fetch(`/api/auth?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`, {
+                        method: 'POST'
+                    }).then(response => {
+                        if (response.ok) {
+                            window.location.href = '/admin'; // Chuyển hướng đến admin
+                        } else {
+                            response.text().then(text => {
+                                alert(text); // Hiển thị lỗi
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>
