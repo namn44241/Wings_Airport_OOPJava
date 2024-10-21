@@ -1280,21 +1280,25 @@
           <h2>Quản lý phân công</h2>
           
           <!-- Form thêm phân công -->
-          <form id="themPhanCongForm" method="POST" action="{{ url_for('them_phan_cong') }}">
+          <form id="themPhanCongForm">
             <label for="employee-id">Mã nhân viên:</label>
             <select id="employee-id" name="employee-id" required>
               <option value="">-- Chọn Mã nhân viên --</option>
-              {% for employee in employee_info %}
-                <option value="{{ employee.MaNV }}">{{ employee.MaNV }} - {{ employee.HoDem }} {{ employee.Ten }}</option>
-              {% endfor %}
+              <th:block th:each="employee : ${employeeInfo}">
+                <option th:value="${employee.maNV}" 
+                        th:text="${employee.maNV + ' - ' + employee.hoDem + ' ' + employee.ten}">
+                </option>
+              </th:block>
             </select>
 
             <label for="flight-id">Mã chuyến bay:</label>
             <select id="flight-id" name="flight-id" required onchange="updateFlightDetailsForAssignment(this.value)">
               <option value="">-- Chọn Mã chuyến bay --</option>
-              {% for flight in flight_info %}
-                <option value="{{ flight.MaChuyenBay }}">{{ flight.MaChuyenBay }} - {{ flight.TenSanBayDi }} - {{ flight.TenSanBayDen }}</option>
-              {% endfor %}
+              <th:block th:each="flight : ${flightInfo}">
+                <option th:value="${flight.maChuyenBay}" 
+                        th:text="${flight.maChuyenBay + ' - ' + flight.tenSanBayDi + ' - ' + flight.tenSanBayDen}">
+                </option>
+              </th:block>
             </select>
 
             <label for="departure-datetime">Giờ đi:</label>
@@ -1376,27 +1380,35 @@
             }
           }
 
-          document.getElementById('themPhanCongForm').onsubmit = function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
+          document.getElementById('themPhanCongForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                'employee-id': document.getElementById('employee-id').value,
+                'flight-id': document.getElementById('flight-id').value,
+                'departure-datetime': document.getElementById('assignment-departure-datetime').value
+            };
+
             fetch('/them_phan_cong', {
-              method: 'POST',
-              body: formData
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
             })
             .then(response => response.json())
             .then(data => {
-              if (data.success) {
-                alert(data.success);
-                location.reload();
-              } else if (data.error) {
-                alert(data.error);
-              }
+                if (data.success) {
+                    alert(data.success);
+                    this.reset();
+                } else {
+                    alert(data.error);
+                }
             })
             .catch(error => {
-              console.error('Error:', error);
-              alert('Có lỗi xảy ra khi thêm phân công');
+                alert('Có lỗi xảy ra: ' + error);
             });
-          };
+        });
 
           document.getElementById('suaPhanCongForm').onsubmit = function(event) {
             event.preventDefault();
