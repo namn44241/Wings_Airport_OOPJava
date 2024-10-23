@@ -204,137 +204,136 @@
         </section>
 
         <section id="flight-info">
-            <h2>Quản lý thông tin chuyến bay</h2>
-          
-            <!-- Form để thêm chuyến bay mới -->
-            <form id="add-flight-form" method="POST" action="{{ url_for('them_cb') }}" onsubmit="return validateForm()">
-              <label for="flight-id">Mã chuyến bay:</label>
-                <input type="text" required pattern="^CB.*$" id="flight-id" name="flight-id" value="{{ next_flight_id }}" readonly><br>
-              <label for="departure-airport">Sân bay đi:</label>
-              <input type="text" id="departure-airport" name="departure-airport" placeholder="Nhập Sân bay đi" required><br>
-              <label for="arrival-airport">Sân bay đến:</label>
-              <input type="text" id="arrival-airport" name="arrival-airport" placeholder="Nhập Sân bay đến" required><br>
-              <label for="departure-time">Giờ đi:</label>
-              <input type="datetime-local" id="departure-time" name="departure-time" required><br>
-              <label for="arrival-time">Giờ đến:</label>
-              <input type="datetime-local" id="arrival-time" name="arrival-time" required><br>
-              <button type="submit">Thêm chuyến bay mới</button>
-            </form>
+          <h2>Quản lý thông tin chuyến bay</h2>
+        
+          <!-- Form để thêm chuyến bay mới -->
+          <form id="add-flight-form" method="POST" action="{{ url_for('them_cb') }}" onsubmit="return validateForm()">
+            <label for="flight-id">Mã chuyến bay:</label>
+              <input type="text" required pattern="^CB.*$" id="flight-id" name="flight-id" value="{{ next_flight_id }}" readonly><br>
+            <label for="departure-airport">Sân bay đi:</label>
+            <input type="text" id="departure-airport" name="departure-airport" placeholder="Nhập Sân bay đi" required><br>
+            <label for="arrival-airport">Sân bay đến:</label>
+            <input type="text" id="arrival-airport" name="arrival-airport" placeholder="Nhập Sân bay đến" required><br>
+            <label for="departure-time">Giờ đi:</label>
+            <input type="datetime-local" id="departure-time" name="departure-time" required><br>
+            <label for="arrival-time">Giờ đến:</label>
+            <input type="datetime-local" id="arrival-time" name="arrival-time" required><br>
+            <button type="submit">Thêm chuyến bay mới</button>
+          </form>
 
-            <script>
-              function validateForm() {
-                  var departureAirport = document.getElementById("departure-airport").value;
-                  var arrivalAirport = document.getElementById("arrival-airport").value;
-                  
-                  if (departureAirport === arrivalAirport) {
-                      alert("Sân bay đi và đến phải khác nhau");
-                      return false;
+          <script>
+            // Hàm validate thời gian chuyến bay
+                  function validateFlightTimes(formId) {
+                      const form = document.getElementById(formId);
+                      const departureTime = new Date(form.querySelector('[name="departure-time"]').value);
+                      const arrivalTime = new Date(form.querySelector('[name="arrival-time"]').value);
+                      const currentTime = new Date();
+
+                      if (departureTime <= currentTime) {
+                          alert("Lỗi: Thời gian khởi hành phải sau thời gian hiện tại!");
+                          return false;
+                      }
+
+                      if (arrivalTime <= departureTime) {
+                          alert("Lỗi: Thời gian đến phải sau thời gian đi!");
+                          return false;
+                      }
+
+                      const timeDifference = arrivalTime - departureTime;
+                      const minutesDifference = timeDifference / (1000 * 60);
+
+                      if (minutesDifference < 30) {
+                          alert("Lỗi: Thời gian đến phải sau thời gian đi ít nhất 30 phút!");
+                          return false;
+                      }
+
+                      return true;
                   }
-                  return true;
-              }
-              function validateFlightTimes(formId) {
-                const form = document.getElementById(formId);
-                const departureTime = new Date(form.querySelector('[name="departure-time"]').value);
-                const arrivalTime = new Date(form.querySelector('[name="arrival-time"]').value);
-                const currentTime = new Date();
 
-                // Kiểm tra thời gian khởi hành so với thời gian hiện tại
-                if (departureTime <= currentTime) {
-                    alert("Lỗi: Thời gian khởi hành phải sau thời gian hiện tại!");
-                    return false;
-                }
+                  // Lắng nghe sự kiện submit cho form thêm chuyến bay
+                  document.getElementById('add-flight-form').addEventListener('submit', function(e) {
+                      if (!validateFlightTimes('add-flight-form')) {
+                          e.preventDefault();
+                      }
+                  });
 
-                // So sánh thời gian đến và đi
-                if (arrivalTime <= departureTime) {
-                    alert("Lỗi: Thời gian đến phải sau thời gian đi!");
-                    return false;
-                }
+                  // Lắng nghe sự kiện submit cho form sửa chuyến bay
+                  document.getElementById('edit-flight-form').addEventListener('submit', function(e) {
+                      if (!validateFlightTimes('edit-flight-form')) {
+                          e.preventDefault();
+                      }
+                  });
 
-                // Tính toán khoảng cách thời gian
-                const timeDifference = arrivalTime - departureTime;
-                const minutesDifference = timeDifference / (1000 * 60);
-
-                // Kiểm tra nếu thời gian đến chỉ sau thời gian đi vài phút
-                if (minutesDifference < 30) {  // Giả sử chuyến bay ngắn nhất là 30 phút
-                    alert("Lỗi: Thời gian đến phải sau thời gian đi ít nhất 30 phút!");
-                    return false;
-                }
-
-                return true;
-            }
-
-            // Áp dụng cho form thêm chuyến bay mới
-            document.querySelector('form[action="{{ url_for("them_cb") }}"]').onsubmit = function(e) {
-                if (!validateFlightTimes(this.id)) {
-                    e.preventDefault();
-                }
-            };
-
-            // Áp dụng cho form sửa chuyến bay
-            document.querySelector('form[action="{{ url_for("sua_cb") }}"]').onsubmit = function(e) {
-                if (!validateFlightTimes(this.id)) {
-                    e.preventDefault();
-                }
-            };
-            </script>
-          
-            <!-- Bảng hiển thị thông tin chuyến bay -->
-            <table>
-              <thead>
+          </script>
+        
+          <!-- Bảng hiển thị thông tin chuyến bay -->
+          <table id="flights-table">
+            <thead>
                 <tr>
-                  <th>Mã chuyến bay</th>
-                  <th>Sân bay đi</th>
-                  <th>Sân bay đến</th>
-                  <th>Giờ đi</th>
-                  <th>Giờ đến</th>
-                  <th>Thao tác</th>
+                    <th>Mã chuyến bay</th>
+                    <th>Sân bay đi</th>
+                    <th>Sân bay đến</th>
+                    <th>Giờ đi</th>
+                    <th>Giờ đến</th>
+                    <th>Thao tác</th>
                 </tr>
-              </thead>
-              <tbody>
-                {% for row in flight_info %}
-                <tr>
-                  <td>{{ row.MaChuyenBay }}</td>
-                  <td>{{ row.TenSanBayDi }}</td>
-                  <td>{{ row.TenSanBayDen }}</td>
-                  <td>{{ row.GioDi.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-                  <td>{{ row.GioDen.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-                  <td>
-                    <button onclick="showEditForm('{{ row.MaChuyenBay }}')">Sửa</button>
-                    <button onclick="deleteFlightConfirm('{{ row.MaChuyenBay }}')">Xóa</button>
-                    <form id="edit-form-{{ row.MaChuyenBay }}" style="display: none;" onsubmit="return editFlight('{{ row.MaChuyenBay }}')">
-                      <input type="hidden" name="flight-id" value="{{ row.MaChuyenBay }}">
-                      <label for="edit-departure-airport-{{ row.MaChuyenBay }}">Sân bay đi:</label>
-                      <input type="text" id="edit-departure-airport-{{ row.MaChuyenBay }}" name="departure-airport" value="{{ row.TenSanBayDi }}" required><br>
-                      <label for="edit-arrival-airport-{{ row.MaChuyenBay }}">Sân bay đến:</label>
-                      <input type="text" id="edit-arrival-airport-{{ row.MaChuyenBay }}" name="arrival-airport" value="{{ row.TenSanBayDen }}" required><br>
-                      <label for="edit-departure-time-{{ row.MaChuyenBay }}">Giờ đi:</label>
-                      <input type="datetime-local" id="edit-departure-time-{{ row.MaChuyenBay }}" name="departure-time" value="{{ row.GioDi.strftime('%Y-%m-%dT%H:%M') }}" required><br>
-                      <label for="edit-arrival-time-{{ row.MaChuyenBay }}">Giờ đến:</label>
-                      <input type="datetime-local" id="edit-arrival-time-{{ row.MaChuyenBay }}" name="arrival-time" value="{{ row.GioDen.strftime('%Y-%m-%dT%H:%M') }}" required><br>
-                      <button type="submit">Lưu thay đổi</button>
-                    </form>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-            <script>
-            function validateForm() {
-                var departureAirport = document.getElementById("departure-airport").value;
-                var arrivalAirport = document.getElementById("arrival-airport").value;
-                
-                if (departureAirport === arrivalAirport) {
-                    alert("Sân bay đi và đến phải khác nhau");
-                    return false;
-                }
-                return true;
-            }
-            function showEditForm(flightId) {
-              const form = document.getElementById(`edit-form-${flightId}`);
-              form.style.display = form.style.display === 'none' ? 'block' : 'none';
-            }
-
-            function editFlight(flightId) {
+            </thead>
+            <tbody>
+                <!-- Dữ liệu chuyến bay sẽ được hiển thị ở đây -->
+            </tbody>
+        </table>
+        
+        <script>
+            // Gọi API để lấy danh sách chuyến bay
+            fetch('/api/flights')
+                .then(response => response.json())
+                .then(flights => {
+                    const tableBody = document.querySelector('#flights-table tbody');
+                    flights.forEach(flight => {
+                        // Tạo dòng mới cho mỗi chuyến bay
+                        const row = document.createElement('tr');
+                        
+                        // Cột "Mã chuyến bay"
+                        const flightIdCell = document.createElement('td');
+                        flightIdCell.textContent = flight.maChuyenBay;
+                        
+                        // Cột "Sân bay đi"
+                        const departureAirportCell = document.createElement('td');
+                        departureAirportCell.textContent = flight.tenSanBayDi;
+                        
+                        // Cột "Sân bay đến"
+                        const arrivalAirportCell = document.createElement('td');
+                        arrivalAirportCell.textContent = flight.tenSanBayDen;
+                        
+                        // Cột "Giờ đi"
+                        const departureTimeCell = document.createElement('td');
+                        departureTimeCell.textContent = new Date(flight.gioDi).toLocaleString();
+                        
+                        // Cột "Giờ đến"
+                        const arrivalTimeCell = document.createElement('td');
+                        arrivalTimeCell.textContent = new Date(flight.gioDen).toLocaleString();
+                        
+                        // Cột "Thao tác" (Chỉnh sửa và xóa)
+                        const actionCell = document.createElement('td');
+                        actionCell.innerHTML = `
+                            <button onclick="showEditForm('${flight.maChuyenBay}')">Sửa</button>
+                            <button onclick="deleteFlight('${flight.maChuyenBay}')">Xóa</button>
+                        `;
+        
+                        // Thêm tất cả các cột vào dòng
+                        row.appendChild(flightIdCell);
+                        row.appendChild(departureAirportCell);
+                        row.appendChild(arrivalAirportCell);
+                        row.appendChild(departureTimeCell);
+                        row.appendChild(arrivalTimeCell);
+                        row.appendChild(actionCell);
+        
+                        // Thêm dòng vào bảng
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching flight data:', error));
+                function editFlight(flightId) {
               const form = document.getElementById(`edit-form-${flightId}`);
               const formData = new FormData(form);
 
@@ -383,8 +382,10 @@
                 });
               }
             } 
-            </script>
-          </section>
+
+        </script>
+        
+        </section>
         
           <section id="airport-info">
             <h2>Quản lý thông tin loại máy bay</h2>
