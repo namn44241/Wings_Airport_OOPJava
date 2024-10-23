@@ -47,10 +47,18 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#" id="helpLink">TRỢ GIÚP</a></li>
-                <li><a href="http://127.0.0.1:8080/admin">ĐĂNG NHẬP</a></li>
-                <li><a href="#" onclick="showContainer('booking')">ĐĂNG KÝ</a></li>
+                <li><a href="#" id="helpLink" th:text="#{helpLink}">TRỢ GIÚP</a></li>
+                <li><a href="http://127.0.0.1:8080/admin" th:text="#{loginLink}">ĐĂNG NHẬP</a></li>
+                <li><a href="#" onclick="showContainer('booking')" th:text="#{registerLink}">ĐĂNG KÝ</a></li>
                 <li><a href="#" id="languageSelector">VIETNAM - TIẾNG VIỆT</a></li>
+                <li>
+                    <form method="get" action="#" th:action="@{/}">
+                        <select name="lang" onchange="this.form.submit()">
+                            <option value="vi" th:selected="${#locale.language == 'vi'}">Tiếng Việt</option>
+                            <option value="en" th:selected="${#locale.language == 'en'}">English</option>
+                        </select>
+                    </form>
+                </li>
             </ul>
         </nav>
         <div id="languageModal" class="modal">

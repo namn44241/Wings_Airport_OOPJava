@@ -10,4 +10,7 @@ public class SanBayController {
     public String sanBay() {
         return "san_bay";
     }
+    // public String sanBayPage() {
+    //     return "san_bay"; // Trả về tên file san_bay.html
+    // }
 }
