@@ -222,48 +222,60 @@
           </form>
 
           <script>
-            // Hàm validate thời gian chuyến bay
-                  function validateFlightTimes(formId) {
-                      const form = document.getElementById(formId);
-                      const departureTime = new Date(form.querySelector('[name="departure-time"]').value);
-                      const arrivalTime = new Date(form.querySelector('[name="arrival-time"]').value);
-                      const currentTime = new Date();
+            function validateForm() {
+                var departureAirport = document.getElementById("departure-airport").value;
+                var arrivalAirport = document.getElementById("arrival-airport").value;
+                
+                if (departureAirport === arrivalAirport) {
+                    alert("Sân bay đi và đến phải khác nhau");
+                    return false;
+                }
+                return true;
+            }
+            function validateFlightTimes(formId) {
+              const form = document.getElementById(formId);
+              const departureTime = new Date(form.querySelector('[name="departure-time"]').value);
+              const arrivalTime = new Date(form.querySelector('[name="arrival-time"]').value);
+              const currentTime = new Date();
 
-                      if (departureTime <= currentTime) {
-                          alert("Lỗi: Thời gian khởi hành phải sau thời gian hiện tại!");
-                          return false;
-                      }
+              // Kiểm tra thời gian khởi hành so với thời gian hiện tại
+              if (departureTime <= currentTime) {
+                  alert("Lỗi: Thời gian khởi hành phải sau thời gian hiện tại!");
+                  return false;
+              }
 
-                      if (arrivalTime <= departureTime) {
-                          alert("Lỗi: Thời gian đến phải sau thời gian đi!");
-                          return false;
-                      }
+              // So sánh thời gian đến và đi
+              if (arrivalTime <= departureTime) {
+                  alert("Lỗi: Thời gian đến phải sau thời gian đi!");
+                  return false;
+              }
 
-                      const timeDifference = arrivalTime - departureTime;
-                      const minutesDifference = timeDifference / (1000 * 60);
+              // Tính toán khoảng cách thời gian
+              const timeDifference = arrivalTime - departureTime;
+              const minutesDifference = timeDifference / (1000 * 60);
 
-                      if (minutesDifference < 30) {
-                          alert("Lỗi: Thời gian đến phải sau thời gian đi ít nhất 30 phút!");
-                          return false;
-                      }
+              // Kiểm tra nếu thời gian đến chỉ sau thời gian đi vài phút
+              if (minutesDifference < 30) {  // Giả sử chuyến bay ngắn nhất là 30 phút
+                  alert("Lỗi: Thời gian đến phải sau thời gian đi ít nhất 30 phút!");
+                  return false;
+              }
 
-                      return true;
-                  }
+              return true;
+          }
 
-                  // Lắng nghe sự kiện submit cho form thêm chuyến bay
-                  document.getElementById('add-flight-form').addEventListener('submit', function(e) {
-                      if (!validateFlightTimes('add-flight-form')) {
-                          e.preventDefault();
-                      }
-                  });
+          // Áp dụng cho form thêm chuyến bay mới
+          document.querySelector('form[action="{{ url_for("them_cb") }}"]').onsubmit = function(e) {
+              if (!validateFlightTimes(this.id)) {
+                  e.preventDefault();
+              }
+          };
 
-                  // Lắng nghe sự kiện submit cho form sửa chuyến bay
-                  document.getElementById('edit-flight-form').addEventListener('submit', function(e) {
-                      if (!validateFlightTimes('edit-flight-form')) {
-                          e.preventDefault();
-                      }
-                  });
-
+          // Áp dụng cho form sửa chuyến bay
+          document.querySelector('form[action="{{ url_for("sua_cb") }}"]').onsubmit = function(e) {
+              if (!validateFlightTimes(this.id)) {
+                  e.preventDefault();
+              }
+          };
           </script>
         
           <!-- Bảng hiển thị thông tin chuyến bay -->

@@ -3,7 +3,7 @@ package com.example.quanlisanbay.controllers;
 import com.example.quanlisanbay.model.PlaneType;
 import com.example.quanlisanbay.service.PlaneTypeService;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
