@@ -968,77 +968,81 @@
         
           <section id="employee-info">
             <h2>Quản lý thông tin nhân viên</h2>
-            <form id="add-employee-form" method="POST" action="{{ url_for('them_nv') }}">
-              <label for="employee-id">Mã nhân viên:</label>
-              <input type="text" required pattern="^NV.*$" id="employee-id" name="employee-id" value="{{ next_employee_id}}" readonly><br>
-              <label for="employee-last-name">Họ đệm:</label>
-              <input type="text" id="employee-last-name" name="employee-last-name" placeholder="Nhập họ đệm" required><br>
-              <label for="employee-first-name">Tên:</label>
-              <input type="text" id="employee-first-name" name="employee-first-name" placeholder="Nhập tên" required><br>
-              <label for="employee-phone">Số điện thoại:</label>
-              <input type="text" pattern="0[0-9]{9}" id="employee-phone" name="employee-phone" placeholder="Nhập số điện thoại" required><br>
-              <label for="employee-address">Địa chỉ:</label>
-              <input type="text" id="employee-address" name="employee-address" placeholder="Nhập địa chỉ" required><br>
-              <label for="employee-salary">Lương:</label>
-              <input type="text" id="employee-salary" name="employee-salary" placeholder="Nhập lương" required><br>
-              <label for="employee-type">Loại nhân viên:</label>
-              <select id="employee-type" name="employee-type" required>
-                <option value="">Chọn loại nhân viên</option>
-                <option value="Tiếp viên">Tiếp viên</option>
-                <option value="Phi công">Phi công</option>
-              </select><br>
-              <button type="button" onclick="addEmployee()">Thêm thông tin nhân viên</button>
+            <form id="add-employee-form" method="POST" th:action="@{/them_nv}">
+                <label for="employee-id">Mã nhân viên:</label>
+                <input type="text" required pattern="^NV.*$" id="employee-id" name="employee-id" th:value="${next_employee_id}" readonly><br>
+                <label for="employee-last-name">Họ đệm:</label>
+                <input type="text" id="employee-last-name" name="employee-last-name" placeholder="Nhập họ đệm" required><br>
+                <label for="employee-first-name">Tên:</label>
+                <input type="text" id="employee-first-name" name="employee-first-name" placeholder="Nhập tên" required><br>
+                <label for="employee-phone">Số điện thoại:</label>
+                <input type="text" pattern="0[0-9]{9}" id="employee-phone" name="employee-phone" placeholder="Nhập số điện thoại" required><br>
+                <label for="employee-address">Địa chỉ:</label>
+                <input type="text" id="employee-address" name="employee-address" placeholder="Nhập địa chỉ" required><br>
+                <label for="employee-salary">Lương:</label>
+                <input type="text" id="employee-salary" name="employee-salary" placeholder="Nhập lương" required><br>
+                <label for="employee-type">Loại nhân viên:</label>
+                <select id="employee-type" name="employee-type" required>
+                    <option value="">Chọn loại nhân viên</option>
+                    <option value="Tiếp viên">Tiếp viên</option>
+                    <option value="Phi công">Phi công</option>
+                </select><br>
+                <button type="button" onclick="addEmployee()">Thêm thông tin nhân viên</button>
             </form>
-
+        
             <table>
-              <thead>
-                <tr>
-                  <th>Mã nhân viên</th>
-                  <th>Họ đệm</th>
-                  <th>Tên</th>
-                  <th>Số điện thoại</th>
-                  <th>Địa chỉ</th>
-                  <th>Lương</th>
-                  <th>Loại nhân viên</th>
-                  <th>Thao tác</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for row in employee_info %}
-                <tr>
-                  <td>{{ row.MaNV }}</td>
-                  <td>{{ row.HoDem }}</td>
-                  <td>{{ row.Ten }}</td>
-                  <td>{{ row.SDT }}</td>
-                  <td>{{ row.DiaChi }}</td>
-                  <td>{{ row.Luong }}</td>
-                  <td>{{ row.LoaiNV }}</td>
-                  <td>
-                    <button onclick="deleteEmployee('{{ row.MaNV }}')">Xóa</button>
-                    <button onclick="showEditForm('{{ row.MaNV }}')">Sửa</button>
-                    <form id="edit-form-{{ row.MaNV }}" style="display: none;" onsubmit="return editEmployee('{{ row.MaNV }}')">
-                      <input type="hidden" name="employee-id" value="{{ row.MaNV }}">
-                      <label for="edit-employee-last-name-{{ row.MaNV }}">Họ đệm:</label>
-                      <input type="text" id="edit-employee-last-name-{{ row.MaNV }}" name="employee-last-name" value="{{ row.HoDem }}" required><br>
-                      <label for="edit-employee-first-name-{{ row.MaNV }}">Tên:</label>
-                      <input type="text" id="edit-employee-first-name-{{ row.MaNV }}" name="employee-first-name" value="{{ row.Ten }}" required><br>
-                      <label for="edit-employee-phone-{{ row.MaNV }}">Số điện thoại:</label>
-                      <input type="text" id="edit-employee-phone-{{ row.MaNV }}" pattern="0[0-9]{9}" name="employee-phone" value="{{ row.SDT }}" required><br>
-                      <label for="edit-employee-address-{{ row.MaNV }}">Địa chỉ:</label>
-                      <input type="text" id="edit-employee-address-{{ row.MaNV }}" name="employee-address" value="{{ row.DiaChi }}" required><br>
-                      <label for="edit-employee-salary-{{ row.MaNV }}">Lương:</label>
-                      <input type="text" id="edit-employee-salary-{{ row.MaNV }}" name="employee-salary" value="{{ row.Luong }}" required><br>
-                      <label for="edit-employee-type-{{ row.MaNV }}">Loại nhân viên:</label>
-                      <select id="edit-employee-type-{{ row.MaNV }}" name="employee-type" required>
-                        <option value="Tiếp viên" {% if row.LoaiNV == 'Tiếp viên' %}selected{% endif %}>Tiếp viên</option>
-                        <option value="Phi công" {% if row.LoaiNV == 'Phi công' %}selected{% endif %}>Phi công</option>
-                      </select><br>
-                      <button type="submit">Lưu thay đổi</button>
-                    </form>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
+                <thead>
+                    <tr>
+                        <th>Mã nhân viên</th>
+                        <th>Họ đệm</th>
+                        <th>Tên</th>
+                        <th>Số điện thoại</th>
+                        <th>Địa chỉ</th>
+                        <th>Lương</th>
+                        <th>Loại nhân viên</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="row : ${employee_info}">
+                        <td th:text="${row.MaNV}"></td>
+                        <td th:text="${row.HoDem}"></td>
+                        <td th:text="${row.Ten}"></td>
+                        <td th:text="${row.SDT}"></td>
+                        <td th:text="${row.DiaChi}"></td>
+                        <td th:text="${row.Luong}"></td>
+                        <td th:text="${row.LoaiNV}"></td>
+                        <td>
+                            <button th:onclick="'deleteEmployee(\'' + ${row.MaNV} + '\')'">Xóa</button>
+                            <button th:onclick="'showEditForm(\'' + ${row.MaNV} + '\')'">Sửa</button>
+                            <form th:id="'edit-form-' + ${row.MaNV}" style="display: none;" 
+                                  th:onsubmit="'return editEmployee(\'' + ${row.MaNV} + '\')'">
+                                <input type="hidden" name="employee-id" th:value="${row.MaNV}">
+                                <label th:for="'edit-employee-last-name-' + ${row.MaNV}">Họ đệm:</label>
+                                <input type="text" th:id="'edit-employee-last-name-' + ${row.MaNV}" 
+                                       name="employee-last-name" th:value="${row.HoDem}" required><br>
+                                <label th:for="'edit-employee-first-name-' + ${row.MaNV}">Tên:</label>
+                                <input type="text" th:id="'edit-employee-first-name-' + ${row.MaNV}" 
+                                       name="employee-first-name" th:value="${row.Ten}" required><br>
+                                <label th:for="'edit-employee-phone-' + ${row.MaNV}">Số điện thoại:</label>
+                                <input type="text" th:id="'edit-employee-phone-' + ${row.MaNV}" 
+                                       pattern="0[0-9]{9}" name="employee-phone" th:value="${row.SDT}" required><br>
+                                <label th:for="'edit-employee-address-' + ${row.MaNV}">Địa chỉ:</label>
+                                <input type="text" th:id="'edit-employee-address-' + ${row.MaNV}" 
+                                       name="employee-address" th:value="${row.DiaChi}" required><br>
+                                <label th:for="'edit-employee-salary-' + ${row.MaNV}">Lương:</label>
+                                <input type="text" th:id="'edit-employee-salary-' + ${row.MaNV}" 
+                                       name="employee-salary" th:value="${row.Luong}" required><br>
+                                <label th:for="'edit-employee-type-' + ${row.MaNV}">Loại nhân viên:</label>
+                                <select th:id="'edit-employee-type-' + ${row.MaNV}" name="employee-type" required>
+                                    <option value="Tiếp viên" th:selected="${row.LoaiNV == 'Tiếp viên'}">Tiếp viên</option>
+                                    <option value="Phi công" th:selected="${row.LoaiNV == 'Phi công'}">Phi công</option>
+                                </select><br>
+                                <button type="submit">Lưu thay đổi</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
             <script>
               function showEditForm(employeeId) {
@@ -1283,22 +1287,12 @@
           <form id="themPhanCongForm">
             <label for="employee-id">Mã nhân viên:</label>
             <select id="employee-id" name="employee-id" required>
-              <option value="">-- Chọn Mã nhân viên --</option>
-              <th:block th:each="employee : ${employeeInfo}">
-                <option th:value="${employee.maNV}" 
-                        th:text="${employee.maNV + ' - ' + employee.hoDem + ' ' + employee.ten}">
-                </option>
-              </th:block>
+                <option value="">-- Chọn Mã nhân viên --</option>
             </select>
-
-            <label for="flight-id">Mã chuyến bay:</label>
+        
+            <label for="flight-id">Mã chuyến bay:</label> 
             <select id="flight-id" name="flight-id" required onchange="updateFlightDetailsForAssignment(this.value)">
-              <option value="">-- Chọn Mã chuyến bay --</option>
-              <th:block th:each="flight : ${flightInfo}">
-                <option th:value="${flight.maChuyenBay}" 
-                        th:text="${flight.maChuyenBay + ' - ' + flight.tenSanBayDi + ' - ' + flight.tenSanBayDen}">
-                </option>
-              </th:block>
+                <option value="">-- Chọn Mã chuyến bay --</option>
             </select>
 
             <label for="departure-datetime">Giờ đi:</label>
@@ -1310,190 +1304,250 @@
             <button type="submit">Thêm phân công</button>
           </form>
 
-          <!-- Form sửa phân công -->
-          <form id="suaPhanCongForm" method="POST" action="{{ url_for('sua_phan_cong') }}">
-            <label for="edit-employee-id">Mã nhân viên:</label>
-            <select id="edit-employee-id" name="employee-id" required>
-              <option value="">-- Chọn Mã nhân viên --</option>
-              {% for employee in employee_info %}
-                <option value="{{ employee.MaNV }}">{{ employee.MaNV }} - {{ employee.HoDem }} {{ employee.Ten }}</option>
-              {% endfor %}
-            </select>
+          <!-- Form sửa phân công -->  
+          <form id="suaPhanCongForm">
+              <label for="edit-employee-id">Mã nhân viên:</label>
+              <select id="edit-employee-id" name="employee-id" required>
+                  <option value="">-- Chọn Mã nhân viên --</option>
+              </select>
+          
+              <label for="edit-flight-id">Mã chuyến bay:</label>
+              <select id="edit-flight-id" name="flight-id" required onchange="updateEditFlightDetailsForAssignment(this.value)">
+                  <option value="">-- Chọn Mã chuyến bay --</option>
+              </select>
 
-            <label for="edit-flight-id">Mã chuyến bay:</label>
-            <select id="edit-flight-id" name="flight-id" required onchange="updateEditFlightDetailsForAssignment(this.value)">
-              <option value="">-- Chọn Mã chuyến bay --</option>
-              {% for flight in flight_info %}
-                <option value="{{ flight.MaChuyenBay }}">{{ flight.MaChuyenBay }} - {{ flight.TenSanBayDi }} - {{ flight.TenSanBayDen }}</option>
-              {% endfor %}
-            </select>
+              <label for="edit-departure-datetime">Giờ đi:</label>
+              <input type="datetime-local" id="edit-assignment-departure-datetime" name="departure-datetime" required readonly>
 
-            <label for="edit-departure-datetime">Giờ đi:</label>
-            <input type="datetime-local" id="edit-assignment-departure-datetime" name="departure-datetime" required readonly>
+              <label for="edit-arrival-datetime">Giờ đến:</label>
+              <input type="datetime-local" id="edit-assignment-arrival-datetime" name="arrival-datetime" required readonly>
 
-            <label for="edit-arrival-datetime">Giờ đến:</label>
-            <input type="datetime-local" id="edit-assignment-arrival-datetime" name="arrival-datetime" required readonly>
-
-            <button type="submit">Lưu thay đổi</button>
+              <button type="submit">Lưu thay đổi</button>
           </form>
-
-          <script>
-          function updateFlightDetailsForAssignment(flightId) {
-            if (flightId) {
-              fetch(`/get_flight_details_for_assignment?flight_id=${flightId}`)
-                .then(response => response.json())
-                .then(data => {
-                  if (data.error) {
-                    console.error(data.error);
-                    return;
-                  }
-                  document.getElementById('assignment-departure-datetime').value = data.departure_time;
-                  document.getElementById('assignment-arrival-datetime').value = data.arrival_time;
-                  document.getElementById('assignment-airport-info').textContent = `${data.departure_airport} -> ${data.arrival_airport}`;
-                })
-                .catch(error => console.error('Error:', error));
-            } else {
-              document.getElementById('assignment-departure-datetime').value = '';
-              document.getElementById('assignment-arrival-datetime').value = '';
-              document.getElementById('assignment-airport-info').textContent = '';
-            }
-          }
-
-          function updateEditFlightDetailsForAssignment(flightId) {
-            if (flightId) {
-              fetch(`/get_flight_details_for_assignment?flight_id=${flightId}`)
-                .then(response => response.json())
-                .then(data => {
-                  if (data.error) {
-                    console.error(data.error);
-                    return;
-                  }
-                  document.getElementById('edit-assignment-departure-datetime').value = data.departure_time;
-                  document.getElementById('edit-assignment-arrival-datetime').value = data.arrival_time;
-                  document.getElementById('edit-assignment-airport-info').textContent = `${data.departure_airport} -> ${data.arrival_airport}`;
-                })
-                .catch(error => console.error('Error:', error));
-            } else {
-              document.getElementById('edit-assignment-departure-datetime').value = '';
-              document.getElementById('edit-assignment-arrival-datetime').value = '';
-              document.getElementById('edit-assignment-airport-info').textContent = '';
-            }
-          }
-
-          document.getElementById('themPhanCongForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = {
-                'employee-id': document.getElementById('employee-id').value,
-                'flight-id': document.getElementById('flight-id').value,
-                'departure-datetime': document.getElementById('assignment-departure-datetime').value
-            };
-
-            fetch('/them_phan_cong', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.success);
-                    this.reset();
-                } else {
-                    alert(data.error);
-                }
-            })
-            .catch(error => {
-                alert('Có lỗi xảy ra: ' + error);
-            });
-        });
-
-          document.getElementById('suaPhanCongForm').onsubmit = function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            fetch('/sua_phan_cong', {
-              method: 'POST',
-              body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-              if (data.success) {
-                alert(data.success);
-                location.reload();
-              } else if (data.error) {
-                alert(data.error);
-              }
-            })
-            .catch(error => {
-              console.error('Error:', error);
-              alert('Có lỗi xảy ra khi cập nhật phân công');
-            });
-          };
-
-          function deleteAssignment(employeeId, flightId, departureDate) {
-            if (confirm('Bạn có chắc chắn muốn xóa phân công này?')) {
-                fetch('/xoa_phan_cong', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `employee_id=${employeeId}&flight_id=${flightId}&departure_date=${departureDate}`
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert(data.success);
-                        location.reload();
-                    } else if (data.error) {
-                        alert(data.error);
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    alert('Có lỗi xảy ra khi xóa phân công');
-                });
-            }
-        }
-          </script>
 
           <!-- Bảng hiển thị thông tin phân công -->
           <table>
-            <thead>
-                <tr>
-                    <th>Mã nhân viên</th>
-                    <th>Tên nhân viên</th>
-                    <th>Số điện thoại</th>
-                    <th>Loại nhân viên</th>
-                    <th>Mã chuyến bay</th>
-                    <th>Sân bay đi</th>
-                    <th>Sân bay đến</th>
-                    <th>Giờ đi</th>
-                    <th>Giờ đến</th>
-                    <th>Thao tác</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for assignment in assignment_info %}
-                <tr>
-                    <td>{{ assignment.MaNV }}</td>
-                    <td>{{ assignment.HoTen }}</td>
-                    <td>{{ assignment.SDT }}</td>
-                    <td>{{ assignment.LoaiNV }}</td>
-                    <td>{{ assignment.MaChuyenBay }}</td>
-                    <td>{{ assignment.TenSanBayDi }}</td>
-                    <td>{{ assignment.TenSanBayDen }}</td>
-                    <td>{{ assignment.GioDi }}</td>
-                    <td>{{ assignment.GioDen }}</td>
-                    <td>
-                        <button onclick="deleteAssignment('{{ assignment.MaNV }}', '{{ assignment.MaChuyenBay }}', '{{ assignment.NgayDi }}')">Xóa</button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
+              <thead>
+                  <tr>
+                      <th>Mã nhân viên</th>
+                      <th>Tên nhân viên</th>
+                      <th>Số điện thoại</th> 
+                      <th>Loại nhân viên</th>
+                      <th>Mã chuyến bay</th>
+                      <th>Sân bay đi</th>
+                      <th>Sân bay đến</th>
+                      <th>Giờ đi</th>
+                      <th>Giờ đến</th>
+                      <th>Thao tác</th>
+                  </tr>
+              </thead>
+              <tbody id="assignment-table-body">
+              </tbody>
           </table>
-        </section>        
+
+          <script>
+          function loadInitialData() {
+              // Load employees
+              fetch('/api/admin/employees')
+              .then(response => response.json()) 
+              .then(data => {
+                  // Form thêm mới
+                  const employeeSelect = document.querySelector('#themPhanCongForm #employee-id');
+                  // Form sửa
+                  const editEmployeeSelect = document.querySelector('#suaPhanCongForm #edit-employee-id');
+                  
+                  if(employeeSelect && editEmployeeSelect) {
+                      // Clear existing options
+                      employeeSelect.innerHTML = '<option value="">-- Chọn Mã nhân viên --</option>';
+                      editEmployeeSelect.innerHTML = '<option value="">-- Chọn Mã nhân viên --</option>';
+                      
+                      data.employeeInfo.forEach(employee => {
+                          const option = `<option value="${employee.MaNV}">${employee.MaNV} - ${employee.HoDem} ${employee.Ten}</option>`;
+                          employeeSelect.insertAdjacentHTML('beforeend', option);
+                          editEmployeeSelect.insertAdjacentHTML('beforeend', option);
+                      });
+                  } else {
+                      console.error('Cannot find employee select elements');
+                  }
+              });
+
+              // Load flights
+              fetch('/api/admin/flights')
+              .then(response => response.json())
+              .then(data => {
+                  // Form thêm mới
+                  const flightSelect = document.querySelector('#themPhanCongForm #flight-id');
+                  // Form sửa  
+                  const editFlightSelect = document.querySelector('#suaPhanCongForm #edit-flight-id');
+                  
+                  if(flightSelect && editFlightSelect) {
+                      // Clear existing options
+                      flightSelect.innerHTML = '<option value="">-- Chọn Mã chuyến bay --</option>';
+                      editFlightSelect.innerHTML = '<option value="">-- Chọn Mã chuyến bay --</option>';
+                      
+                      data.flightInfo.forEach(flight => {
+                          const option = `<option value="${flight.MaChuyenBay}">${flight.MaChuyenBay} - ${flight.TenSanBayDi} - ${flight.TenSanBayDen}</option>`;
+                          flightSelect.insertAdjacentHTML('beforeend', option);
+                          editFlightSelect.insertAdjacentHTML('beforeend', option);
+                      });
+                  } else {
+                      console.error('Cannot find flight select elements'); 
+                  }
+              });
+
+              // Load assignments
+              updateAssignmentTable();
+          }
+
+          function updateAssignmentTable() {
+              fetch('/api/admin/employees')
+              .then(response => response.json())
+              .then(data => {
+                  const tbody = document.getElementById('assignment-table-body');
+                  tbody.innerHTML = '';
+                  
+                  data.assignmentInfo.forEach(assignment => {
+                      const row = tbody.insertRow();
+                      row.innerHTML = `
+                          <td>${assignment.MaNV}</td>
+                          <td>${assignment.HoTen}</td>
+                          <td>${assignment.SDT}</td>
+                          <td>${assignment.LoaiNV}</td>
+                          <td>${assignment.MaChuyenBay}</td>
+                          <td>${assignment.TenSanBayDi}</td>
+                          <td>${assignment.TenSanBayDen}</td>
+                          <td>${assignment.GioDi}</td>
+                          <td>${assignment.GioDen}</td>
+                          <td>
+                              <button onclick="deleteAssignment('${assignment.MaNV}', '${assignment.MaChuyenBay}', '${assignment.NgayDi}')">
+                                  Xóa
+                              </button>
+                          </td>
+                      `;
+                  });
+              });
+          }
+
+          function updateFlightDetailsForAssignment(flightId) {
+              if (flightId) {
+                  fetch(`/get_flight_details_for_assignment?flight_id=${flightId}`)
+                  .then(response => response.json())
+                  .then(data => {
+                      if (data.error) {
+                          console.error(data.error);
+                          return;
+                      }
+                      document.getElementById('assignment-departure-datetime').value = data.departure_time;
+                      document.getElementById('assignment-arrival-datetime').value = data.arrival_time;
+                  })
+                  .catch(error => console.error('Error:', error));
+              } else {
+                  document.getElementById('assignment-departure-datetime').value = '';
+                  document.getElementById('assignment-arrival-datetime').value = '';
+              }
+          }
+
+          function updateEditFlightDetailsForAssignment(flightId) {
+              if (flightId) {
+                  fetch(`/get_flight_details_for_assignment?flight_id=${flightId}`)
+                  .then(response => response.json())
+                  .then(data => {
+                      if (data.error) {
+                          console.error(data.error);
+                          return;
+                      }
+                      document.getElementById('edit-assignment-departure-datetime').value = data.departure_time;
+                      document.getElementById('edit-assignment-arrival-datetime').value = data.arrival_time;
+                  })
+                  .catch(error => console.error('Error:', error));
+              } else {
+                  document.getElementById('edit-assignment-departure-datetime').value = '';
+                  document.getElementById('edit-assignment-arrival-datetime').value = '';
+              }
+          }
+
+          document.getElementById('themPhanCongForm').onsubmit = function(event) {
+              event.preventDefault();
+              const formData = new FormData(this);
+
+              fetch('/them_phan_cong', {
+                  method: 'POST',
+                  body: formData
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      alert(data.success);
+                      updateAssignmentTable();
+                      this.reset();
+                  } else if (data.error) {
+                      alert(data.error);
+                  }
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+                  alert('Có lỗi xảy ra khi thêm phân công');
+              });
+          };
+
+          document.getElementById('suaPhanCongForm').onsubmit = function(event) {
+              event.preventDefault();
+              const formData = new FormData(this);
+
+              fetch('/sua_phan_cong', {
+                  method: 'POST',
+                  body: formData
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      alert(data.success);
+                      updateAssignmentTable();
+                      this.reset();
+                  } else if (data.error) {
+                      alert(data.error);
+                  }
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+                  alert('Có lỗi xảy ra khi cập nhật phân công');
+              });
+          };
+
+          function deleteAssignment(employeeId, flightId, departureDate) {
+              if (confirm('Bạn có chắc chắn muốn xóa phân công này?')) {
+                  const formData = new URLSearchParams();
+                  formData.append('employee_id', employeeId);
+                  formData.append('flight_id', flightId);
+                  formData.append('departure_date', departureDate);
+
+                  fetch('/xoa_phan_cong', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/x-www-form-urlencoded',
+                      },
+                      body: formData.toString()
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                      if (data.success) {
+                          alert(data.success);
+                          updateAssignmentTable();
+                      } else if (data.error) {
+                          alert(data.error);
+                      }
+                  })
+                  .catch(error => {
+                      console.error('Error:', error);
+                      alert('Có lỗi xảy ra khi xóa phân công');
+                  });
+              }
+          }
+
+          // Load dữ liệu khi trang được tải
+          document.addEventListener('DOMContentLoaded', loadInitialData);
+          </script>
+        </section>  
 
     </main>
     <footer>
