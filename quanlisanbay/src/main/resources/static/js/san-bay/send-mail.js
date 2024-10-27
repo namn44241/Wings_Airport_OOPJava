@@ -31,7 +31,7 @@ var fullName = lastName + ' ' + firstName;
 
 console.log("Selected language:", language);
 
-fetch('http://127.0.0.1:5000/send-email', {
+fetch('http://127.0.0.1:8080/send-email', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -53,6 +53,6 @@ fetch('http://127.0.0.1:5000/send-email', {
 })
 .catch((error) => {
     console.error('Error:', error);
-    alert('Có lỗi xảy ra. Vui lòng thử lại sau.');
+    alert('Có lỗi xảy ra. Vui lòng thử lại sau: ' + error.message);
 });
 }
