@@ -1,28 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUẢN LÍ SÂN BAY</title>
-    <link rel="icon" href="images/wings_logo.png" alt="logo" id="logo">
-    <link rel="stylesheet" href="css/styles_admin.css">
+    <link rel="icon" th:href="@{/images/wings_logo.png}" alt="logo" id="logo">
+    <link rel="stylesheet" th:href="@{/css/styles_admin.css}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
   
   <!-- Phần tiền xử lý khi tải trang (Preloader): -->
-
   <div id="preloader">
     <div class="spinner">
-      <img src="images/wings.png" alt="Avatar" class="avatar">
+      <img th:src="@{/images/wings.png}" alt="Avatar" class="avatar">
     </div>
   </div>
 
   <!-- Phần chào mừng và header -->
-
   <header>
-    <h2>Xin chào <span id="username">{{ username.upper() }}</span>, mời bạn</h2>
+    <h2>Xin chào <span id="username" th:text="${#strings.toUpperCase(username)}"></span>, mời bạn</h2>
     <h1>QUẢN LÍ SÂN BAY</h1>
   </header>
   <script>
@@ -47,7 +45,6 @@
   </script>
 
   <!-- Thanh điều hướng (navigation): -->
-
   <nav>
     <ul>
       <li><a href="#dashboard">Dashboard</a></li>
@@ -84,7 +81,7 @@
                   <div class="card">
                     <div>
                       <h5>Khách Hàng</h5>
-                      <p>{{ stats.khach_hang }}</p>
+                      <p th:text="${stats.khach_hang}">0</p>
                     </div>
                   </div>
                 </td>
@@ -92,7 +89,7 @@
                   <div class="card">
                     <div>
                       <h5>Nhân Viên</h5>
-                      <p>{{ stats.nhan_vien }}</p>
+                      <p th:text="${stats.nhan_vien}">0</p>
                     </div>
                   </div>
                 </td>
@@ -100,7 +97,7 @@
                   <div class="card">
                     <div>
                       <h5>Loại Máy Bay</h5>
-                      <p>{{ stats.loai_may_bay }}</p>
+                      <p th:text="${stats.loai_may_bay}">0</p>
                     </div>
                   </div>
                 </td>
@@ -108,7 +105,7 @@
                   <div class="card">
                     <div>
                       <h5>Máy Bay</h5>
-                      <p>{{ stats.may_bay }}</p>
+                      <p th:text="${stats.may_bay}">0</p>
                     </div>
                   </div>
                 </td>
@@ -118,7 +115,7 @@
                   <div class="card">
                     <div>
                       <h5>Chuyến Bay</h5>
-                      <p>{{ stats.chuyen_bay }}</p>
+                      <p th:text="${stats.chuyen_bay}">0</p>
                     </div>
                   </div>
                 </td>
@@ -126,7 +123,7 @@
                   <div class="card">
                     <div>
                       <h5>Lịch Bay</h5>
-                      <p>{{ stats.lich_bay }}</p>
+                      <p th:text="${stats.lich_bay}">0</p>
                     </div>
                   </div>
                 </td>
@@ -134,7 +131,7 @@
                   <div class="card">
                     <div>
                       <h5>Đặt Chỗ</h5>
-                      <p>{{ stats.dat_cho }}</p>
+                      <p th:text="${stats.dat_cho}">0</p>
                     </div>
                   </div>
                 </td>
@@ -142,26 +139,41 @@
                   <div class="card">
                     <div>
                       <h5>Phân Công</h5>
-                      <p>{{ stats.phan_cong }}</p>
+                      <p th:text="${stats.phan_cong}">0</p>
                     </div>
                   </div>
                 </td>
               </tr>
             </table>
 
-                <div class="chart-item">
-                  <canvas id="topChuyenBayChart"></canvas>
-                </div>
-                <div class="chart-item">
-                    <canvas id="loaiMayBayChart"></canvas>
-                </div>
+            <div class="chart-item">
+              <canvas id="topChuyenBayChart"></canvas>
+            </div>
+            <div class="chart-item">
+                <canvas id="chuyenBayThangChart"></canvas>
+            </div>
+            <div class="chart-item">
+                <canvas id="loaiMayBayChart"></canvas>
+            </div>
+            <div class="chart-item">
+                <canvas id="nhanVienChart"></canvas>
+            </div>
 
-            <script>
+            <script th:inline="javascript">
               $(document).ready(function() {
-                  var stats = {{ stats | tojson | safe }};
+                  var stats = [[${stats}]];
+                  if(!stats) {
+                    stats = {
+                      loai_may_bay_stats: {},
+                      top_chuyen_bay: {},
+                      nhan_vien_theo_loai: {}
+                    }
+                  }
+                  console.log("Stats data:", stats); 
           
                   // Biểu đồ phân bổ loại máy bay theo hãng
                   if (stats.loai_may_bay_stats) {
+                    console.log("Loại máy bay data:", stats.loai_may_bay_stats);
                       new Chart(document.getElementById('loaiMayBayChart').getContext('2d'), {
                           type: 'pie',
                           data: {
@@ -178,6 +190,7 @@
           
                   // Biểu đồ top 5 chuyến bay được đặt nhiều nhất
                   if (stats.top_chuyen_bay) {
+                      console.log("Top chuyến bay data:", stats.top_chuyen_bay); // Log dữ liệu biểu đồ 2 
                       new Chart(document.getElementById('topChuyenBayChart').getContext('2d'), {
                           type: 'bar',
                           data: {
@@ -191,6 +204,58 @@
                           options: {
                               title: { display: true, text: 'Top 5 Chuyến Bay Được Đặt Nhiều Nhất' },
                               scales: { y: { beginAtZero: true } }
+                          }
+                      });
+                  }
+
+                  if (stats.nhan_vien_theo_loai) {
+                      new Chart(document.getElementById('nhanVienChart').getContext('2d'), {
+                          type: 'doughnut',
+                          data: {
+                              labels: stats.nhan_vien_theo_loai.labels,
+                              datasets: [{
+                                  label: 'Số lượng',
+                                  data: stats.nhan_vien_theo_loai.data,
+                                  backgroundColor: ['#FF9F40', '#4BC0C0', '#36A2EB', '#FF6384']
+                              }]
+                          },
+                          options: {
+                              plugins: {
+                                  title: {
+                                      display: true,
+                                      text: 'Phân Loại Nhân Viên'
+                                  }
+                              }
+                          }
+                      });
+                  }
+
+                  // Biểu đồ chuyến bay theo tháng
+                  if (stats.chuyen_bay_theo_thang) {
+                      new Chart(document.getElementById('chuyenBayThangChart').getContext('2d'), {
+                          type: 'line',
+                          data: {
+                              labels: stats.chuyen_bay_theo_thang.labels,
+                              datasets: [{
+                                  label: 'Số chuyến bay',
+                                  data: stats.chuyen_bay_theo_thang.data,
+                                  borderColor: 'rgb(75, 192, 192)',
+                                  tension: 0.1,
+                                  fill: false
+                              }]
+                          },
+                          options: {
+                              plugins: {
+                                  title: {
+                                      display: true,
+                                      text: 'Số Lượng Chuyến Bay Theo Tháng'
+                                  }
+                              },
+                              scales: {
+                                  y: {
+                                      beginAtZero: true
+                                  }
+                              }
                           }
                       });
                   }

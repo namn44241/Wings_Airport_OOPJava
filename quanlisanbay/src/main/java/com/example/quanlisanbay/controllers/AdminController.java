@@ -28,7 +28,10 @@ public class AdminController {
        if (username == null) {
            return "redirect:/login";
        }
+       Map<String, Object> stats = getStats();
+       model.addAttribute("stats", stats);
        model.addAttribute("username", username);
+       
        return "admin";
    }
 
@@ -166,6 +169,7 @@ public class AdminController {
        stats.put("lich_bay", jdbcTemplate.queryForObject("SELECT COUNT(*) FROM LichBay", Integer.class));
        stats.put("dat_cho", jdbcTemplate.queryForObject("SELECT COUNT(*) FROM DatCho", Integer.class));
        stats.put("phan_cong", jdbcTemplate.queryForObject("SELECT COUNT(*) FROM PhanCong", Integer.class));
+       
 
        // Thống kê loại máy bay
        String planeStatsQuery = "SELECT HangSanXuat, COUNT(*) as count FROM LoaiMayBay GROUP BY HangSanXuat";
@@ -219,6 +223,26 @@ public class AdminController {
        nhanVienTheoLoai.put("labels", labels);
        nhanVienTheoLoai.put("data", data);
        stats.put("nhan_vien_theo_loai", nhanVienTheoLoai);
+
+       // Thống kê chuyến bay theo tháng
+        String flightsByMonthQuery = """
+            SELECT MONTH(NgayDi) as month, COUNT(*) as count 
+            FROM LichBay 
+            WHERE YEAR(NgayDi) = YEAR(CURRENT_DATE)
+            GROUP BY MONTH(NgayDi)
+            ORDER BY month
+        """;
+        List<Map<String, Object>> flightsByMonth = jdbcTemplate.queryForList(flightsByMonthQuery);
+        Map<String, Object> chuyenBayTheoThang = new HashMap<>();
+        List<String> monthLabels = new ArrayList<>();
+        List<Integer> monthData = new ArrayList<>();
+        for (Map<String, Object> stat : flightsByMonth) {
+            monthLabels.add("Tháng " + stat.get("month"));
+            monthData.add(((Number) stat.get("count")).intValue());
+        }
+        chuyenBayTheoThang.put("labels", monthLabels);
+        chuyenBayTheoThang.put("data", monthData);
+        stats.put("chuyen_bay_theo_thang", chuyenBayTheoThang);
 
        return stats;
    }
