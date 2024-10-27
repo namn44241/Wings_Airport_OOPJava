@@ -582,7 +582,7 @@ def xoa_cb(flight_id):
     try:
         # Kiểm tra xem chuyến bay có trong bảng LichBay, DatCho hoặc PhanCong không
         check_query = """
-        SELECT COUNT(*) 
+        SELECT COUNT(*)
         FROM (
             SELECT MaChuyenBay FROM LichBay WHERE MaChuyenBay = ?
             UNION ALL
