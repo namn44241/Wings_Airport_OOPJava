@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-    
+
     @Bean
     public LoginRequiredInterceptor loginRequiredInterceptor() {
         return new LoginRequiredInterceptor();

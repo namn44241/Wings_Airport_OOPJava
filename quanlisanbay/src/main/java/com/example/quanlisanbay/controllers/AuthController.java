@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,25 +21,14 @@ public class AuthController {
 
     @PostMapping("/api/auth")
     @ResponseBody
-    public String auth(@RequestParam String username, @RequestParam String password, HttpSession session,
-            HttpServletRequest request) {
-        // Mã hóa mật khẩu
+    public String auth(@RequestParam String username, @RequestParam String password, HttpSession session) {
         String sql = "SELECT COUNT(*) FROM Admins WHERE UserName = ? AND PasswordHash = ?";
         String hashedPassword = hashPassword(password);
-        System.out.println("Hashed password: " + hashedPassword);
 
-        // Kiểm tra tài khoản
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class, username, hashedPassword);
 
         if (count != null && count > 0) {
-            // Xóa session cũ nếu có và tạo session mới
-            session.invalidate(); // Xóa session cũ
-            session = request.getSession(true); // Tạo session mới
-
-            // Lưu username vào session mới
             session.setAttribute("username", username);
-            System.out.println("Session username after login: " + session.getAttribute("username"));
-
             return "Đăng nhập thành công";
         } else {
             return "Tài khoản hoặc mật khẩu không đúng";
@@ -53,7 +41,7 @@ public class AuthController {
             byte[] hashedBytes = md.digest(password.getBytes());
             StringBuilder sb = new StringBuilder();
             for (byte b : hashedBytes) {
-                sb.append("%02x".formatted(b));
+                sb.append(String.format("%02x", b));
             }
             return sb.toString();
         } catch (NoSuchAlgorithmException e) {
