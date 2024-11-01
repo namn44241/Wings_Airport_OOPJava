@@ -15,6 +15,14 @@ public class PlaneType {
     @NotNull
     private String manufacturer;
 
+    public PlaneType() {
+    }
+
+    public PlaneType(String planeTypeId, String manufacturer) {
+        this.planeTypeId = planeTypeId;
+        this.manufacturer = manufacturer;
+    }
+
     // Getters and Setters
     public String getPlaneTypeId() {
         return planeTypeId;

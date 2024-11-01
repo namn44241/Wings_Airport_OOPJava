@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     .then(data => {
                         data.forEach(flight => {
                             const option = document.createElement('option');
-                            option.value = flight.MaChuyenBay;
-                            option.textContent = `${flight.MaChuyenBay} - ${flight.TenSanBayDi} - ${flight.TenSanBayDen}`;
+                            option.value = flight.maChuyenBay;
+                            option.textContent = `${flight.maChuyenBay} - ${flight.tenSanBayDi} - ${flight.tenSanBayDen}`;
                             flightSelect.appendChild(option);
                         });
                     })
@@ -89,9 +89,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Xử lý sự kiện submit form đặt chỗ
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             const formData = new FormData(this);
-            
+
             // Lấy NgayDi từ GioDi
             const departureDatetime = new Date(formData.get('departure-datetime'));
             const ngayDi = departureDatetime.toISOString().split('T')[0]; // Lấy phần yyyy-mm-dd

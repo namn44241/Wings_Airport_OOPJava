@@ -4,17 +4,33 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "flights")
 public class FlightEDIT {
     @Id
     private String flightId;
+
     private String departureAirport;
     private String arrivalAirport;
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;
 
-    // Getters và Setters
+    // Constructor, getters và setters
+
+    public FlightEDIT() {
+    }
+
+    public FlightEDIT(String flightId, String departureAirport, String arrivalAirport, LocalDateTime departureTime,
+            LocalDateTime arrivalTime) {
+        this.flightId = flightId;
+        this.departureAirport = departureAirport;
+        this.arrivalAirport = arrivalAirport;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+    }
+
     public String getFlightId() {
         return flightId;
     }
