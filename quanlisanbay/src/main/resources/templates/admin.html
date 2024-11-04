@@ -914,122 +914,160 @@
         </script>             
              
         <!-- Quản lý thông tin khách hàng -->
-          <section id="customer-info">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-              {% if messages %}
-                {% for category, message in messages %}
-                  <div class="alert alert-{{ category }}">{{ message }}</div>
-                {% endfor %}
-              {% endif %}
-            {% endwith %}
-            <h2>Quản lý thông tin khách hàng</h2>
-            <form method="POST" action="{{ url_for('them_kh') }}">
+        <section id="customer-info" xmlns:th="http://www.thymeleaf.org">
+          <div th:if="${message}" th:class="'alert alert-' + ${messageType}" th:text="${message}"></div>
+          
+          <h2>Quản lý thông tin khách hàng</h2>
+          <form method="POST" th:action="@{/them_kh}">
+              <!-- Trong form HTML -->
               <label for="customer-id">Mã khách hàng:</label>
-              <input type="text" required pattern="^KH.*$" id="customer-id" name="customer-id" value="{{ next_customer_id }}" readonly><br>
+              <input type="text" required pattern="^KH.*$" id="customer-id" name="customer-id" readonly>
+              
               <label for="customer-phone">Số điện thoại:</label>
               <input type="text" pattern="0[0-9]{9}" id="customer-phone" name="customer-phone" placeholder="Nhập số điện thoại" required><br>
+              
               <label for="customer-last-name">Họ đệm:</label>
               <input type="text" id="customer-last-name" name="customer-last-name" placeholder="Nhập họ đệm" required><br>
+              
               <label for="customer-first-name">Tên:</label>
               <input type="text" id="customer-first-name" name="customer-first-name" placeholder="Nhập tên" required><br>
+              
               <label for="customer-address">Địa chỉ:</label>
               <input type="text" id="customer-address" name="customer-address" placeholder="Nhập địa chỉ" required><br>
+              
               <button type="submit">Thêm thông tin khách hàng</button>
-            </form>
-              <table>
-                <thead>
+          </form>
+
+          <table>
+              <thead>
                   <tr>
-                    <th>Mã khách hàng</th>
-                    <th>Số điện thoại</th>
-                    <th>Họ đệm</th>
-                    <th>Tên</th>
-                    <th>Địa chỉ</th>
-                    <th>Thao tác</th>
+                      <th>Mã khách hàng</th>
+                      <th>Số điện thoại</th>
+                      <th>Họ đệm</th>
+                      <th>Tên</th>
+                      <th>Địa chỉ</th>
+                      <th>Thao tác</th>
                   </tr>
-                </thead>
-                <tbody>
-                  {% for row in customer_info %}
-                  <tr>
-                    <td>{{ row.MaKH }}</td>
-                    <td>{{ row.SDT }}</td>
-                    <td>{{ row.HoDem }}</td>
-                    <td>{{ row.Ten }}</td>
-                    <td>{{ row.DiaChi }}</td>
-                    <td>
-                      <button onclick="deleteCustomer('{{ row.MaKH }}')">Xóa</button>
-                      <button onclick="showEditForm('{{ row.MaKH }}')">Sửa</button>
-                      <form id="edit-form-{{ row.MaKH }}" style="display: none;" onsubmit="return editCustomer('{{ row.MaKH }}')">
-                        <input type="hidden" name="customer-id" value="{{ row.MaKH }}">
-                        <label for="edit-customer-phone-{{ row.MaKH }}">Số điện thoại:</label>
-                        <input type="text" pattern="0[0-9]{9}" id="edit-customer-phone-{{ row.MaKH }}" name="customer-phone" value="{{ row.SDT }}" required><br>
-                        <label for="edit-customer-last-name-{{ row.MaKH }}">Họ đệm:</label>
-                        <input type="text" id="edit-customer-last-name-{{ row.MaKH }}" name="customer-last-name" value="{{ row.HoDem }}" required><br>
-                        <label for="edit-customer-first-name-{{ row.MaKH }}">Tên:</label>
-                        <input type="text" id="edit-customer-first-name-{{ row.MaKH }}" name="customer-first-name" value="{{ row.Ten }}" required><br>
-                        <label for="edit-customer-address-{{ row.MaKH }}">Địa chỉ:</label>
-                        <input type="text" id="edit-customer-address-{{ row.MaKH }}" name="customer-address" value="{{ row.DiaChi }}" required><br>
-                        <button type="submit">Lưu thay đổi</button>
-                      </form>
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            <script>
-            function showEditForm(customerId) {
+              </thead>
+              <tbody>
+                  
+              </tbody>
+          </table>
+
+          <script th:inline="javascript">
+          function loadInitialCustomerData() {
+              fetch('/api/admin/bookings')
+              .then(response => response.json())
+              .then(data => {
+                  // Xử lý mã khách hàng tiếp theo
+                  const customerIdInput = document.querySelector('#customer-info #customer-id');
+                  if(customerIdInput) {
+                      customerIdInput.value = data.nextCustomerId;
+                  }
+
+                  // Hiển thị bảng khách hàng
+                  const tableBody = document.querySelector('#customer-info table tbody');
+                  if(tableBody) {
+                      tableBody.innerHTML = ''; // Xóa dữ liệu cũ
+                      
+                      data.customerInfo.forEach(customer => {
+                          const row = `
+                              <tr>
+                                  <td>${customer.MaKH}</td>
+                                  <td>${customer.SDT}</td>
+                                  <td>${customer.HoDem}</td>
+                                  <td>${customer.Ten}</td>
+                                  <td>${customer.DiaChi}</td>
+                                  <td>
+                                      <button onclick="deleteCustomer('${customer.MaKH}')">Xóa</button>
+                                      <button onclick="showEditForm('${customer.MaKH}')">Sửa</button>
+                                      <form id="edit-form-${customer.MaKH}" style="display: none;" 
+                                            onsubmit="return editCustomer('${customer.MaKH}')">
+                                          <input type="hidden" name="customer-id" value="${customer.MaKH}">
+                                          <label for="edit-customer-phone-${customer.MaKH}">Số điện thoại:</label>
+                                          <input type="text" pattern="0[0-9]{9}" 
+                                                id="edit-customer-phone-${customer.MaKH}" 
+                                                name="customer-phone" value="${customer.SDT}" required><br>
+                                          <label for="edit-customer-last-name-${customer.MaKH}">Họ đệm:</label>
+                                          <input type="text" id="edit-customer-last-name-${customer.MaKH}" 
+                                                name="customer-last-name" value="${customer.HoDem}" required><br>
+                                          <label for="edit-customer-first-name-${customer.MaKH}">Tên:</label>
+                                          <input type="text" id="edit-customer-first-name-${customer.MaKH}" 
+                                                name="customer-first-name" value="${customer.Ten}" required><br>
+                                          <label for="edit-customer-address-${customer.MaKH}">Địa chỉ:</label>
+                                          <input type="text" id="edit-customer-address-${customer.MaKH}" 
+                                                name="customer-address" value="${customer.DiaChi}" required><br>
+                                          <button type="submit">Lưu thay đổi</button>
+                                      </form>
+                                  </td>
+                              </tr>
+                          `;
+                          tableBody.insertAdjacentHTML('beforeend', row);
+                      });
+                  }
+              })
+              .catch(error => {
+                  console.error('Error loading customer data:', error);
+              });
+          }
+          function showEditForm(customerId) {
               const form = document.getElementById(`edit-form-${customerId}`);
               form.style.display = form.style.display === 'none' ? 'block' : 'none';
-            }
+          }
 
-            function editCustomer(customerId) {
+          function editCustomer(customerId) {
               const form = document.getElementById(`edit-form-${customerId}`);
               const formData = new FormData(form);
 
               fetch('/sua_kh', {
-                method: 'POST',
-                body: formData
+                  method: 'POST',
+                  body: formData
               })
               .then(response => response.json())
               .then(data => {
-                if (data.status === 'success') {
-                  alert(data.message);
-                  location.reload(); // Refresh trang sau khi sửa thành công
-                } else {
-                  alert(data.message);
-                }
+                  if (data.status === 'success') {
+                      alert(data.message);
+                      location.reload();
+                  } else {
+                      alert(data.message);
+                  }
               })
               .catch((error) => {
-                console.error('Error:', error);
-                alert('Có lỗi xảy ra khi sửa thông tin khách hàng.');
+                  console.error('Error:', error);
+                  alert('Có lỗi xảy ra khi sửa thông tin khách hàng.');
               });
 
-              return false; // Ngăn form submit theo cách thông thường
-            }
-            function deleteCustomer(customerId) {
+              return false;
+          }
+
+          function deleteCustomer(customerId) {
               if (confirm('Bạn có chắc chắn muốn xóa khách hàng này?')) {
-                fetch(`/xoa_kh/${customerId}`, {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                })
-                .then(response => response.json())
-                .then(data => {
-                  if (data.status === 'success') {
-                    alert(data.message);
-                    location.reload(); // Chỉ refresh khi xóa thành công
-                  } else {
-                    alert(data.message);
-                  }
-                })
-                .catch((error) => {
-                  console.error('Error:', error);
-                  alert('Có lỗi xảy ra khi xóa khách hàng.');
-                });
+                  fetch(`/xoa_kh/${customerId}`, {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                      },
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                      if (data.status === 'success') {
+                          alert(data.message);
+                          location.reload();
+                      } else {
+                          alert(data.message);
+                      }
+                  })
+                  .catch((error) => {
+                      console.error('Error:', error);
+                      alert('Có lỗi xảy ra khi xóa khách hàng.');
+                  });
               }
-            }
-            </script>
-          </section>        
+          }
+          document.addEventListener('DOMContentLoaded', function() {
+              loadInitialCustomerData();
+          });
+          </script>
+        </section>       
         
           <section id="employee-info">
             <h2>Quản lý thông tin nhân viên</h2>
