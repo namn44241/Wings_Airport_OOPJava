@@ -862,8 +862,9 @@
                 <label for="plane-id">Số hiệu:</label>
                 <input type="text" id="plane-id" name="plane-id" placeholder="Nhập số hiệu" required><br>
                 
-                <label for="plane-type-id">Mã loại:</label>
-                <select id="plane-type-id" name="plane-type-id" required>
+                <!-- Form thêm máy bay -->
+                <label for="aircraft-type-id">Mã loại:</label>
+                <select id="aircraft-type-id" name="plane-type-id" required>
                     <option value="">-- Chọn mã loại --</option>
                 </select><br>
                 
@@ -895,7 +896,7 @@
             .then(response => response.json())
             .then(data => {
                 // Cập nhật select box mã loại máy bay
-                const typeSelect = document.getElementById('plane-type-id'); 
+                const typeSelect = document.getElementById('aircraft-type-id'); // Đổi ID này
                 typeSelect.innerHTML = '<option value="">Chọn mã loại</option>';
                 data.aircraftInfo.forEach(type => {
                     const option = `
@@ -1455,7 +1456,6 @@
                 fetch('/api/admin/flights')
                 .then(response => response.json())
                 .then(data => {
-                    console.log("Flight data:", data);
                     const flightSelect = document.querySelector('#schedule-flight-id');
                     const editFlightSelect = document.querySelector('#edit-schedule-flight-id');
                     
@@ -1465,7 +1465,6 @@
                         
                         if(data.flightInfo && data.flightInfo.length > 0) {
                             data.flightInfo.forEach(flight => {
-                                console.log("Processing flight:", flight);
                                 const option = `<option value="${flight.MaChuyenBay}">${flight.MaChuyenBay} - ${flight.TenSanBayDi} - ${flight.TenSanBayDen}</option>`;
                                 flightSelect.insertAdjacentHTML('beforeend', option);
                                 editFlightSelect.insertAdjacentHTML('beforeend', option);

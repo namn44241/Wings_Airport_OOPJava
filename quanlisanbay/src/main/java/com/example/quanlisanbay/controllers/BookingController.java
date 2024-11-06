@@ -191,15 +191,21 @@ public class BookingController {
             @RequestParam("departure-datetime") String newDepartureDatetime
     ) {
         try {
+            // Kiểm tra số lượng đặt chỗ hiện tại của khách hàng
+            String countBookingsQuery = "SELECT COUNT(*) FROM DatCho WHERE MaKH = ?";
+            int bookingCount = jdbcTemplate.queryForObject(countBookingsQuery, Integer.class, customerId);
+
+            if (bookingCount > 1) {
+                return ResponseEntity.badRequest().body(
+                    Map.of("error", "Khách hàng này có nhiều hơn 1 đặt chỗ. Không thể sửa thông tin.")
+                );
+            }
+
             LocalDateTime newNgayDi = LocalDateTime.parse(newDepartureDatetime).toLocalDate().atStartOfDay();
 
             // Lấy thông tin đặt chỗ hiện tại
             String getCurrentBookingQuery = "SELECT NgayDi, MaChuyenBay FROM DatCho WHERE MaKH = ?";
             Map<String, Object> current = jdbcTemplate.queryForMap(getCurrentBookingQuery, customerId);
-
-            if (current == null) {
-                return ResponseEntity.notFound().build();
-            }
 
             // Cập nhật đặt chỗ
             String updateQuery = """
@@ -228,19 +234,18 @@ public class BookingController {
 
     @PostMapping("/xoa_dat_cho")
     @LoginRequired
-    public String xoaDatCho(
-            @RequestParam("customer_id") String customerId,
-            @RequestParam("flight_id") String flightId,
-            @RequestParam("departure_date") String departureDate,
-            RedirectAttributes redirectAttributes
+    @ResponseBody  // Thêm annotation này
+    public ResponseEntity<?> xoaDatCho(  // Đổi kiểu trả về
+        @RequestParam("customer_id") String customerId,
+        @RequestParam("flight_id") String flightId,
+        @RequestParam("departure_date") String departureDate
     ) {
         try {
             String query = "DELETE FROM DatCho WHERE MaKH = ? AND MaChuyenBay = ? AND NgayDi = ?";
             jdbcTemplate.update(query, customerId, flightId, departureDate);
-            redirectAttributes.addFlashAttribute("success", "Xóa đặt chỗ thành công");
+            return ResponseEntity.ok(Map.of("success", "Xóa đặt chỗ thành công"));
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Lỗi khi xóa đặt chỗ: " + e.getMessage());
+            return ResponseEntity.internalServerError().body(Map.of("error", "Lỗi khi xóa đặt chỗ: " + e.getMessage()));
         }
-        return "redirect:/admin";
     }
 }
