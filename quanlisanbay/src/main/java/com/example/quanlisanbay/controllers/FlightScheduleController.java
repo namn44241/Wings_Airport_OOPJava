@@ -24,6 +24,16 @@ public class FlightScheduleController {
             @RequestParam("aircraft-id") String aircraftId
     ) {
         try {
+            // Kiểm tra xem chuyến bay đã có lịch bay chưa
+            String checkFlightSchedule = "SELECT COUNT(*) FROM LichBay WHERE MaChuyenBay = ?";
+            int flightScheduleCount = jdbcTemplate.queryForObject(checkFlightSchedule, Integer.class, flightId);
+            
+            if (flightScheduleCount > 0) {
+                Map<String, String> response = new HashMap<>();
+                response.put("error", "Mã chuyến bay này đã có lịch bay!");
+                return ResponseEntity.badRequest().body(response);
+            }
+
             // Lấy GioDi từ bảng ChuyenBay
             String queryGetGiodi = "SELECT GioDi FROM ChuyenBay WHERE MaChuyenBay = ?";
             Map<String, Object> result = jdbcTemplate.queryForMap(queryGetGiodi, flightId);
