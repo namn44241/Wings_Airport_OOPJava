@@ -1358,101 +1358,39 @@
           </section> 
 
           <section id="schedule-info">
-            <!-- Form for creating new flight schedule -->
             <h2>Quản lý lịch bay</h2>
-            <form id="themLichForm" method="POST" action="{{ url_for('them_lich') }}">
+            
+            <!-- Form thêm lịch bay -->
+            <form id="themLichForm">
                 <label for="flight-id">Mã chuyến bay:</label>
                 <select id="flight-id" name="flight-id" required>
                     <option value="">-- Chọn Mã chuyến bay --</option>
-                    {% for flight in flights %}
-                        <option value="{{ flight.MaChuyenBay }}">
-                            {{ flight.MaChuyenBay }} - {{ flight.TenSanBayDi }} - {{ flight.TenSanBayDen }}
-                        </option>
-                    {% endfor %}
                 </select><br>
+        
                 <label for="aircraft-id">Số hiệu máy bay:</label>
                 <select id="aircraft-id" name="aircraft-id" required>
                     <option value="">-- Chọn Số hiệu máy bay--</option>
-                    {% for aircraft in aircrafts %}
-                        <option value="{{ aircraft[0] }}">{{ aircraft[0] }}</option>
-                    {% endfor %}
                 </select><br>
+        
                 <button type="submit">Thêm lịch bay mới</button>
             </form>
-            <form method="POST" action="{{ url_for('sua_lich') }}">
+        
+            <!-- Form sửa lịch bay -->
+            <form id="suaLichForm">
                 <label for="edit-flight-id">Mã chuyến bay:</label>
                 <select id="edit-flight-id" name="flight-id" required>
                     <option value="">-- Chọn Mã chuyến bay --</option>
-                    {% for flight in flights %}
-                        <option value="{{ flight.MaChuyenBay }}">
-                            {{ flight.MaChuyenBay }} - {{ flight.TenSanBayDi }} - {{ flight.TenSanBayDen }}
-                        </option>
-                    {% endfor %}
                 </select><br>
+        
                 <label for="edit-aircraft-id">Số hiệu máy bay:</label>
                 <select id="edit-aircraft-id" name="aircraft-id" required>
                     <option value="">-- Chọn Số hiệu máy bay--</option>
-                    {% for aircraft in aircrafts %}
-                        <option value="{{ aircraft[0] }}">{{ aircraft[0] }}</option>
-                    {% endfor %}
                 </select><br>
+        
                 <button type="submit">Lưu thay đổi</button>
             </form>
-            <script>
-            function themLichBay(event) {
-                event.preventDefault();
-                const form = event.target;
-                const formData = new FormData(form);
-
-                fetch('/them_lich', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        alert(data.error);
-                    } else if (data.success) {
-                        alert(data.success);
-                        location.reload();
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    alert('Có lỗi xảy ra khi thêm lịch bay');
-                });
-            }
-
-            document.getElementById('themLichForm').onsubmit = themLichBay;
-            function editSchedule(event) {
-                event.preventDefault();
-                const form = event.target;
-                const formData = new FormData(form);
-            
-                fetch('/sua_lich', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        alert(data.error);
-                    } else if (data.success) {
-                        alert(data.success);
-                        // Reload the page or update the table
-                        location.reload();
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    alert('Có lỗi xảy ra khi cập nhật lịch bay');
-                });
-            }
-            
-            document.querySelector('form[action="{{ url_for('sua_lich') }}"]').onsubmit = editSchedule;
-            </script>
         
-            <!-- Table for displaying flight schedule information -->
+            <!-- Bảng hiển thị lịch bay -->
             <table>
                 <thead>
                     <tr>
@@ -1468,53 +1406,165 @@
                         <th>Thao tác</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {% for schedule in schedules %}
-                    <tr>
-                        <td>{{ schedule.MaChuyenBay }}</td>
-                        <td>{{ schedule.SoHieu }}</td>
-                        <td>{{ schedule.MaLoai }}</td>
-                        <td>{{ schedule.HangSanXuat }}</td>
-                        <td>{{ schedule.SoGheNgoi }}</td>
-                        <td>{{ schedule.TenSanBayDi }}</td>
-                        <td>{{ schedule.TenSanBayDen }}</td>
-                        <td>{{ schedule.GioDi }}</td>
-                        <td>{{ schedule.GioDen }}</td>
-                        <td>
-                          <button onclick="deleteSchedule('{{ schedule.MaChuyenBay }}', '{{ schedule.SoHieu }}')">Xóa</button>
-                        </td>
-                    </tr>
-                    {% endfor %}
+                <tbody id="schedule-table-body">
                 </tbody>
             </table>
-        </section>
-        <script>
-        function deleteSchedule(flightId, aircraftId) {
-            if (confirm('Bạn có chắc chắn muốn xóa lịch bay này?')) {
-                fetch('/xoa_lich', {
+        
+            <script>
+            function loadInitialData() {
+                // Load flights
+                fetch('/api/admin/flights')
+                .then(response => response.json())
+                .then(data => {
+                    const flightSelect = document.querySelector('#themLichForm #flight-id');
+                    const editFlightSelect = document.querySelector('#suaLichForm #edit-flight-id');
+                    
+                    if(flightSelect && editFlightSelect) {
+                        flightSelect.innerHTML = '<option value="">-- Chọn Mã chuyến bay --</option>';
+                        editFlightSelect.innerHTML = '<option value="">-- Chọn Mã chuyến bay --</option>';
+                        
+                        data.flightInfo.forEach(flight => {
+                            const option = `<option value="${flight.MaChuyenBay}">${flight.MaChuyenBay} - ${flight.TenSanBayDi} - ${flight.TenSanBayDen}</option>`;
+                            flightSelect.insertAdjacentHTML('beforeend', option);
+                            editFlightSelect.insertAdjacentHTML('beforeend', option);
+                        });
+                    }
+                });
+        
+                // Load aircrafts 
+                fetch('/api/admin/aircraft')
+                .then(response => response.json())
+                .then(data => {
+                    const aircraftSelect = document.querySelector('#themLichForm #aircraft-id');
+                    const editAircraftSelect = document.querySelector('#suaLichForm #edit-aircraft-id');
+                    
+                    if(aircraftSelect && editAircraftSelect) {
+                        aircraftSelect.innerHTML = '<option value="">-- Chọn Số hiệu máy bay--</option>';
+                        editAircraftSelect.innerHTML = '<option value="">-- Chọn Số hiệu máy bay--</option>';
+                        
+                        // Sửa để hiển thị thêm thông tin máy bay
+                        data.planeInfo.forEach(plane => {
+                            const option = `<option value="${plane.SoHieu}">
+                                ${plane.SoHieu} - ${plane.HangSanXuat} (${plane.SoGheNgoi} ghế)
+                            </option>`;
+                            aircraftSelect.insertAdjacentHTML('beforeend', option);
+                            editAircraftSelect.insertAdjacentHTML('beforeend', option);
+                        });
+                    }
+                });
+        
+                // Load schedules
+                updateScheduleTable();
+            }
+        
+            function updateScheduleTable() {
+                fetch('/api/admin/schedules')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById('schedule-table-body');
+                    tbody.innerHTML = '';
+                    
+                    data.schedules.forEach(schedule => {
+                        const row = tbody.insertRow();
+                        row.innerHTML = `
+                            <td>${schedule.MaChuyenBay}</td>
+                            <td>${schedule.SoHieu}</td>
+                            <td>${schedule.MaLoai}</td>
+                            <td>${schedule.HangSanXuat}</td>
+                            <td>${schedule.SoGheNgoi}</td>
+                            <td>${schedule.TenSanBayDi}</td>
+                            <td>${schedule.TenSanBayDen}</td>
+                            <td>${schedule.GioDi}</td>
+                            <td>${schedule.GioDen}</td>
+                            <td>
+                                <button onclick="deleteSchedule('${schedule.MaChuyenBay}', '${schedule.SoHieu}')">Xóa</button>
+                            </td>
+                        `;
+                    });
+                });
+            }
+        
+            document.getElementById('themLichForm').onsubmit = function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+        
+                fetch('/them_lich', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `flight-id=${flightId}&aircraft-id=${aircraftId}`
+                    body: formData
                 })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.error) {
-                        alert(data.error);
-                    } else if (data.success) {
+                    if (data.success) {
                         alert(data.success);
-                        // Reload the page or update the table
-                        location.reload();
+                        updateScheduleTable();
+                        this.reset();
+                    } else if (data.error) {
+                        alert(data.error);
                     }
                 })
-                .catch((error) => {
+                .catch(error => {
                     console.error('Error:', error);
-                    alert('Có lỗi xảy ra khi xóa lịch bay');
+                    alert('Có lỗi xảy ra khi thêm lịch bay');
                 });
+            };
+        
+            document.getElementById('suaLichForm').onsubmit = function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+        
+                fetch('/sua_lich', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.success);
+                        updateScheduleTable();
+                        this.reset();
+                    } else if (data.error) {
+                        alert(data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Có lỗi xảy ra khi cập nhật lịch bay');
+                });
+            };
+        
+            function deleteSchedule(flightId, aircraftId) {
+                if (confirm('Bạn có chắc chắn muốn xóa lịch bay này?')) {
+                    const formData = new URLSearchParams();
+                    formData.append('flight-id', flightId);
+                    formData.append('aircraft-id', aircraftId);
+        
+                    fetch('/xoa_lich', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: formData.toString()
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.success);
+                            updateScheduleTable();
+                        } else if (data.error) {
+                            alert(data.error);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Có lỗi xảy ra khi xóa lịch bay');
+                    });
+                }
             }
-        }
-        </script>
+        
+            // Load dữ liệu khi trang được tải
+            document.addEventListener('DOMContentLoaded', loadInitialData);
+            </script>
+        </section>
 
         <section id="assignment-info">
           <h2>Quản lý phân công</h2>
