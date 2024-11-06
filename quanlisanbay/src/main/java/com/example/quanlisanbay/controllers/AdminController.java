@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -120,7 +121,14 @@ public class AdminController {
        response.put("nextCustomerId", nextCustomerId);
        return response;
    }
-
+   
+    @GetMapping("/api/admin/flight-details")
+    @ResponseBody 
+    public Map<String, Object> getFlightDetails(@RequestParam String flight_id) {
+        String query = "SELECT GioDi as departure_time, GioDen as arrival_time FROM ChuyenBay WHERE MaChuyenBay = ?";
+        return jdbcTemplate.queryForMap(query, flight_id);
+    }
+    
    // API lấy thông tin nhân viên và phân công
    @GetMapping("/api/admin/employees") 
    @ResponseBody
