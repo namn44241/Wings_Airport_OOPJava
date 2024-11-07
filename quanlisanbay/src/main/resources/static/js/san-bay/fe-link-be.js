@@ -1,5 +1,3 @@
-const API_BASE_URL = 'http://127.0.0.1:5000';
-
 document.addEventListener('DOMContentLoaded', function() {
     const bookingContainer = document.getElementById('booking-container');
     const manageContainer = document.getElementById('manage-container');
@@ -39,17 +37,18 @@ document.addEventListener('DOMContentLoaded', function() {
         // Lấy danh sách chuyến bay chỉ khi người dùng focus vào select
         flightSelect.addEventListener('focus', function() {
             if (this.options.length <= 1) {  // Chỉ tải nếu chưa có dữ liệu
-                fetch(`${API_BASE_URL}/api/flights`)
-                    .then(response => response.json())
-                    .then(data => {
-                        data.forEach(flight => {
+                fetch(`/api/flights`)
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        data.data.forEach(flight => {
                             const option = document.createElement('option');
                             option.value = flight.MaChuyenBay;
                             option.textContent = `${flight.MaChuyenBay} - ${flight.TenSanBayDi} - ${flight.TenSanBayDen}`;
                             flightSelect.appendChild(option);
                         });
-                    })
-                    .catch(error => console.error('Error:', error));
+                    }
+                })
             }
         });
 
@@ -66,8 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hàm cập nhật thông tin chuyến bay
         function updateFlightDetails(flightId) {
             if (flightId) {
-                fetch(`${API_BASE_URL}/get_flight_details?flight_id=${flightId}`)
-                    .then(response => response.json())
+                fetch(`/get_flight_details_for_assignment?flight_id=${flightId}`)
+                .then(response => response.json())
                     .then(data => {
                         if (data.error) {
                             alert(data.error);
@@ -80,9 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         console.error('Error:', error);
                         alert('Có lỗi khi lấy thông tin chuyến bay');
                     });
-            } else {
-                document.getElementById('manage-departure-datetime').value = '';
-                document.getElementById('manage-arrival-datetime').value = '';
             }
         }
 
@@ -97,14 +93,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const ngayDi = departureDatetime.toISOString().split('T')[0]; // Lấy phần yyyy-mm-dd
             formData.append('ngay_di', ngayDi);
 
-            fetch(`${API_BASE_URL}/them_dat_cho_fe`, {
+            fetch(`/them_dat_cho_fe`, {
                 method: 'POST',
                 body: formData
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert(data.message);
+                    alert(data.message || "Gửi mail thông báo đặt chỗ thành công"); 
                     // Reset form
                     this.reset();
                     document.getElementById('manage-customer-id').value = '';
@@ -134,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            fetch(`${API_BASE_URL}/them_kh_fe`, {
+            fetch(`/them_kh_fe`, {
                 method: 'POST',
                 body: new FormData(this)
             })
@@ -158,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function fetchNextCustomerId() {
-        fetch(`${API_BASE_URL}/next_customer_id`)
+        fetch(`/next_customer_id`)
             .then(response => response.json())
             .then(data => {
                 document.getElementById('customer-id').value = data.next_customer_id;
@@ -169,34 +165,47 @@ document.addEventListener('DOMContentLoaded', function() {
     function initializeCheckin() {
         const tableBody = document.querySelector('#flight-table tbody');
         
-        tableBody.innerHTML = '<tr><td colspan="7">Đang tải dữ liệu...</td></tr>';
+        // Load dữ liệu ban đầu
+        loadFlightData();
+    
+        // Xử lý form tìm kiếm
+        document.getElementById('search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = this.querySelector('input[name="query"]').value;
+            
+            fetch(`/api/search?query=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        displayFlights(data.data);
+                    } else {
+                        throw new Error(data.error || 'Có lỗi xảy ra');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    tableBody.innerHTML = '<tr><td colspan="7">Lỗi khi tìm kiếm dữ liệu</td></tr>';
+                });
+        });
+    }
 
-        fetch(`${API_BASE_URL}/api/flights`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
+    function loadFlightData() {
+        const tableBody = document.querySelector('#flight-table tbody');
+        tableBody.innerHTML = '<tr><td colspan="7">Đang tải dữ liệu...</td></tr>';
+    
+        fetch('/api/flights')
+            .then(response => response.json())
             .then(data => {
-                displayFlights(data);
+                if(data.success) {
+                    displayFlights(data.data);
+                } else {
+                    throw new Error(data.error || 'Có lỗi xảy ra');
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
-                tableBody.innerHTML = '<tr><td colspan="7">Có lỗi xảy ra khi tải dữ liệu. Vui lòng thử lại sau.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="7">Lỗi khi tải dữ liệu</td></tr>';
             });
-
-        document.getElementById('search-flight-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const query = this.querySelector('input[name="query"]').value;
-            performSearch('flight', query);
-        });
-
-        document.getElementById('search-airport-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const query = this.querySelector('input[name="query"]').value;
-            performSearch('airport', query);
-        });
     }
 
     function performSearch(type, query) {
