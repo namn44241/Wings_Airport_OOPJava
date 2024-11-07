@@ -39,6 +39,7 @@ public class AdminController {
    // API lấy thông tin chuyến bay
    @GetMapping("/api/admin/flights")
    @ResponseBody
+   @LoginRequired 
    public Map<String, Object> getFlights() {
        Map<String, Object> response = new HashMap<>();
        
@@ -61,6 +62,7 @@ public class AdminController {
    // API lấy thông tin máy bay
    @GetMapping("/api/admin/aircraft")
    @ResponseBody
+   @LoginRequired 
    public Map<String, Object> getAircraft() {
        Map<String, Object> response = new HashMap<>();
        
@@ -92,6 +94,7 @@ public class AdminController {
    // API lấy thông tin đặt chỗ và khách hàng 
    @GetMapping("/api/admin/bookings")
    @ResponseBody
+   @LoginRequired 
    public Map<String, Object> getBookings() {
        Map<String, Object> response = new HashMap<>();
        
@@ -124,6 +127,7 @@ public class AdminController {
    
     @GetMapping("/api/admin/flight-details")
     @ResponseBody 
+    @LoginRequired 
     public Map<String, Object> getFlightDetails(@RequestParam String flight_id) {
         String query = "SELECT GioDi as departure_time, GioDen as arrival_time FROM ChuyenBay WHERE MaChuyenBay = ?";
         return jdbcTemplate.queryForMap(query, flight_id);
@@ -132,6 +136,7 @@ public class AdminController {
    // API lấy thông tin nhân viên và phân công
    @GetMapping("/api/admin/employees") 
    @ResponseBody
+   @LoginRequired 
    public Map<String, Object> getEmployees() {
        Map<String, Object> response = new HashMap<>();
        
@@ -164,7 +169,8 @@ public class AdminController {
 
    // API lấy thống kê
    @GetMapping("/api/admin/stats")
-   @ResponseBody 
+   @ResponseBody
+   @LoginRequired  
    public Map<String, Object> getStats() {
        Map<String, Object> stats = new HashMap<>();
        
@@ -258,6 +264,7 @@ public class AdminController {
    // API lấy thông tin lịch bay
    @GetMapping("/api/admin/schedules")
    @ResponseBody
+   @LoginRequired 
    public Map<String, Object> getSchedules() {
        Map<String, Object> response = new HashMap<>();
 
