@@ -4,7 +4,7 @@ https://youtu.be/diddub_jWAM?si=4pPiAdezpXkX1kUP
 
 # Check API
 
-https://www.postman.com/technical-candidate-72354826/namnam/collection/t5csmib/api-for-wings-airport-management
+https://elements.getpostman.com/redirect?entityId=38988190-965ce511-d183-4da0-8774-8a0cca93e420&entityType=collection
 
 # 1.1. Tổng quan về sân bay Wings Airport
 
