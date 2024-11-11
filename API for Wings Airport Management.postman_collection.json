@@ -1,0 +1,1507 @@
+{
+	"info": {
+		"_postman_id": "965ce511-d183-4da0-8774-8a0cca93e420",
+		"name": "API for Wings Airport Management",
+		"description": "Dưới đây là danh sách các API đã được định nghĩa, tổng cộng có **47 API**:\n\n### 1\\. Kiểm tra kết nối và đăng nhập\n\n- `/test_connection`: `GET` - Kiểm tra kết nối.\n    \n- `/`: `GET` - Kiểm tra đăng nhập.\n    \n- `/login`: `GET` - Đăng nhập.\n    \n- `/api/auth`: `POST` - Xác thực người dùng.\n    \n- `/logout`: `GET` - Đăng xuất.\n    \n\n### 2\\. Trang chủ chính và Admin\n\n- `/admin`: `GET` - Truy cập trang admin (yêu cầu đăng nhập).\n    \n- `/san_bay.html`: `GET` - Trang chủ QLSV ngôn ngữ Việt.\n    \n- `/san_bay_en.html`: `GET` - Trang chủ QLSV ngôn ngữ Anh.\n    \n- `/san_bay`: `GET` - Lấy danh sách sân bay.\n    \n\n### 3\\. Gửi email\n\n- `/send-email`: `POST` - Gửi email.\n    \n\n### 4\\. Quản lý chuyến bay\n\n- `/api/flights`: `GET` - Lấy danh sách chuyến bay\n    \n- `/api/search`: `GET` - Tìm kiếm chuyến bay\n    \n\n### 5\\. Quản lý chuyến bay (admin)\n\n- `/api/admin/flights`: `GET` - Lấy thông tin chuyến bay (yêu cầu đăng nhập).\n    \n- `/api/admin/flight-details`: `GET` - Lấy thông tin cụ thể của một chuyến bay (yêu cầu đăng nhập).\n    \n- `/them_cb`: `POST` - Thêm chuyến bay (yêu cầu đăng nhập).\n    \n- `/sua_cb`: `POST` - Sửa chuyến bay (yêu cầu đăng nhập).\n    \n- `/xoa_cb/{flightId}`: `POST` - Xóa chuyến bay (yêu cầu đăng nhập).\n    \n\n### 6\\. Quản lý loại máy bay\n\n- `/them_loai_mb`: `POST` - Thêm loại máy bay (yêu cầu đăng nhập).\n    \n- `/sua_loai_mb/{planeTypeId}`: `POST`\\- Sửa loại máy bay (yêu cầu đăng nhập).\n    \n- `/xoa_loai_mb/{planeTypeId}`: `POST` - Xóa loại máy bay (yêu cầu đăng nhập).\n    \n\n### 7\\. Quản lý đặt chỗ\n\n- `/api/admin/bookings`:`GET` - Lấy thông tin đặt chỗ và khách hàng (yêu cầu đăng nhập).\n    \n- `/them_dat_cho`: `POST` - Thêm đặt chỗ (yêu cầu đăng nhập).\n    \n- `/them_dat_cho_fe`: `POST` - Thêm đặt chỗ từ frontend.\n    \n- `/sua_dat_cho`: `POST` - Sửa đặt chỗ (yêu cầu đăng nhập).\n    \n- `/xoa_dat_cho`: `POST` - Xóa đặt chỗ (yêu cầu đăng nhập).\n    \n\n### 8\\. Quản lý máy bay\n\n- `/api/admin/aircraft`: `GET` - Lấy thông tin máy bay (yêu cầu đăng nhập).\n    \n- `/them_mb`: `POST` - Thêm máy bay (yêu cầu đăng nhập).\n    \n- `/sua_mb`: `POST` - Sửa máy bay (yêu cầu đăng nhập).\n    \n- `/xoa_mb/{planeId}`: `POST` - Xóa máy bay (yêu cầu đăng nhập).\n    \n\n### 9\\. Quản lý khách hàng\n\n- `/them_kh`: `POST` - Thêm khách hàng (yêu cầu đăng nhập).\n    \n- `/next_customer_id`: `GET` - Lấy mã khách hàng tiếp theo.\n    \n- `/them_kh_fe`: `POST` - Thêm khách hàng từ frontend.\n    \n- `/sua_kh`: `POST` - Sửa khách hàng (yêu cầu đăng nhập).\n    \n- `/xoa_kh/{customerId}`: `POST` - Xóa khách hàng (yêu cầu đăng nhập).\n    \n\n### 10\\. Quản lý nhân viên\n\n- `/api/admin/employees`: `GET` - Lấy thông tin nhân viên (yêu cầu đăng nhập).\n    \n- `/them_nv`: `POST` - Thêm nhân viên (yêu cầu đăng nhập).\n    \n- `/sua_nv/{employeeId}`: `POST` - Sửa nhân viên (yêu cầu đăng nhập).\n    \n- `/xoa_nv/{employeeId}`: `POST` - Xóa nhân viên (yêu cầu đăng nhập).\n    \n\n### 11\\. Quản lý lịch bay\n\n- `/api/admin/schedules`: `GET` - Lấy thông tin lịch bay (yêu cầu đăng nhập).\n    \n- `/them_lich`: `POST` - Thêm lịch bay (yêu cầu đăng nhập).\n    \n- `/sua_lich`: `POST` - Sửa lịch bay (yêu cầu đăng nhập).\n    \n- `/xoa_lich`: `POST` - Xóa lịch bay (yêu cầu đăng nhập).\n    \n\n### 12\\. Quản lý phân công\n\n- `/api/admin/employees`: `GET` - Lấy thông tin nhân viên (yêu cầu đăng nhập).\n    \n- `/them_phan_cong`: `POST` - Thêm phân công (yêu cầu đăng nhập).\n    \n- `/sua_phan_cong`: `POST` - Sửa phân công (yêu cầu đăng nhập).\n    \n- `/xoa_phan_cong`: `POST` - Xóa phân công (yêu cầu đăng nhập).\n    \n- `/get_flight_details_for_assignment`: `GET` - Lấy thông tin của một chuyến bay cho phân công (yêu cầu đăng nhập).\n    \n\n### 13\\. Quản lý thống kê\n\n- `/api/admin/stats`: `GET` - Lấy thống kê của tất cả mọi thứ (yêu cầu đăng nhập).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38988190"
+	},
+	"item": [
+		{
+			"name": "Một số lưu ý",
+			"item": [],
+			"description": "Khi test API endpoint cần lưu ý:\n\n- Lưu ý chung của tất cả các API:\n    \n    - Call như thường.\n        \n    - Các API đã được call sẵn bằng Params hoặc Body JSON.\n        \n    - Key giữ nguyên, không được thay đổi. Có thể thay đổi Value miễn là đã tồn tại trên Database.\n        \n    - Nếu như là Path Variable thì chỉ cần thay đổi trực tiếp là được.\n        \n    - Đối với API mà có chuyến bay đi kèm với giờ đi thì phải vào xem list Chuyến bay nếu không sẽ bị Bad Request.\n        \n    - Thêm một lưu ý rất quan trọng, ở phần **Chuyến bay**, **Lịch bay**, **Phân công** thường sẽ là tập hợp của **Máy bay**, **Khách hàng**, **Nhân viên** và ngược lại nên hãy lưu ý khi **Thêm**, **Sửa**, **Xóa** ở những phần này.\n        \n- Lưu ý riêng cho API có yêu cầu đăng nhập (đã được chú thích):\n    \n    - Cần phải vào **Xác thực người dùng** nằm ở **1\\. Kiểm tra kết nối và đăng nhập**. Sau đó có thể test các API như thường.\n        \n    - Nếu muốn out Admin thì cứ vào phần **Đăng xuất** rồi call là được.\n        \n- Những lỗi đang chưa fix được:\n    \n    - **Gửi email** ở phần **3\\. Gửi email**\n        \n    - **Xóa máy bay (yêu cầu đăng nhập)** ở phần **8\\. Quản lý máy bay**"
+		},
+		{
+			"name": "1. Kiểm tra kết nối và đăng nhập",
+			"item": [
+				{
+					"name": "Kiểm tra kết nối",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/test_connection",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"test_connection"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Kiểm tra đăng nhập",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Đăng nhập",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xác thực người dùng",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/auth?username=1&password=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "1"
+								},
+								{
+									"key": "password",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Đăng xuất",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/logout",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- `/test_connection`: `GET` - Kiểm tra kết nối.\n    \n- `/`: `GET` - Kiểm tra đăng nhập.\n    \n- `/login`: `GET` - Đăng nhập.\n    \n- `/api/auth`: `POST` - Xác thực người dùng.\n    \n- `/logout`: `GET` - Đăng xuất."
+		},
+		{
+			"name": "2. Trang chủ chính và Admin",
+			"item": [
+				{
+					"name": "Truy cập trang chủ Admin",
+					"request": {
+						"auth": {
+							"type": "apikey"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Trang chủ Sân bay (Việt)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/san_bay.html",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"san_bay.html"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Trang chủ Sân bay (Anh)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/san_bay_en.html",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"san_bay_en.html"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Danh sách Sân bay",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/san_bay",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"san_bay"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- `/admin`: `GET` - Truy cập trang admin (yêu cầu đăng nhập).\n    \n- `/san_bay.html`: `GET` - Trang chủ QLSV ngôn ngữ Việt.\n    \n- `/san_bay_en.html`: `GET` - Trang chủ QLSV ngôn ngữ Anh.\n    \n- `/san_bay`: `GET` - Lấy danh sách sân bay."
+		},
+		{
+			"name": "3. Gửi email",
+			"item": [
+				{
+					"name": "Gửi email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"dandythenubit@gmail.com\",\r\n    \"language\": \"en\",\r\n    \"fullName\": \"Dandy\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/send-email",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"send-email"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- `/send-email`: `POST` - Gửi email."
+		},
+		{
+			"name": "4. Quản lý chuyến bay",
+			"item": [
+				{
+					"name": "Danh sách chuyến bay",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/flights",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"flights"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tìm kiếm chuyến bay",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/search?query=Sân Bay",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "Sân Bay"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- `/api/flights`: `GET` - Lấy danh sách chuyến bay\n    \n- `/api/search`: `GET` - Tìm kiếm chuyến bay"
+		},
+		{
+			"name": "5. Quản lý chuyến bay (Admin)",
+			"item": [
+				{
+					"name": "Lấy thông tin chuyến bay (yêu cầu đăng nhập)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/admin/flights",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"flights"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thông tin chi tiết của một chuyến bay cho phân công",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/get_flight_details_for_assignment?flight_id=CB000001",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"get_flight_details_for_assignment"
+							],
+							"query": [
+								{
+									"key": "flight_id",
+									"value": "CB000001"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm chuyến bay (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "flight-id",
+									"value": "CB000017",
+									"type": "text"
+								},
+								{
+									"key": "departure-airport",
+									"value": "Hanoi",
+									"type": "text"
+								},
+								{
+									"key": "arrival-airport",
+									"value": "Ho Chi Minh",
+									"type": "text"
+								},
+								{
+									"key": "departure-time",
+									"value": "2024-11-09T10:00:00",
+									"type": "text"
+								},
+								{
+									"key": "arrival-time",
+									"value": "2024-11-09T12:00:00",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/them_cb",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"them_cb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sửa chuyến bay (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "flight-id",
+									"value": "CB000016",
+									"type": "text"
+								},
+								{
+									"key": "departure-airport",
+									"value": "Sân bay Tân Sơn Nhất",
+									"type": "text"
+								},
+								{
+									"key": "arrival-airport",
+									"value": "Sân bay Nội Bài",
+									"type": "text"
+								},
+								{
+									"key": "departure-time",
+									"value": "2024-11-09T11:00:00",
+									"type": "text"
+								},
+								{
+									"key": "arrival-time",
+									"value": "2024-11-09T13:00:00",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/sua_cb",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sua_cb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa chuyến bay (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:8080/xoa_cb/CB000016",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"xoa_cb",
+								"CB000016"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- `/api/admin/flights`: `GET` - Lấy thông tin chuyến bay (yêu cầu đăng nhập).\n    \n- `/api/admin/flight-details`: `GET` - Lấy thông tin cụ thể của một chuyến bay (yêu cầu đăng nhập).\n    \n- `/them_cb`: `POST` - Thêm chuyến bay (yêu cầu đăng nhập).\n    \n- `/sua_cb`: `POST` - Sửa chuyến bay (yêu cầu đăng nhập).\n    \n- `/xoa_cb/{flightId}`: `POST` - Xóa chuyến bay (yêu cầu đăng nhập)."
+		},
+		{
+			"name": "6. Quản lý loại máy bay",
+			"item": [
+				{
+					"name": "Thêm loại máy bay (yêu cầu đăng nhập).",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "plane-type-id",
+									"value": "31",
+									"type": "text"
+								},
+								{
+									"key": "manufacturer",
+									"value": "Dandy Airways",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/them_loai_mb",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"them_loai_mb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sửa loại máy bay (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "manufacturer",
+									"value": "Dandy The Nub IT Company",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/sua_loai_mb/31",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sua_loai_mb",
+								"31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa loại máy bay (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/xoa_loai_mb/31",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"xoa_loai_mb",
+								"31"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- `/them_loai_mb`: `POST` - Thêm loại máy bay (yêu cầu đăng nhập).\n    \n- `/sua_loai_mb/{planeTypeId}`: `POST`\\- Sửa loại máy bay (yêu cầu đăng nhập).\n    \n- `/xoa_loai_mb/{planeTypeId}`: `POST` - Xóa loại máy bay (yêu cầu đăng nhập)."
+		},
+		{
+			"name": "7. Quản lý đặt chỗ",
+			"item": [
+				{
+					"name": "Thông tin đặt chỗ và khách hàng (yêu cầu đăng nhập)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/admin/bookings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm đặt chỗ (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "customer-id",
+									"value": "KH000005",
+									"type": "text"
+								},
+								{
+									"key": "flight-id",
+									"value": "CB000005",
+									"type": "text"
+								},
+								{
+									"key": "departure-datetime",
+									"value": "2024-04-03T12:00",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/them_dat_cho",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"them_dat_cho"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm đặt chỗ từ frontend",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "customer-id",
+									"value": "KH000005",
+									"type": "text"
+								},
+								{
+									"key": "flight-id",
+									"value": "CB000005",
+									"type": "text"
+								},
+								{
+									"key": "departure-datetime",
+									"value": "2024-04-03T12:00:00",
+									"type": "text"
+								},
+								{
+									"key": "customer-email",
+									"value": "dandythenubit@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/them_dat_cho_fe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"them_dat_cho_fe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sửa đặt chỗ (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "customer-id",
+									"value": "KH000005",
+									"type": "text"
+								},
+								{
+									"key": "flight-id",
+									"value": "CB000002",
+									"type": "text"
+								},
+								{
+									"key": "departure-datetime",
+									"value": "2024-04-30T09:00:00",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/sua_dat_cho",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sua_dat_cho"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa đặt chỗ (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "customer_id",
+									"value": "KH000005",
+									"type": "text"
+								},
+								{
+									"key": "flight_id",
+									"value": "CB000002",
+									"type": "text"
+								},
+								{
+									"key": "departure_date",
+									"value": "2024-04-30T09:00:00",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/xoa_dat_cho",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"xoa_dat_cho"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- `/api/admin/bookings`:`GET` - Lấy thông tin đặt chỗ và khách hàng (yêu cầu đăng nhập).\n    \n- `/them_dat_cho`: `POST` - Thêm đặt chỗ (yêu cầu đăng nhập).\n    \n- `/them_dat_cho_fe`: `POST` - Thêm đặt chỗ từ frontend.\n    \n- `/sua_dat_cho`: `POST` - Sửa đặt chỗ (yêu cầu đăng nhập).\n    \n- `/xoa_dat_cho`: `POST` - Xóa đặt chỗ (yêu cầu đăng nhập)."
+		},
+		{
+			"name": "8. Quản lý máy bay",
+			"item": [
+				{
+					"name": "Lấy thông tin máy bay (yêu cầu đăng nhập)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/admin/aircraft",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"aircraft"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm máy bay (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "plane-id",
+									"value": "BA0007",
+									"type": "text"
+								},
+								{
+									"key": "plane-type-id",
+									"value": "18",
+									"type": "text"
+								},
+								{
+									"key": "seat-quantity",
+									"value": "350",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/them_mb",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"them_mb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sửa máy bay (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "plane-id",
+									"value": "BA0004",
+									"type": "text"
+								},
+								{
+									"key": "plane-type-id",
+									"value": "18",
+									"type": "text"
+								},
+								{
+									"key": "seat-quantity",
+									"value": "120",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/sua_mb",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sua_mb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa máy bay (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/xoa_mb/BA0004",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"xoa_mb",
+								"BA0004"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- `/api/admin/aircraft`: `GET` - Lấy thông tin máy bay (yêu cầu đăng nhập).\n    \n- `/them_mb`: `POST` - Thêm máy bay (yêu cầu đăng nhập).\n    \n- `/sua_mb`: `POST` - Sửa máy bay (yêu cầu đăng nhập).\n    \n- `/xoa_mb/{planeId}`: `POST` - Xóa máy bay (yêu cầu đăng nhập)."
+		},
+		{
+			"name": "9. Quản lý khách hàng",
+			"item": [
+				{
+					"name": "Thêm khách hang (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "customer-id",
+									"value": "KH000016",
+									"type": "text"
+								},
+								{
+									"key": "customer-phone",
+									"value": "0123456789",
+									"type": "text"
+								},
+								{
+									"key": "customer-last-name",
+									"value": "Tran",
+									"type": "text"
+								},
+								{
+									"key": "customer-first-name",
+									"value": "Dandy",
+									"type": "text"
+								},
+								{
+									"key": "customer-address",
+									"value": "Royal City",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/them_kh",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"them_kh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lấy mã khách hàng tiếp theo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/next_customer_id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"next_customer_id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm khách hàng từ frontend",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "customer-id",
+									"value": "KH000017",
+									"type": "text"
+								},
+								{
+									"key": "customer-phone",
+									"value": "0123456789",
+									"type": "text"
+								},
+								{
+									"key": "customer-last-name",
+									"value": "Dandy",
+									"type": "text"
+								},
+								{
+									"key": "customer-first-name",
+									"value": "Tran",
+									"type": "text"
+								},
+								{
+									"key": "customer-address",
+									"value": "City Royal",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/them_kh_fe",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"them_kh_fe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sửa khách hàng (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "customer-id",
+									"value": "KH000017",
+									"type": "text"
+								},
+								{
+									"key": "customer-last-name",
+									"value": "Trần Thành",
+									"type": "text"
+								},
+								{
+									"key": "customer-first-name",
+									"value": "Duy",
+									"type": "text"
+								},
+								{
+									"key": "customer-address",
+									"value": "Vũ Tông Phan",
+									"type": "text"
+								},
+								{
+									"key": "customer-phone",
+									"value": "0135792468",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/sua_kh",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sua_kh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa khách hàng (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/xoa_kh/KH000017",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"xoa_kh",
+								"KH000017"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- `/them_kh`: `POST` - Thêm khách hàng (yêu cầu đăng nhập).\n    \n- `/next_customer_id`: `GET` - Lấy mã khách hàng tiếp theo.\n    \n- `/them_kh_fe`: `POST` - Thêm khách hàng từ frontend.\n    \n- `/sua_kh`: `POST` - Sửa khách hàng (yêu cầu đăng nhập).\n    \n- `/xoa_kh/{customerId}`: `POST` - Xóa khách hàng (yêu cầu đăng nhập)."
+		},
+		{
+			"name": "10. Quản lý nhân viên",
+			"item": [
+				{
+					"name": "Lấy thông tin nhân viên (yêu cầu đăng nhập)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/admin/employees",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm nhân viên (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "employee-id",
+									"value": "NV000016",
+									"type": "text"
+								},
+								{
+									"key": "employee-first-name",
+									"value": "Tran",
+									"type": "text"
+								},
+								{
+									"key": "employee-last-name",
+									"value": "Dandy",
+									"type": "text"
+								},
+								{
+									"key": "employee-phone",
+									"value": "0123456789",
+									"type": "text"
+								},
+								{
+									"key": "employee-address",
+									"value": "Royal City",
+									"type": "text"
+								},
+								{
+									"key": "employee-salary",
+									"value": "10305000",
+									"type": "text"
+								},
+								{
+									"key": "employee-type",
+									"value": "Tiếp viên",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/them_nv",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"them_nv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sửa nhân viên (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "employee-first-name",
+									"value": "Dandy",
+									"type": "text"
+								},
+								{
+									"key": "employee-last-name",
+									"value": "Trannn",
+									"type": "text"
+								},
+								{
+									"key": "employee-phone",
+									"value": "0135792468",
+									"type": "text"
+								},
+								{
+									"key": "employee-address",
+									"value": "Vu Tong Phan",
+									"type": "text"
+								},
+								{
+									"key": "employee-salary",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "employee-type",
+									"value": "Phi công",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/sua_nv/KH000016",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sua_nv",
+								"KH000016"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa nhân viên (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/xoa_nv/KH000016",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"xoa_nv",
+								"KH000016"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- `/api/admin/employees`: `GET` - Lấy thông tin nhân viên (yêu cầu đăng nhập).\n    \n- `/them_nv`: `POST` - Thêm nhân viên (yêu cầu đăng nhập).\n    \n- `/sua_nv/{employeeId}`: `POST` - Sửa nhân viên (yêu cầu đăng nhập).\n    \n- `/xoa_nv/{employeeId}`: `POST` - Xóa nhân viên (yêu cầu đăng nhập)."
+		},
+		{
+			"name": "11. Quản lý lịch bay",
+			"item": [
+				{
+					"name": "Lấy thông tin lịch bay (yêu cầu đăng nhập)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/admin/schedules",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"schedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm lịch bay (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "flight-id",
+									"value": "CB000017",
+									"type": "text"
+								},
+								{
+									"key": "aircraft-id",
+									"value": "BA0004",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/them_lich",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"them_lich"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sửa lịch bay (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "flight-id",
+									"value": "CB000017",
+									"type": "text"
+								},
+								{
+									"key": "aircraft-id",
+									"value": "BA0005",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/sua_lich",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sua_lich"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa lịch bay (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "flight-id",
+									"value": "CB000017",
+									"type": "text"
+								},
+								{
+									"key": "aircraft-id",
+									"value": "BA0005",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/xoa_lich",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"xoa_lich"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- `/api/admin/schedules`: `GET` - Lấy thông tin lịch bay (yêu cầu đăng nhập).\n    \n- `/them_lich`: `POST` - Thêm lịch bay (yêu cầu đăng nhập).\n    \n- `/sua_lich`: `POST` - Sửa lịch bay (yêu cầu đăng nhập).\n    \n- `/xoa_lich`: `POST` - Xóa lịch bay (yêu cầu đăng nhập)."
+		},
+		{
+			"name": "12. Quản lý phân công",
+			"item": [
+				{
+					"name": "Lấy thông tin nhân viên (yêu cầu đăng nhập)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/admin/employees",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm phân công (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "employee-id",
+									"value": "NV000016",
+									"type": "text"
+								},
+								{
+									"key": "flight-id",
+									"value": "CB000016",
+									"type": "text"
+								},
+								{
+									"key": "departure-datetime",
+									"value": "2024-11-09T11:00:00",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/them_phan_cong",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"them_phan_cong"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sửa phân công (yêu cầu đăng nhập).",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "employee-id",
+									"value": "NV000016",
+									"type": "text"
+								},
+								{
+									"key": "flight-id",
+									"value": "CB000017",
+									"type": "text"
+								},
+								{
+									"key": "departure-datetime",
+									"value": "2024-11-09T10:00:00",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/sua_phan_cong",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sua_phan_cong"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa phân công (yêu cầu đăng nhập)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "employee_id",
+									"value": "NV000016",
+									"type": "text"
+								},
+								{
+									"key": "flight_id",
+									"value": "CB000017",
+									"type": "text"
+								},
+								{
+									"key": "departure_date",
+									"value": "2024-11-09T10:00:00",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/xoa_phan_cong",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"xoa_phan_cong"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lấy thông tin của một chuyến bay cho phân công",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/get_flight_details_for_assignment?flight_id=CB000015",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"get_flight_details_for_assignment"
+							],
+							"query": [
+								{
+									"key": "flight_id",
+									"value": "CB000015"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- `/api/admin/employees`: `GET` - Lấy thông tin nhân viên (yêu cầu đăng nhập).\n    \n- `/them_phan_cong`: `POST` - Thêm phân công (yêu cầu đăng nhập).\n    \n- `/sua_phan_cong`: `POST` - Sửa phân công (yêu cầu đăng nhập).\n    \n- `/xoa_phan_cong`: `POST` - Xóa phân công (yêu cầu đăng nhập).\n    \n- `/get_flight_details_for_assignment`: `GET` - Lấy thông tin của một chuyến bay cho phân công (yêu cầu đăng nhập)."
+		},
+		{
+			"name": "13. Quản lý thống kê",
+			"item": [
+				{
+					"name": "Lấy thống kê",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/admin/stats",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "- `/api/admin/stats`: `GET` - Lấy thống kê của tất cả mọi thứ (yêu cầu đăng nhập)."
+		}
+	]
+}
