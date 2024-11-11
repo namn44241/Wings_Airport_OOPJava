@@ -144,35 +144,23 @@ nav ul li {
     position: relative;
 }
 
+/* Tạo vùng đệm lớn hơn cho menu chính */
+nav > ul > li {
+    padding: 0 10px;
+}
+
 nav ul li a {
     display: block;
     padding: 15px 20px;
     text-decoration: none;
     color: white;
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    transition: all 0.5s ease; /* Tăng thời gian transition */
     text-align: center;
     font-weight: bold;
     white-space: nowrap;
 }
 
-nav > ul > li > a:after {
-    content: ' ▼';
-    font-size: 0.8em;
-    display: none;
-}
-
-nav > ul > li:nth-child(2) > a:after,
-nav > ul > li:nth-child(3) > a:after {
-    display: inline;
-}
-
-nav ul li > a:hover {
-    background-color: #ff6f61;
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-}
-
+/* Submenu styling với delay dài hơn */
 nav ul ul {
     display: none;
     position: absolute;
@@ -186,37 +174,71 @@ nav ul ul {
     min-width: 200px;
     flex-direction: column;
     opacity: 0;
-    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none; /* Tắt tương tác khi chưa hover */
+    transition: all 0.5s ease; /* Tăng thời gian transition */
 }
 
+/* Thêm vùng đệm lớn để dễ di chuột */
+nav ul ul::before {
+    content: '';
+    position: absolute;
+    top: -20px; /* Tăng vùng đệm phía trên */
+    left: -20px; /* Thêm vùng đệm hai bên */
+    right: -20px;
+    height: 20px;
+}
+
+/* Hiệu ứng hover cho menu chính */
+nav ul li:hover > a {
+    background-color: #ff6f61;
+    transform: scale(1.05);
+    transition: all 0.5s ease;
+}
+
+/* Hiển thị submenu với delay */
 nav ul li:hover > ul {
     display: block;
     opacity: 1;
+    pointer-events: auto; /* Bật lại tương tác */
     transform: translateX(-50%) translateY(5px);
+    transition-delay: 0.4s; /* Tăng delay khi hiện submenu */
 }
 
+/* Giữ submenu hiển thị khi hover vào submenu */
+nav ul ul:hover {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Style cho các mục trong submenu */
 nav ul ul li {
     width: 100%;
 }
 
 nav ul ul li a {
-    padding: 12px 20px;
+    padding: 15px 25px; /* Tăng padding cho dễ click */
     color: white;
     text-decoration: none;
     display: block;
     text-align: left;
     font-weight: normal;
-    transition: background-color 0.3s, padding-left 0.3s;
+    transition: all 0.5s ease;
 }
 
+/* Hiệu ứng hover cho mục trong submenu */
 nav ul ul li a:hover {
     background-color: #ff6f61;
-    transform: none;
-    box-shadow: none;
-    border-radius: 0;
-    padding-left: 25px;
+    padding-left: 30px;
+    transition: all 0.5s ease;
 }
 
+/* Thêm margin cho submenu */
+nav ul ul li:not(:last-child) {
+    margin-bottom: 2px;
+}
+
+/* Góc bo tròn cho submenu */
 nav ul ul li:first-child a {
     border-radius: 5px 5px 0 0;
 }
@@ -225,42 +247,32 @@ nav ul ul li:last-child a {
     border-radius: 0 0 5px 5px;
 }
 
-/* Responsive Design */
+/* Responsive styles */
 @media (max-width: 768px) {
     nav ul {
         flex-direction: column;
-        align-items: stretch;
-    }
-
-    nav ul li {
-        width: 100%;
-    }
-
-    nav > ul > li > a:after {
-        float: right;
-        line-height: 1.5;
     }
 
     nav ul ul {
         position: static;
         transform: none;
         width: 100%;
-        box-shadow: none;
-        background: rgba(0, 0, 0, 0.1);
-        border-radius: 0;
+        display: none;
+        opacity: 1;
+        transition: none;
     }
 
     nav ul li:hover > ul {
-        display: block;
         transform: none;
+        transition-delay: 0s;
+    }
+
+    nav ul ul::before {
+        display: none;
     }
 
     nav ul ul li a {
         padding-left: 40px;
-    }
-
-    nav ul ul li a:hover {
-        padding-left: 45px;
     }
 }
 /* Định dạng cho nội dung chính */
@@ -490,7 +502,7 @@ main section:target {
     transition: transform 0.3s, box-shadow 0.3s;
     max-width: 800px;
     max-height: 600px;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 
 .chart-item:hover {

@@ -40,7 +40,7 @@
     <header>
         <div class="headerdiv">
             <img class="logo" src="images/wings.png" alt="wings">
-            <div class="text-container">
+            <div>
                 <p class="airport-name">Sân bay Wings Airport</p>
                 <p class="sub-text">Tinh Túy - Tinh Chọn - Tinh Hoa</p>
             </div>
@@ -117,76 +117,76 @@
         <div id="nav-manage" onclick="showContainer('manage')">ĐẶT CHỖ</div>
         <div id="nav-checkin" onclick="showContainer('checkin')">TRA CỨU CHUYẾN BAY, LỊCH BAY</div>
     </div>
+    
     <div class="overlay1" id="overlay1"></div>
-
-    <!-- Đăng ký khách hàng -->
+    
+    <!-- Modal: Form đăng ký -->
     <div class="container" id="booking-container" style="display: none;">
         <form id="customer-form" th:action="@{/them_khach_hang}" method="POST">
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="customer-id">Mã khách hàng</label>
-                    <input type="text" id="customer-id" name="customer-id" readonly>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="customer-phone">Số điện thoại</label>
-                    <input type="tel" id="customer-phone" name="customer-phone" pattern="[0-9]{10}" required>
-                    <label for="customer-address">Địa chỉ</label>
-                    <input type="text" id="customer-address" name="customer-address" required>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="customer-last-name">Họ đệm</label>
-                    <input type="text" id="customer-last-name" name="customer-last-name" required>
-                    <label for="customer-first-name">Tên khách hàng</label>
-                    <input type="text" id="customer-first-name" name="customer-first-name" required>
-                </div>
+            <h3>Thông tin khách hàng</h3>
+            <div class="form-group">
+                <label for="customer-id">Mã khách hàng</label>
+                <input type="text" id="customer-id" name="customer-id" readonly>
             </div>
             <div class="form-group">
-                <button type="submit" style="width: 150px;">Đăng ký</button>
+                <label for="customer-phone">Số điện thoại</label>
+                <input type="tel" id="customer-phone" name="customer-phone" pattern="[0-9]{10}" required>
+            </div>
+            <div class="form-group">
+                <label for="customer-address">Địa chỉ</label>
+                <input type="text" id="customer-address" name="customer-address" required>
+            </div>
+            <div class="form-group">
+                <label for="customer-last-name">Họ đệm</label>
+                <input type="text" id="customer-last-name" name="customer-last-name" required>
+            </div>
+            <div class="form-group">
+                <label for="customer-first-name">Tên khách hàng</label>
+                <input type="text" id="customer-first-name" name="customer-first-name" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn-primary">Đăng ký</button>
             </div>
         </form>
     </div>
-
-    <!-- Đặt chỗ -->
+    
+    <!-- Form Quản lý đặt chỗ -->
     <div class="container" id="manage-container" style="display: none;">
         <form id="bookingForm" th:action="@{/them_dat_cho}" method="POST">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="customer-email">Địa chỉ email:</label>
-                    <input type="email" id="customer-email" name="customer-email" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="manage-customer-id">Mã khách hàng:</label>
-                    <input type="text" id="manage-customer-id" name="customer-id" readonly>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="manage-flight-id">Mã chuyến bay:</label>
-                    <select id="manage-flight-id" name="flight-id" required>
-                        <option value="">-- Chọn Mã chuyến bay --</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="manage-departure-datetime">Giờ đi:</label>
-                    <input type="datetime-local" id="manage-departure-datetime" name="departure-datetime" required readonly>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="manage-arrival-datetime">Giờ đến:</label>
-                    <input type="datetime-local" id="manage-arrival-datetime" name="arrival-datetime" required readonly>
-                </div>
+            <h3>Thông tin đặt chỗ</h3>
+            <div class="form-group">
+                <label for="customer-email">Địa chỉ email:</label>
+                <input type="email" id="customer-email" name="customer-email" required>
             </div>
             <div class="form-group">
-                <button type="submit">Đặt chỗ</button>
+                <label for="manage-customer-id">Mã khách hàng:</label>
+                <input type="text" id="manage-customer-id" name="customer-id" readonly>
+            </div>
+            <div class="form-group">
+                <label for="manage-flight-id">Mã chuyến bay:</label>
+                <select id="manage-flight-id" name="flight-id" required>
+                    <option value="">-- Chọn Mã chuyến bay --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="manage-departure-datetime">Giờ đi:</label>
+                <input type="datetime-local" id="manage-departure-datetime" name="departure-datetime" required readonly>
+            </div>
+            <div class="form-group">
+                <label for="manage-arrival-datetime">Giờ đến:</label>
+                <input type="datetime-local" id="manage-arrival-datetime" name="arrival-datetime" required readonly>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn-primary">Đặt chỗ</button>
             </div>
         </form>
     </div>
-
-    <!-- Tra cứu chuyến bay -->
+    <!-- Tra cứu thông tin chuyến bay -->
     <div class="container" id="checkin-container" style="display: none;">
         <form id="search-form" th:action="@{/api/search}" method="GET">
-            <p>Tìm kiếm thông tin:</p>
-            <input type="text" name="query" placeholder="Siêu tìm kiếm (Mã chuyến bay, Sân bay, Số hiệu máy bay, Giờ đi, Ngày đến...)" required>
-            <button type="submit" class="btn-search">Tìm kiếm</button>
+            <h3>Tìm kiếm thông tin chuyến bay</h3>
+            <input type="text" name="query" placeholder="Siêu tìm kiếm (Mã chuyến bay, Sân bay, Số hiệu máy bay...)" required>
+            <button type="submit" class="btn-primary">Tìm kiếm</button>
         </form>
         <div class="table-container">
             <table id="flight-table">
@@ -207,6 +207,9 @@
             </table>
         </div>
     </div>
+    
+    <script src="js/san-bay/an-khi-tat.js"></script>
+    
 
     <script th:src="@{/js/san-bay/fe-link-be.js}"></script>
 
@@ -261,15 +264,28 @@
 
     <!-- Khám phá các chuyến bay phổ biến -->
     <h2 class="khampha">Khám Phá Các Chuyến Bay Phổ Biến Nhất Của Chúng Tôi</h2>
-    <div style="margin-left: 10.5%;">
+    <div class="filters-container">
+        <!-- Route Dropdown -->
         <div class="dropdown">
-            <a href="#" onclick="toggleDropdown(event, 'dropdownContent1')">Nhấn vào đây để hiển thị các lựa chọn</a>
+            <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event, 'dropdownContent1')" data-toggle="dropdown">
+                <span>Nhấn vào đây để hiển thị các lựa chọn</span>
+                <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 12 12">
+                    <path d="M2 4 L6 8 L10 4" stroke="currentColor" fill="none" stroke-width="2"/>
+                </svg>
+            </a>
             <div class="dropdown-content" id="dropdownContent1">
-                <!-- Các lựa chọn sẽ được thêm vào đây bằng JavaScript -->
+                <!-- JavaScript will populate this -->
             </div>
         </div>
+
+        <!-- Budget Dropdown -->
         <div class="dropdown">
-            <a href="#" onclick="toggleDropdown(event, 'dropdownContent2')">Ngân sách</a>
+            <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event, 'dropdownContent2')" data-toggle="dropdown">
+                <span>Ngân sách</span>
+                <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 12 12">
+                    <path d="M2 4 L6 8 L10 4" stroke="currentColor" fill="none" stroke-width="2"/>
+                </svg>
+            </a>
             <div class="dropdown-content" id="dropdownContent2">
                 <a href="#" onclick="filterByBudget(event, 'low')">Dưới 1 triệu VND</a>
                 <a href="#" onclick="filterByBudget(event, 'medium')">1 - 1.5 triệu VND</a>
@@ -282,133 +298,215 @@
         <div class="row" id="row2" style="display: none;"></div>
         <div class="row" id="row3" style="display: none;"></div>
     </div>
-    <button style="margin-top: 1%;" id="view-more-btn" onclick="toggleAdditionalImages()">Xem thêm</button>
-
+    <button id="view-more-btn" onclick="toggleAdditionalImages()">Xem thêm</button>
     <script>
         const flightRoutes = [
-            { from: "Hà Nội", to: "Đà Nẵng", image: "images/danang1.jpg", link: "https://pixabay.com/vi/images/search/%C4%91%C3%A0%20n%E1%BA%B5ng/", price: "1,500,000 VND" },
-            { from: "Hà Nội", to: "Hạ Long", image: "images/halong1.jpg", link: "https://pixabay.com/vi/images/search/v%E1%BB%8Bnh%20h%E1%BA%A1%20long/", price: "800,000 VND" },
-            { from: "TP Hồ Chí Minh", to: "Đà Nẵng", image: "images/danang3.jpg", link: "https://pixabay.com/vi/images/search/%C4%91%C3%A0%20n%E1%BA%B5ng/", price: "1,200,000 VND" },
-            { from: "Hà Nội", to: "TP Hồ Chí Minh", image: "images/du-lich-sai-gon-1.webp", link: "https://www.pexels.com/vi-vn/tim-kiem/th%C3%A0nh%20ph%E1%BB%91%20h%E1%BB%93%20ch%C3%AD%20minh/", price: "1,800,000 VND" },
-            { from: "Hà Nội", to: "Sa Pa", image: "images/sapa.jpg", link: "https://pixabay.com/vi/images/search/sapa/", price: "1,000,000 VND" },
-            { from: "TP Hồ Chí Minh", to: "Ninh Bình", image: "images/ninhbinh.jpg", link: "https://pixabay.com/vi/images/search/ninh%20binh/", price: "1,600,000 VND" },
-            { from: "Hà Nội", to: "Hội An", image: "images/hoian.jpeg", link: "https://anhdephd.vn/hinh-anh-hoi-an/", price: "1,400,000 VND" },
-            { from: "TP Hồ Chí Minh", to: "Hà Nội", image: "images/dong-phong-nha.jpg", link: "https://www.pexels.com/vi-vn/tim-kiem/h%C3%A0%20n%E1%BB%99i/", price: "1,800,000 VND" },
-            { from: "Hà Nội", to: "Nha Trang", image: "images/nhatrang.jpg", link: "https://toigingiuvedep.vn/hinh-anh-nha-trang/", price: "1,700,000 VND" },
-            { from: "Huế", to: "Hà Nội", image: "images/hanoi1.jpg", link: "https://www.pexels.com/vi-vn/tim-kiem/h%C3%A0%20n%E1%BB%99i/", price: "1,500,000 VND" },
-            { from: "Hà Nội", to: "Quảng Bình", image: "images/dong-phong-nha.jpg", link: "https://top10quangbinh.vn/hinh-anh-quang-binh/", price: "1,300,000 VND" },
-            { from: "Đà Lạt", to: "TP Hồ Chí Minh", image: "images/hcm.jpg", link: "https://www.pexels.com/vi-vn/tim-kiem/th%C3%A0nh%20ph%E1%BB%91%20h%E1%BB%93%20ch%C3%AD%20minh/", price: "900,000 VND" }
-        ];        
-        let showAllImages = false;
+  {
+    from: "Hà Nội",
+    to: "Đà Nẵng",
+    image: "images/danang1.jpg",
+    link: "https://pixabay.com/vi/images/search/%C4%91%C3%A0%20n%E1%BA%B5ng/",
+    price: "1,500,000 VND",
+  },
+  {
+    from: "Hà Nội",
+    to: "Hạ Long",
+    image: "images/halong1.jpg",
+    link: "https://pixabay.com/vi/images/search/v%E1%BB%8Bnh%20h%E1%BA%A1%20long/",
+    price: "800,000 VND",
+  },
+  {
+    from: "TP Hồ Chí Minh",
+    to: "Đà Nẵng",
+    image: "images/danang3.jpg",
+    link: "https://pixabay.com/vi/images/search/%C4%91%C3%A0%20n%E1%BA%B5ng/",
+    price: "1,200,000 VND",
+  },
+  {
+    from: "Hà Nội",
+    to: "TP Hồ Chí Minh",
+    image: "images/du-lich-sai-gon-1.webp",
+    link: "https://www.pexels.com/vi-vn/tim-kiem/th%C3%A0nh%20ph%E1%BB%91%20h%E1%BB%93%20ch%C3%AD%20minh/",
+    price: "1,800,000 VND",
+  },
+  {
+    from: "Hà Nội",
+    to: "Sa Pa",
+    image: "images/sapa.jpg",
+    link: "https://pixabay.com/vi/images/search/sapa/",
+    price: "1,000,000 VND",
+  },
+  {
+    from: "TP Hồ Chí Minh",
+    to: "Ninh Bình",
+    image: "images/ninhbinh.jpg",
+    link: "https://pixabay.com/vi/images/search/ninh%20binh/",
+    price: "1,600,000 VND",
+  },
+  {
+    from: "Hà Nội",
+    to: "Hội An",
+    image: "images/hoian.jpeg",
+    link: "https://anhdephd.vn/hinh-anh-hoi-an/",
+    price: "1,400,000 VND",
+  },
+  {
+    from: "TP Hồ Chí Minh",
+    to: "Hà Nội",
+    image: "images/dong-phong-nha.jpg",
+    link: "https://www.pexels.com/vi-vn/tim-kiem/h%C3%A0%20n%E1%BB%99i/",
+    price: "1,800,000 VND",
+  },
+  {
+    from: "Hà Nội",
+    to: "Nha Trang",
+    image: "images/nhatrang.jpg",
+    link: "https://toigingiuvedep.vn/hinh-anh-nha-trang/",
+    price: "1,700,000 VND",
+  },
+  {
+    from: "Huế",
+    to: "Hà Nội",
+    image: "images/hanoi1.jpg",
+    link: "https://www.pexels.com/vi-vn/tim-kiem/h%C3%A0%20n%E1%BB%99i/",
+    price: "1,500,000 VND",
+  },
+  {
+    from: "Hà Nội",
+    to: "Quảng Bình",
+    image: "images/dong-phong-nha.jpg",
+    link: "https://top10quangbinh.vn/hinh-anh-quang-binh/",
+    price: "1,300,000 VND",
+  },
+  {
+    from: "Đà Lạt",
+    to: "TP Hồ Chí Minh",
+    image: "images/hcm.jpg",
+    link: "https://www.pexels.com/vi-vn/tim-kiem/th%C3%A0nh%20ph%E1%BB%91%20h%E1%BB%93%20ch%C3%AD%20minh/",
+    price: "900,000 VND",
+  },
+];
+let showAllImages = false;
 
-        function populateDropdown() {
-            const dropdown = document.getElementById('dropdownContent1');
-            const uniqueRoutes = [...new Set(flightRoutes.map(route => `${route.from} đến ${route.to}`))];           
-            uniqueRoutes.forEach(route => {
-                const a = document.createElement('a');
-                a.href = '#';
-                a.textContent = route;
-                a.onclick = (event) => {
-                    event.preventDefault();
-                    filterImages(route);
-                };
-                dropdown.appendChild(a);
+function populateDropdown() {
+    const dropdown = document.getElementById('dropdownContent1');
+    const uniqueRoutes = [...new Set(flightRoutes.map(route => `${route.from} đến ${route.to}`))];
+    uniqueRoutes.forEach(route => {
+        const a = document.createElement('a');
+        a.href = '#';
+        a.textContent = route;
+        a.onclick = (event) => {
+            event.preventDefault();
+            filterImages(route);
+        };
+        dropdown.appendChild(a);
+    });
+}
+
+function filterImages(selectedRoute) {
+    const rows = [document.getElementById('row1'), document.getElementById('row2'), document.getElementById('row3')];
+    rows.forEach(row => row.innerHTML = '');
+    
+    const filteredRoutes = flightRoutes.filter(route => `${route.from} đến ${route.to}` === selectedRoute);
+    displayImages(filteredRoutes);
+}
+
+function displayImages(routes) {
+    const rows = [document.getElementById('row1'), document.getElementById('row2'), document.getElementById('row3')];
+    rows.forEach(row => {
+        row.innerHTML = '';
+        row.style.display = 'none';
+    });
+
+    const displayCount = showAllImages ? routes.length : Math.min(4, routes.length);
+
+    for (let i = 0; i < displayCount; i++) {
+        const route = routes[i];
+        const rowIndex = Math.floor(i / 4);
+        const row = rows[rowIndex];
+        row.style.display = 'flex';
+
+        const div = document.createElement('div');
+        div.className = 'image-container';
+        div.innerHTML = `
+            <a href="${route.link}" target="_blank">
+                <img src="${route.image}" alt="${route.from} to ${route.to}">
+            </a>
+            <div class="text">
+                <div>Từ ${route.from} đến ${route.to}</div>
+                <div class="price">${route.price}</div>
+            </div>
+        `;
+        row.appendChild(div);
+
+        setTimeout(() => {
+            div.classList.add('show');
+        }, 50 * i);
+    }
+}
+
+function toggleAdditionalImages() {
+    showAllImages = !showAllImages;
+    displayImages(flightRoutes);
+    document.getElementById('view-more-btn').textContent = showAllImages ? "Thu gọn" : "Xem thêm";
+}
+
+function toggleDropdown(event, id) {
+    event.preventDefault();
+    document.getElementById(id).classList.toggle("show");
+}
+
+function filterByBudget(event, budgetLevel) {
+    event.preventDefault();
+    let filteredRoutes;
+    switch (budgetLevel) {
+        case 'low':
+            filteredRoutes = flightRoutes.filter(route => parseInt(route.price.replace(/[^0-9]/g, '')) < 1000000);
+            break;
+        case 'medium':
+            filteredRoutes = flightRoutes.filter(route => {
+                const price = parseInt(route.price.replace(/[^0-9]/g, ''));
+                return price >= 1000000 && price <= 1500000;
             });
-        }
-        
-        function filterImages(selectedRoute) {
-            const rows = [document.getElementById('row1'), document.getElementById('row2'), document.getElementById('row3')];
-            rows.forEach(row => row.innerHTML = '');
-            
-            const filteredRoutes = flightRoutes.filter(route => `${route.from} đến ${route.to}` === selectedRoute);
-            displayImages(filteredRoutes);
-        }        
-        function displayImages(routes) {
-        const rows = [document.getElementById('row1'), document.getElementById('row2'), document.getElementById('row3')];
-        rows.forEach(row => {
-            row.innerHTML = '';
-            row.style.display = 'none';
-        });
-        
-        const displayCount = showAllImages ? routes.length : Math.min(4, routes.length);
+            break;
+        case 'high':
+            filteredRoutes = flightRoutes.filter(route => parseInt(route.price.replace(/[^0-9]/g, '')) > 1500000);
+            break;
+        default:
+            filteredRoutes = flightRoutes;
+    }
+    displayImages(filteredRoutes);
+}
 
-        for (let i = 0; i < displayCount; i++) {
-            const route = routes[i];
-            const rowIndex = Math.floor(i / 4);
-            const row = rows[rowIndex];
-            row.style.display = 'flex';
-            
-            const div = document.createElement('div');
-            div.className = 'image-container';
-            div.innerHTML = `
-                <a href="${route.link}" target="_blank">
-                    <img src="${route.image}" alt="${route.from} to ${route.to}">
-                </a>
-                <div class="text">
-                    <div>Từ ${route.from} đến ${route.to}</div>
-                    <div class="price">${route.price}</div>
-                </div>
-            `;
-            row.appendChild(div);
-            
-            setTimeout(() => {
-                div.classList.add('show');
-            }, 50 * i);
+document.addEventListener('DOMContentLoaded', () => {
+    populateDropdown();
+    displayImages(flightRoutes);
+});
+
+window.onclick = function(event) {
+    if (!event.target.matches('.dropdown a')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
         }
     }
-        function toggleAdditionalImages() {
-            showAllImages = !showAllImages;
-            displayImages(flightRoutes);
-            document.getElementById('view-more-btn').textContent = showAllImages ? "Thu gọn" : "Xem thêm";
-        }
-        
-        function toggleDropdown(event, id) {
-            event.preventDefault();
-            document.getElementById(id).classList.toggle("show");
-        }
-        
-        function filterByBudget(event, budgetLevel) {
-            event.preventDefault();
-            let filteredRoutes;
-            switch (budgetLevel) {
-                case 'low':
-                    filteredRoutes = flightRoutes.filter(route => parseInt(route.price.replace(/[^0-9]/g, '')) < 1000000);
-                    break;
-                case 'medium':
-                    filteredRoutes = flightRoutes.filter(route => {
-                        const price = parseInt(route.price.replace(/[^0-9]/g, ''));
-                        return price >= 1000000 && price <= 1500000;
-                    });
-                    break;
-                case 'high':
-                    filteredRoutes = flightRoutes.filter(route => parseInt(route.price.replace(/[^0-9]/g, '')) > 1500000);
-                    break;
-                default:
-                    filteredRoutes = flightRoutes;
-            }
-            displayImages(filteredRoutes);
-        }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            populateDropdown();
-            displayImages(flightRoutes);
-        });
-        
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropdown a')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
+}
+document.addEventListener('click', function(event) {
+    const dropdown = document.querySelector('.dropdown');
+    const dropdownContent = dropdown.querySelector('.dropdown-content');
+    
+    if (dropdown.contains(event.target)) {
+        // Nếu nhấp vào bên trong dropdown, toggle hiển thị nội dung
+        dropdownContent.classList.toggle('show');
+    } else {
+        // Nếu nhấp ra ngoài dropdown, ẩn nội dung
+        dropdownContent.classList.remove('show');
+    }
+});
     </script>
-
-    <br><div class="dropdown-note" style="text-align: center; font-size: 11px;">*Giá vé hiển thị được thu thập trong vòng 48 giờ và có thể không còn hiệu lực tại thời điểm đặt chỗ. Chúng tôi có thể thu thêm phí và lệ phí cho một số sản phẩm và dịch vụ.</div>
-
     <!-- Thông tin nổi bật -->
     <div class="section-title">
         <span>Thông tin nổi bật</span>
@@ -458,15 +556,6 @@
     
     <div class="dots1"></div>
     
-    <style>
-    .slide {
-        transition: transform 0.3s ease;
-    }
-    .slide:hover {
-        transform: scale(1.05);
-    }
-    </style>
-
     <script src="js/san-bay/slide-kham-pha.js"></script>
         
     <script src="js/san-bay/dom-xoay.js"></script>
@@ -520,8 +609,8 @@
                         <option value="china">China</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <input type="checkbox" id="privacy_policy" name="privacy_policy" required>
+                <div class="form-group2">
+                    <input type="checkbox" id="privacy_policy" name="privacy_policy" class="input" required>
                     <label for="privacy_policy">Tôi đã đọc, đồng ý với các điều khoản của <a href="#">Chính sách bảo mật</a> và xác nhận rằng tôi đã đủ 16 tuổi.</label>
                 </div>
                 <button type="submit">ĐĂNG KÝ</button>
@@ -628,7 +717,7 @@
         </div>
         <hr>
         <pre class="footer-info">© 2024 Wings Airlines JSC
-            Tổng công ty Hàng không Bình Nam - CTCP. Số 999 Trần Bình, P.Nam Nguyễn, Q.Vinh Quang, Hà Nội.
+            Tổng công ty Hàng không VNUI - CTCP. Số 999 Trần Bình, P.Nam Nguyễn, Q.Vinh Quang, Hà Nội.
             Điện thoại: (+84-24) 38272289. Fax: (+84-24) 38722375.
             Giấy chứng nhận đăng ký doanh nghiệp, mã số doanh nghiệp: 0999999999, đăng ký lần đầu ngày 32/6/2010, đăng ký thay đổi lần thứ 9 ngày 32/01/2022, cấp bởi Sở KHĐT thành phố Hà Nội.</pre>
         <div class="footer-column">
