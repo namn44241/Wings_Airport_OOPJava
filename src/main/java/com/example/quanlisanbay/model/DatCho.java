@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "PhanCong")
-public class PhanCong {
+@Table(name = "DatCho")
+public class DatCho {
     @Id
-    @Column(name = "MaNV")
-    private String maNV;
+    @Column(name = "MaKH")
+    private String maKH;
     
     @Column(name = "MaChuyenBay")
     private String maChuyenBay;
@@ -17,37 +17,36 @@ public class PhanCong {
     private LocalDate ngayDi;
 
     // Constructors
-    public PhanCong() {}
+    public DatCho() {}
     
-    public PhanCong(String maNV, String maChuyenBay, LocalDate ngayDi) {
-        this.maNV = maNV;
+    public DatCho(String maKH, String maChuyenBay, LocalDate ngayDi) {
+        this.maKH = maKH;
         this.maChuyenBay = maChuyenBay;
         this.ngayDi = ngayDi;
     }
 
-    // Getters
-    public String getMaNV() {
-        return maNV;
+    // Getters and Setters
+    public String getMaKH() {
+        return maKH;
+    }
+
+    public void setMaKH(String maKH) {
+        this.maKH = maKH;
     }
 
     public String getMaChuyenBay() {
         return maChuyenBay;
     }
 
-    public LocalDate getNgayDi() {
-        return ngayDi;
-    }
-
-    // Setters
-    public void setMaNV(String maNV) {
-        this.maNV = maNV;
-    }
-
     public void setMaChuyenBay(String maChuyenBay) {
         this.maChuyenBay = maChuyenBay;
+    }
+
+    public LocalDate getNgayDi() {
+        return ngayDi;
     }
 
     public void setNgayDi(LocalDate ngayDi) {
         this.ngayDi = ngayDi;
     }
-}
+} 

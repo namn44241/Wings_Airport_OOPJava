@@ -24,6 +24,20 @@
     <h1>QUẢN LÍ SÂN BAY</h1>
   </header>
   <script>
+    window.onload = function() {
+        if (!window.location.hash) {
+            window.location.hash = '#dashboard';
+            window.location.reload();
+        } else if (window.location.hash === '#dashboard') {
+            // Kiểm tra xem đây có phải là lần đầu load không
+            if (!sessionStorage.getItem('dashboardLoaded')) {
+                sessionStorage.setItem('dashboardLoaded', 'true');
+                window.location.reload();
+            }
+        }
+    }
+</script>
+  <script>
       const usernameSpan = document.getElementById('username');
       const logoutBtn = document.createElement('span');
       logoutBtn.textContent = 'Đăng xuất Admin';

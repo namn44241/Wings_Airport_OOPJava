@@ -1,4 +1,4 @@
-package com.example.quanlisanbay.controllers;
+package com.example.quanlisanbay.controllers.core;
 
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
