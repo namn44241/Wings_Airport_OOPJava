@@ -1,7 +1,7 @@
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
+package com.example.quanlisanbay.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ChuyenBay")
@@ -17,10 +17,36 @@ public class ChuyenBay {
     private String tenSanBayDen;
     
     @Column(name = "GioDi")
-    private String gioDi;
+    private LocalDateTime gioDi;
     
     @Column(name = "GioDen")
-    private String gioDen;
+    private LocalDateTime gioDen;
 
-    // Getters and setters
+    // Constructors
+    public ChuyenBay() {}
+    
+    public ChuyenBay(String maChuyenBay, String tenSanBayDi, String tenSanBayDen, 
+                     LocalDateTime gioDi, LocalDateTime gioDen) {
+        this.maChuyenBay = maChuyenBay;
+        this.tenSanBayDi = tenSanBayDi;
+        this.tenSanBayDen = tenSanBayDen;
+        this.gioDi = gioDi;
+        this.gioDen = gioDen;
+    }
+
+    // Getters and Setters
+    public String getMaChuyenBay() { return maChuyenBay; }
+    public void setMaChuyenBay(String maChuyenBay) { this.maChuyenBay = maChuyenBay; }
+
+    public String getTenSanBayDi() { return tenSanBayDi; }
+    public void setTenSanBayDi(String tenSanBayDi) { this.tenSanBayDi = tenSanBayDi; }
+
+    public String getTenSanBayDen() { return tenSanBayDen; }
+    public void setTenSanBayDen(String tenSanBayDen) { this.tenSanBayDen = tenSanBayDen; }
+
+    public LocalDateTime getGioDi() { return gioDi; }
+    public void setGioDi(LocalDateTime gioDi) { this.gioDi = gioDi; }
+
+    public LocalDateTime getGioDen() { return gioDen; }
+    public void setGioDen(LocalDateTime gioDen) { this.gioDen = gioDen; }
 }
