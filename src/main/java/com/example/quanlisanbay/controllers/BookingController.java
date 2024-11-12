@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.mail.javamail.JavaMailSender;
-
 import java.time.LocalDateTime;
 import java.util.Map;
 
