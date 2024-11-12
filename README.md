@@ -1,11 +1,3 @@
-# Video Demo
-
-https://youtu.be/diddub_jWAM?si=4pPiAdezpXkX1kUP
-
-# Check API
-
-https://www.postman.com/technical-candidate-72354826/namnam/collection/t5csmib/api-for-wings-airport-management
-
 # 1.1. Tổng quan về sân bay Wings Airport
 
 Sân bay quốc tế Wings Airport hướng đến là một sân bay thật sự trong hệ thống giao thông hàng không của Việt Nam. Với số lượng hành khách ngày càng tăng, và các chuyến bay [nội địa/quốc tế] được khai thác thường xuyên, Wings Airport của chúng em ra đời đang phải đối mặt với nhiều thách thức:
@@ -65,11 +57,61 @@ Mặc dù còn nhiều hạn chế, nhưng chúng em đã cố gắng hết sứ
 
 # 1.5. Hướng dẫn sử dụng
 
-## 1.5.1. Cài đặt SSMS, DSN, Postman, Python
+## Cho người dùng Window
+## 1.5.1. Cài đặt Docker, Java, Maven, và các extension cần thiết
+### Java:
+- Truy cập vào trang chủ của Oracle và download phiên bản Oracle [Java 8](https://www.java.com/en/download/)
+- Run file exe và đợi cho Java cài đặt
+- Optional: kiểm tra phiên bản của Java trên máy bằng cách sử dụng Terminal/Powershell và chạy lệnh `Java --version`
+### Docker:
+- Truy cập vào trang web của Docker và download [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- Chạy file exe và đợi cho Docker Desktop cài đặt
+- Optional: kiểm tra phiên bản Docker bằng cách sử dụng Terminal/Powershell và chạy lệnh `docker --version`
+![Docker_Desktop](./src/main/resources/static/images/readme/docker_desktop.png)
+### Extension:
+- Visual studio code:
+    - Truy cập vào phần extentsion của VSC
+    - Tìm kiếm các extentsion của Spring Boot (Spring Intializr Java Support, Spring Boot Dashboard, Spring Boot Tools, etc...) của VMWare
+### Maven:
+- **Lưu ý**: máy cần có Java để chạy được Maven
+- Tìm và truy cập trang download [Maven Apache](https://maven.apache.org/download.cgi)
+- Ở phần Files tải về file "Binary zip archive"
+![Maven](./src/main/resources/static/images/readme/apache_maven.png)
+- Thực hiện giải nén vào một folder riêng biệt
+- Ấn nút Home và tìm "Edit the system enviroment variable"
+- Trong cửa sổ System Properties chọn Enviroment Variables => Cửa sổ Enviroment Variables hiện lên
+- Trong cửa sổ Enviroment Variables, dưới khu vực System Variable tìm hàng có tên "Path" => Ấn Edit => Cửa sổ Edit enviroment varible hiện lên
+![Variable](./src/main/resources/static/images/readme/variable.png)
+- Mở thư mục chứa Maven Apache và copy đường dẫn tới thư mục đó
+- Quay lại cửa sổ Edit enviroment varible => Chọn New => Dán đường vẫn tới thư mục chứa Maven
+- Mở thư mục chứa Maven Apache => Vào thư mục có tên "bin" và copy đường dẫn tới thư mục đó
+- Tiếp tục quay lại cửa sổ Edit enviroment varible => Chọn New => Dán đường vẫn tới thư mục vừa copy
+- Ấn ok ở tất cả các cửa sổ
+- Optional: Restart máy
+- Optional: kiểm tra phiên bản Maven bằng cách sử dụng Terminal/Powershell và chạy lệnh `mvn --version`
 
-Tìm kiếm Google, đảm bảo chạy đầy đủ trước khi làm các bước tiếp
+## 1.5.2 Chạy Project
+### Bước 1: Khởi tạo Docker image và container:
+- Mở Docker Desktop
+- Mở Termial lên và chuyển hướng vào thư mục "quanlisanbay" `cd ./Wings_Airport_OOPJava/quanlisanbay`
+- Chạy lệnh `docker-compose up -d`
 
-## 1.5.2. Cài đặt CSDL
+**Lưu ý:** Nếu như xảy ra lỗi xung đột cổng 3306 thì cần đổi PORT ở các biến "spring.datasource.url" nằm trong file application.properties ở "Wings_Airport_OOPJava/src/main/resources/ và "target/classes"; ports ở docker-compose.yml trong "Wings_Airport_OOPJava/quanlisanbay" thành một cổng bất kỳ chưa được sử dụng
+![Port](./src/main/resources/static/images/readme/port.png)
+![Docker_port](./src/main/resources/static/images/readme/docket_compose.png)
+### Bước 2: Tải các dependencies cần thiết cho Spring Boot
+- Mở Termial mới
+- Chạy câu lệnh `mvn clean install` để tải lại các dependency cần thiết
+- Chạy lệnh `mvn spring-boot:run -DskipTests` để chạy toàn bộ dự án
+
+**Lưu ý:** 
+- Website mặc định chạy ở http://localhost:8888 và PHP server chạy ở http://localhost:8080
+- Tài khoản và mật khẩu của admin website là 1
+- PHP server tài khoản: adminqlsb; mật khầu: 1
+
+
+
+<!-- ## 1.5.2. Cài đặt CSDL
 
 ### Bước 1:
 Chạy Sql Sever Configuration Manager
@@ -129,10 +171,19 @@ Bấm Finish
 - Chạy ``` qlsb_venv\Scripts\activate ``` 
 - Chạy ``` cd main ```
 - Chạy ``` pip install -r requirements.txt ```
-- Chạy ``` python app.py ``` và truy cập theo địa chỉ ```localhost:5000``` hoặc ```127.0.0.1:5000``` hoặc ```{ip_của_mày}:5000``` để chạy
+- Chạy ``` python app.py ``` và truy cập theo địa chỉ ```localhost:5000``` hoặc ```127.0.0.1:5000``` hoặc ```{ip_của_mày}:5000``` để chạ -->
 
-![image-1.png](./main/static/images/readme/image-5.png)
+<!-- ![image-1.png](./src/main/resources/static/images/readme/image-5.png) -->
 
 ---
 
-![image-1.png](./main/static/images/readme/image-6.png)
+![image-1.png](./src/main/resources/static/images/readme/image-6.png)
+![php](./src/main/resources/static/images/readme/php.png)
+
+## Optional: Thêm dữ liệu vào PHP server
+Có thể thêm các trường dữ liệu từ "Query MySQL/insertinto.sql" vào PHP server nhằm phục cho quá trình test project từ website
+### Bước 1: Chạy docker-compose.yml
+### Bước 2: Truy cập vào http://localhost:8080 và nhập tài khoản mật khẩu
+### Bước 3: Chọn truy vấn SQL
+### Bước 4: Chạy từng phần INSERT trong file insertinto.sql
+![insert](./src/main/resources/static/images/readme/insert.png)
