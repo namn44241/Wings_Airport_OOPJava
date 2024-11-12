@@ -72,7 +72,6 @@
   <!-- Phần xử lý dashboard và biểu đồ: -->
     <main>
         <section id="dashboard">
-          <div class="">
             <h1>Airport Management Dashboard</h1>
             
             <table>
@@ -273,7 +272,8 @@
             
             <!-- Hiển thị thông báo -->
             <div th:if="${message}" th:class="'alert alert-' + ${messageType}" th:text="${message}"></div>
-            
+            <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
+            <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormflight()">Thêm chuyến bay</button>
             <!-- Form thêm chuyến bay -->
             <form id="add-flight-form" method="POST" th:action="@{/them_cb}" onsubmit="return validateForm()">
                 <label for="flight-id">Mã chuyến bay:</label>
@@ -292,7 +292,29 @@
                 <input type="datetime-local" id="arrival-time" name="arrival-time" required><br>
         
                 <button type="submit">Thêm chuyến bay mới</button>
+                <button type="button" onclick="toggleAddFormflight()">Hủy</button>
             </form>
+            <style>
+                .search-input {
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    flex: 1;
+                    min-width: 200px;
+                }
+                .btn-primary {
+                    padding: 8px 16px;
+                    background-color: #4CAF50;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin-bottom: 20px;
+                }
+                .btn-primary:hover {
+                    background-color: #45a049;
+                }
+            </style>
         
             <!-- Bảng hiển thị chuyến bay -->
             <table>
@@ -311,6 +333,17 @@
             </table>
         
             <script th:inline="javascript">
+                function toggleAddFormflight() {
+                    const form = document.getElementById('add-flight-form');
+                    const showButton = document.getElementById('show-add-form-btn');
+                    if (form.style.display === 'none') {
+                        form.style.display = 'block';
+                        showButton.style.display = 'none';
+                    } else {
+                        form.style.display = 'none';
+                        showButton.style.display = 'block';
+                    }
+                }
                 // Load dữ liệu ban đầu
                 function loadInitialFlightData() {
                     fetch('/api/admin/flights')
@@ -467,15 +500,38 @@
         
           <section id="airport-info" xmlns:th="http://www.thymeleaf.org">
             <div th:if="${message}" th:class="'alert alert-' + ${messageType}" th:text="${message}"></div>
-        
             <h2>Quản lý thông tin loại máy bay</h2>
+            <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
+            <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormtypeflight()">Thêm thông tin loại máy bay</button>
             <form id="add-plane-type-form" method="POST" th:action="@{/them_loai_mb}">
                 <label for="plane-type-id">Mã loại:</label>
                 <input type="text" id="plane-type-id" name="plane-type-id" th:value="${next_plane_type_id}" readonly><br>
                 <label for="manufacturer">Hãng sản xuất:</label>
                 <input type="text" id="manufacturer" name="manufacturer" placeholder="Nhập tên hãng sản xuất" required><br>
                 <button type="button" onclick="addPlaneType()">Thêm thông tin Loại máy bay</button>
+                <button type="button" onclick="toggleAddFormtypeflight()">Hủy</button>
             </form>
+            <style>
+                .search-input {
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    flex: 1;
+                    min-width: 200px;
+                }
+                .btn-primary {
+                    padding: 8px 16px;
+                    background-color: #4CAF50;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin-bottom: 20px;
+                }
+                .btn-primary:hover {
+                    background-color: #45a049;
+                }
+            </style>
         
             <table>
                 <thead>
@@ -490,6 +546,17 @@
             </table>
         
             <script th:inline="javascript">
+                 function toggleAddFormtypeflight() {
+                    const form = document.getElementById('add-plane-type-form');
+                    const showButton = document.getElementById('show-add-form-btn');
+                    if (form.style.display === 'none') {
+                        form.style.display = 'block';
+                        showButton.style.display = 'none';
+                    } else {
+                        form.style.display = 'none';
+                        showButton.style.display = 'block';
+                    }
+                }
             function loadInitialPlaneTypeData() {
                 fetch('/api/admin/aircraft')
                 .then(response => response.json()) 
@@ -612,9 +679,10 @@
 
         <section id="airline-info">
             <h2>Quản lý thông tin đặt chỗ</h2>
-            
+            <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
+            <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormdatcho()">Thêm thông tin đặt chỗ</button>
             <!-- Form thêm đặt chỗ -->
-            <form id="themDatChoForm">
+            <form id="themDatChoForm" style="display: none" id="add-dat-cho-form">
                 <label for="customer-id">Mã khách hàng:</label>
                 <select id="customer-id" name="customer-id" required>
                     <option value="">-- Chọn Mã khách hàng --</option>
@@ -632,10 +700,32 @@
                 <input type="datetime-local" id="booking-arrival-datetime" name="arrival-datetime" required readonly>
         
                 <button type="submit">Thêm thông tin đặt chỗ</button>
+                <button type="button" onclick="toggleAddFormdatcho()">Hủy</button>
             </form>
-        
+            <style>
+                .search-input {
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    flex: 1;
+                    min-width: 200px;
+                }
+                .btn-primary {
+                    padding: 8px 16px;
+                    background-color: #4CAF50;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin-bottom: 20px;
+                }
+                .btn-primary:hover {
+                    background-color: #45a049;
+                }
+            </style>
+            <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormdatcho()">Thêm chỉnh sửa</button>
             <!-- Form sửa đặt chỗ -->
-            <form id="suaDatChoForm">
+            <form id="suaDatChoForm" style="display: none" id="add-dat-cho-form ">
                 <label for="edit-customer-id">Mã khách hàng:</label>
                 <select id="edit-customer-id" name="customer-id" required>
                     <option value="">-- Chọn Mã khách hàng --</option>
@@ -653,7 +743,9 @@
                 <input type="datetime-local" id="edit-booking-arrival-datetime" name="arrival-datetime" required readonly>
         
                 <button type="submit">Lưu thay đổi</button>
+                <button type="button" onclick="toggleAddFormdatcho()">Hủy</button>
             </form>
+
         
             <!-- Bảng hiển thị -->
             <table>
@@ -674,6 +766,17 @@
             </table>
         
             <script>
+                 function toggleAddForm() {
+                    const form = document.getElementById('add-dat-cho-form');
+                    const showButton = document.getElementById('show-add-form-btn');
+                    if (form.style.display === 'none') {
+                        form.style.display = 'block';
+                        showButton.style.display = 'none';
+                    } else {
+                        form.style.display = 'none';
+                        showButton.style.display = 'block';
+                    }
+                }
             async function loadInitialData() {
                 try {
                     // Load customers first
@@ -857,8 +960,9 @@
         
           <section id="aircraft-info">
             <h2>Quản lý thông tin máy bay</h2>
-        
-            <form id="add-plane-form">
+            <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
+            <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormaddflight()">Thêm máy bay mới</button>
+            <form id="add-plane-form" style="display:none">
                 <label for="plane-id">Số hiệu:</label>
                 <input type="text" id="plane-id" name="plane-id" placeholder="Nhập số hiệu" required><br>
                 
@@ -872,7 +976,29 @@
                 <input type="number" id="seat-quantity" name="seat-quantity" placeholder="Nhập số lượng ghế" required><br>
                 
                 <button type="submit">Thêm máy bay mới</button>
+                <button type="button" onclick="toggleAddFormaddflight()">Hủy</button>
             </form>
+            <style>
+                .search-input {
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    flex: 1;
+                    min-width: 200px;
+                }
+                .btn-primary {
+                    padding: 8px 16px;
+                    background-color: #4CAF50;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin-bottom: 20px;
+                }
+                .btn-primary:hover {
+                    background-color: #45a049;
+                }
+            </style>
         
             <!-- Bảng hiển thị thông tin máy bay -->
             <table>
@@ -891,6 +1017,17 @@
         </section>
     
         <script th:inline="javascript">
+             function toggleAddForm() {
+                    const form = document.getElementById('add-plane-form');
+                    const showButton = document.getElementById('show-add-form-btn');
+                    if (form.style.display === 'none') {
+                        form.style.display = 'block';
+                        showButton.style.display = 'none';
+                    } else {
+                        form.style.display = 'none';
+                        showButton.style.display = 'block';
+                    }
+                }
         function loadInitialAircraftData() {
             fetch('/api/admin/aircraft')
             .then(response => response.json())
@@ -1042,7 +1179,9 @@
           <div th:if="${message}" th:class="'alert alert-' + ${messageType}" th:text="${message}"></div>
           
           <h2>Quản lý thông tin khách hàng</h2>
-          <form method="POST" th:action="@{/them_kh}">
+          <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
+          <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormclient()">Thêm thông tin khách hàng</button>
+          <form id="add-client-form" method="POST" th:action="@{/them_kh}" style="display: none;">
               <!-- Trong form HTML -->
               <label for="customer-id">Mã khách hàng:</label>
               <input type="text" required pattern="^KH.*$" id="customer-id" name="customer-id" readonly>
@@ -1060,6 +1199,7 @@
               <input type="text" id="customer-address" name="customer-address" placeholder="Nhập địa chỉ" required><br>
               
               <button type="submit">Thêm thông tin khách hàng</button>
+              <button type="button" onclick="toggleAddFormclient()">Hủy</button>
           </form>
 
           <table>
@@ -1076,9 +1216,19 @@
               <tbody>
                   
               </tbody>
-          </table>
-
+            </table>
           <script th:inline="javascript">
+            function toggleAddFormclient() {
+                const form = document.getElementById('add-client-form');
+                const showButton = document.getElementById('show-add-form-btn');
+                if (form.style.display === 'none' || form.style.display === '') {
+                    form.style.display = 'block';
+                    showButton.style.display = 'none';
+                } else {
+                    form.style.display = 'none';
+                    showButton.style.display = 'block';
+                }
+            }
           function loadInitialCustomerData() {
               fetch('/api/admin/bookings')
               .then(response => response.json())
@@ -1194,214 +1344,271 @@
         </section>       
         
         <section id="employee-info" xmlns:th="http://www.thymeleaf.org">
-              <div th:if="${message}" th:class="'alert alert-' + ${messageType}" th:text="${message}"></div>
-              
-              <h2>Quản lý thông tin nhân viên</h2>
-              <form id="add-employee-form" method="POST" th:action="@{/them_nv}">
-                  <label for="employee-id">Mã nhân viên:</label>
-                  <input type="text" required pattern="^NV.*$" id="employee-id" name="employee-id" th:value="${next_employee_id}" readonly><br>
-                  
-                  <label for="employee-last-name">Họ đệm:</label>
-                  <input type="text" id="employee-last-name" name="employee-last-name" placeholder="Nhập họ đệm" required><br>
-                  
-                  <label for="employee-first-name">Tên:</label>
-                  <input type="text" id="employee-first-name" name="employee-first-name" placeholder="Nhập tên" required><br>
-                  
-                  <label for="employee-phone">Số điện thoại:</label>
-                  <input type="text" pattern="0[0-9]{9}" id="employee-phone" name="employee-phone" placeholder="Nhập số điện thoại" required><br>
-                  
-                  <label for="employee-address">Địa chỉ:</label>
-                  <input type="text" id="employee-address" name="employee-address" placeholder="Nhập địa chỉ" required><br>
-                  
-                  <label for="employee-salary">Lương:</label>
-                  <input type="text" id="employee-salary" name="employee-salary" placeholder="Nhập lương" required><br>
-                  
-                  <label for="employee-type">Loại nhân viên:</label>
-                  <select id="employee-type" name="employee-type" required>
-                      <option value="">Chọn loại nhân viên</option>
-                      <option value="Tiếp viên">Tiếp viên</option>
-                      <option value="Phi công">Phi công</option>
-                  </select><br>
-                  
-                  <button type="button" onclick="addEmployee()">Thêm thông tin nhân viên</button>
-              </form>
-          
-              <table>
-                  <thead>
-                      <tr>
-                          <th>Mã nhân viên</th>
-                          <th>Họ đệm</th>
-                          <th>Tên</th>
-                          <th>Số điện thoại</th>
-                          <th>Địa chỉ</th>
-                          <th>Lương</th>
-                          <th>Loại nhân viên</th>
-                          <th>Thao tác</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-              </table>
-          
-              <script th:inline="javascript">
-              function loadInitialEmployeeData() {
-                  fetch('/api/admin/employees')
-                  .then(response => response.json())
-                  .then(data => {
-                      // Xử lý mã nhân viên tiếp theo
-                      const employeeIdInput = document.querySelector('#employee-info #employee-id');
-                      if(employeeIdInput) {
-                          employeeIdInput.value = data.nextEmployeeId;
-                      }
-          
-                      // Hiển thị bảng nhân viên
-                      const tableBody = document.querySelector('#employee-info table tbody');
-                      if(tableBody) {
-                          tableBody.innerHTML = '';
-                          
-                          data.employeeInfo.forEach(employee => {
-                              const row = `
-                                  <tr>
-                                      <td>${employee.MaNV}</td>
-                                      <td>${employee.HoDem}</td>
-                                      <td>${employee.Ten}</td>
-                                      <td>${employee.SDT}</td>
-                                      <td>${employee.DiaChi}</td>
-                                      <td>${employee.Luong}</td>
-                                      <td>${employee.LoaiNV}</td>
-                                      <td>
-                                          <button onclick="deleteEmployee('${employee.MaNV}')">Xóa</button>
-                                          <button onclick="showEditForm('${employee.MaNV}')">Sửa</button>
-                                          <form id="edit-form-${employee.MaNV}" style="display: none;" 
-                                                onsubmit="return editEmployee('${employee.MaNV}')">
-                                              <input type="hidden" name="employee-id" value="${employee.MaNV}">
-                                              <label for="edit-employee-last-name-${employee.MaNV}">Họ đệm:</label>
-                                              <input type="text" id="edit-employee-last-name-${employee.MaNV}" 
-                                                    name="employee-last-name" value="${employee.HoDem}" required><br>
-                                              <label for="edit-employee-first-name-${employee.MaNV}">Tên:</label>
-                                              <input type="text" id="edit-employee-first-name-${employee.MaNV}" 
-                                                    name="employee-first-name" value="${employee.Ten}" required><br>
-                                              <label for="edit-employee-phone-${employee.MaNV}">Số điện thoại:</label>
-                                              <input type="text" pattern="0[0-9]{9}" 
-                                                    id="edit-employee-phone-${employee.MaNV}" 
-                                                    name="employee-phone" value="${employee.SDT}" required><br>
-                                              <label for="edit-employee-address-${employee.MaNV}">Địa chỉ:</label>
-                                              <input type="text" id="edit-employee-address-${employee.MaNV}" 
-                                                    name="employee-address" value="${employee.DiaChi}" required><br>
-                                              <label for="edit-employee-salary-${employee.MaNV}">Lương:</label>
-                                              <input type="text" id="edit-employee-salary-${employee.MaNV}" 
-                                                    name="employee-salary" value="${employee.Luong}" required><br>
-                                              <label for="edit-employee-type-${employee.MaNV}">Loại nhân viên:</label>
-                                              <select id="edit-employee-type-${employee.MaNV}" name="employee-type" required>
-                                                  <option value="Tiếp viên" ${employee.LoaiNV === 'Tiếp viên' ? 'selected' : ''}>
-                                                      Tiếp viên
-                                                  </option>
-                                                  <option value="Phi công" ${employee.LoaiNV === 'Phi công' ? 'selected' : ''}>
-                                                      Phi công
-                                                  </option>
-                                              </select><br>
-                                              <button type="submit">Lưu thay đổi</button>
-                                          </form>
-                                      </td>
-                                  </tr>
-                              `;
-                              tableBody.insertAdjacentHTML('beforeend', row);
-                          });
-                      }
-                  })
-                  .catch(error => {
-                      console.error('Error loading employee data:', error);
-                  });
-              }
-          
-              function showEditForm(employeeId) {
-                  const form = document.getElementById(`edit-form-${employeeId}`);
-                  form.style.display = form.style.display === 'none' ? 'block' : 'none';
-              }
-          
-              function editEmployee(employeeId) {
-                  const form = document.getElementById(`edit-form-${employeeId}`);
-                  const formData = new FormData(form);
-          
-                  fetch(`/sua_nv/${employeeId}`, {
-                      method: 'POST',
-                      body: formData
-                  })
-                  .then(response => response.json())
-                  .then(data => {
-                      if (data.status === 'success') {
-                          alert(data.message);
-                          location.reload();
-                      } else {
-                          alert(data.message);
-                      }
-                  })
-                  .catch((error) => {
-                      console.error('Error:', error);
-                      alert('Có lỗi xảy ra khi sửa thông tin nhân viên.');
-                  });
-          
-                  return false;
-              }
-          
-              function deleteEmployee(employeeId) {
-                  if (confirm('Bạn có chắc chắn muốn xóa nhân viên này?')) {
-                      fetch(`/xoa_nv/${employeeId}`, {
-                          method: 'POST',
-                          headers: {
-                              'Content-Type': 'application/json',
-                          },
-                      })
-                      .then(response => response.json())
-                      .then(data => {
-                          if (data.status === 'success') {
-                              alert(data.message);
-                              location.reload();
-                          } else {
-                              alert(data.message);
-                          }
-                      })
-                      .catch((error) => {
-                          console.error('Error:', error);
-                          alert('Có lỗi xảy ra khi xóa nhân viên.');
-                      });
-                  }
-              }
-          
-              function addEmployee() {
-                  const form = document.getElementById('add-employee-form');
-                  const formData = new FormData(form);
-          
-                  fetch('/them_nv', {
-                      method: 'POST', 
-                      body: formData
-                  })
-                  .then(response => response.json())
-                  .then(data => {
-                      if (data.status === 'success') {
-                          alert(data.message);
-                          location.reload();
-                      } else {
-                          alert(data.message);
-                      }
-                  })
-                  .catch((error) => {
-                      console.error('Error:', error);
-                      alert('Có lỗi xảy ra khi thêm nhân viên.');
-                  });
-              }
-          
-              document.addEventListener('DOMContentLoaded', function() {
-                  loadInitialEmployeeData();
-              });
-              </script>
+            <div th:if="${message}" th:class="'alert alert-' + ${messageType}" th:text="${message}"></div>
+            
+            <h2>Quản lý thông tin nhân viên</h2>
+            <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
+
+            <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddForm()">Thêm nhân viên</button>
+            
+            <form id="add-employee-form" method="POST" th:action="@{/them_nv}" style="display: none;">
+                <label for="employee-id">Mã nhân viên:</label>
+                <input type="text" required pattern="^NV.*$" id="employee-id" name="employee-id" th:value="${next_employee_id}" readonly><br>
+                
+                <label for="employee-last-name">Họ đệm:</label>
+                <input type="text" id="employee-last-name" name="employee-last-name" placeholder="Nhập họ đệm" required><br>
+                
+                <label for="employee-first-name">Tên:</label>
+                <input type="text" id="employee-first-name" name="employee-first-name" placeholder="Nhập tên" required><br>
+                
+                <label for="employee-phone">Số điện thoại:</label>
+                <input type="text" pattern="0[0-9]{9}" id="employee-phone" name="employee-phone" placeholder="Nhập số điện thoại" required><br>
+                
+                <label for="employee-address">Địa chỉ:</label>
+                <input type="text" id="employee-address" name="employee-address" placeholder="Nhập địa chỉ" required><br>
+                
+                <label for="employee-salary">Lương:</label>
+                <input type="text" id="employee-salary" name="employee-salary" placeholder="Nhập lương" required><br>
+                
+                <label for="employee-type">Loại nhân viên:</label>
+                <select id="employee-type" name="employee-type" required>
+                    <option value="">Chọn loại nhân viên</option>
+                    <option value="Tiếp viên">Tiếp viên</option>
+                    <option value="Phi công">Phi công</option>
+                </select><br>
+                
+                <button type="button" onclick="addEmployee()">Thêm thông tin nhân viên</button>
+                <button type="button" onclick="toggleAddForm()">Hủy</button>
+            </form>
+            <style>
+                .search-input {
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    display: block;
+                    width: 100%;
+                    min-width: 200px;
+                    margin-bottom: 20px;
+                }
+                .btn-primary {
+                    padding: 8px 16px;
+                    background-color: #4CAF50;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin-bottom: 20px;
+                    }
+                .btn-primary:hover {
+                    background-color: #45a049;
+                    }
+                .action-buttons {
+                    display: flex;
+                    gap: 8px;
+                }
+                .action-buttons button {
+                padding: 6px 12px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                }
+                .action-buttons button:hover {
+                background-color: #45a049;
+                }
+            </style>
+        
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mã nhân viên</th>
+                        <th>Họ đệm</th>
+                        <th>Tên</th>
+                        <th>Số điện thoại</th>
+                        <th>Địa chỉ</th>
+                        <th>Lương</th>
+                        <th>Loại nhân viên</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        
+            <script th:inline="javascript">
+            function toggleAddForm() {
+                const form = document.getElementById('add-employee-form');
+                const showButton = document.getElementById('show-add-form-btn');
+                if (form.style.display === 'none') {
+                    form.style.display = 'block';
+                    showButton.style.display = 'none';
+                } else {
+                    form.style.display = 'none';
+                    showButton.style.display = 'block';
+                }
+            }
+        
+            function loadInitialEmployeeData() {
+                fetch('/api/admin/employees')
+                .then(response => response.json())
+                .then(data => {
+                    const employeeIdInput = document.querySelector('#employee-info #employee-id');
+                    if(employeeIdInput) {
+                        employeeIdInput.value = data.nextEmployeeId;
+                    }
+        
+                    const tableBody = document.querySelector('#employee-info table tbody');
+                    if(tableBody) {
+                        tableBody.innerHTML = '';
+                        
+                        data.employeeInfo.forEach(employee => {
+                            const row = `
+                                <tr>
+                                    <td>${employee.MaNV}</td>
+                                    <td>${employee.HoDem}</td>
+                                    <td>${employee.Ten}</td>
+                                    <td>${employee.SDT}</td>
+                                    <td>${employee.DiaChi}</td>
+                                    <td>${employee.Luong}</td>
+                                    <td>${employee.LoaiNV}</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button onclick="deleteEmployee('${employee.MaNV}')">Xóa</button>
+                                            <button onclick="showEditForm('${employee.MaNV}')">Sửa</button>
+                                        </div>
+                                        <form id="edit-form-${employee.MaNV}" style="display: none;" 
+                                              onsubmit="return editEmployee('${employee.MaNV}')">
+                                            <input type="hidden" name="employee-id" value="${employee.MaNV}">
+                                            <label for="edit-employee-last-name-${employee.MaNV}">Họ đệm:</label>
+                                            <input type="text" id="edit-employee-last-name-${employee.MaNV}" 
+                                                  name="employee-last-name" value="${employee.HoDem}" required><br>
+                                            <label for="edit-employee-first-name-${employee.MaNV}">Tên:</label>
+                                            <input type="text" id="edit-employee-first-name-${employee.MaNV}" 
+                                                  name="employee-first-name" value="${employee.Ten}" required><br>
+                                            <label for="edit-employee-phone-${employee.MaNV}">Số điện thoại:</label>
+                                            <input type="text" pattern="0[0-9]{9}" 
+                                                  id="edit-employee-phone-${employee.MaNV}" 
+                                                  name="employee-phone" value="${employee.SDT}" required><br>
+                                            <label for="edit-employee-address-${employee.MaNV}">Địa chỉ:</label>
+                                            <input type="text" id="edit-employee-address-${employee.MaNV}" 
+                                                  name="employee-address" value="${employee.DiaChi}" required><br>
+                                            <label for="edit-employee-salary-${employee.MaNV}">Lương:</label>
+                                            <input type="text" id="edit-employee-salary-${employee.MaNV}" 
+                                                  name="employee-salary" value="${employee.Luong}" required><br>
+                                            <label for="edit-employee-type-${employee.MaNV}">Loại nhân viên:</label>
+                                            <select id="edit-employee-type-${employee.MaNV}" name="employee-type" required>
+                                                <option value="Tiếp viên" ${employee.LoaiNV === 'Tiếp viên' ? 'selected' : ''}>
+                                                    Tiếp viên
+                                                </option>
+                                                <option value="Phi công" ${employee.LoaiNV === 'Phi công' ? 'selected' : ''}>
+                                                    Phi công
+                                                </option>
+                                            </select><br>
+                                            <button type="submit">Lưu thay đổi</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            `;
+                            tableBody.insertAdjacentHTML('beforeend', row);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading employee data:', error);
+                });
+            }
+        
+            function showEditForm(employeeId) {
+                const form = document.getElementById(`edit-form-${employeeId}`);
+                form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            }
+        
+            function editEmployee(employeeId) {
+                const form = document.getElementById(`edit-form-${employeeId}`);
+                const formData = new FormData(form);
+        
+                fetch(`/sua_nv/${employeeId}`, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert(data.message);
+                        location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('Có lỗi xảy ra khi sửa thông tin nhân viên.');
+                });
+        
+                return false;
+            }
+        
+            function deleteEmployee(employeeId) {
+                if (confirm('Bạn có chắc chắn muốn xóa nhân viên này?')) {
+                    fetch(`/xoa_nv/${employeeId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            alert(data.message);
+                            location.reload();
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        alert('Có lỗi xảy ra khi xóa nhân viên.');
+                    });
+                }
+            }
+        
+            function addEmployee() {
+                const form = document.getElementById('add-employee-form');
+                const formData = new FormData(form);
+        
+                fetch('/them_nv', {
+                    method: 'POST', 
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert(data.message);
+                        location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('Có lỗi xảy ra khi thêm nhân viên.');
+                });
+            }
+        
+            document.addEventListener('DOMContentLoaded', function() {
+                loadInitialEmployeeData();
+            });
+            </script>
+        </section>
           </section> 
 
           <section id="schedule-info">
             <h2>Quản lý lịch bay</h2>
-            
+            <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
+            <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormlichbay()">Thêm lịch bay mới</button>
             <!-- Form thêm lịch bay -->
-            <form id="themLichForm">
+            <form id="themLichForm" style="display: none;" id="add-lich-bay">
                 <label for="schedule-flight-id">Mã chuyến bay:</label>
                 <select id="schedule-flight-id" name="flight-id" required>
                     <option value="">-- Chọn Mã chuyến bay --</option>
@@ -1413,10 +1620,10 @@
                 </select><br>
         
                 <button type="submit">Thêm lịch bay mới</button>
+                <button type="button" onclick="toggleAddFormlichbay()">Hủy</button>
             </form>
-        
             <!-- Form sửa lịch bay -->
-            <form id="suaLichForm">
+            <form id="suaLichForm" style="display: none;" id="add-lich-bay">
                 <label for="edit-schedule-flight-id">Mã chuyến bay:</label>
                 <select id="edit-schedule-flight-id" name="flight-id" required>
                     <option value="">-- Chọn Mã chuyến bay --</option>
@@ -1428,7 +1635,32 @@
                 </select><br>
         
                 <button type="submit">Lưu thay đổi</button>
+                <button type="button" onclick="toggleAddFormlichbay()">Hủy</button>
+                
             </form>
+            <style>
+                .search-input {
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    display: block;
+                    width: 100%;
+                    min-width: 200px;
+                    margin-bottom: 20px;
+                }
+                .btn-primary {
+                    padding: 8px 16px;
+                    background-color: #4CAF50;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin-bottom: 20px;
+                    }
+                .btn-primary:hover {
+                    background-color: #45a049;
+                    }
+            </style>
         
             <!-- Bảng hiển thị lịch bay -->
             <table>
@@ -1451,6 +1683,17 @@
             </table>
         
             <script>
+                function toggleAddFormlichbay() {
+                    const form = document.getElementById('add-lich-bay');
+                    const showButton = document.getElementById('show-add-form-btn');
+                    if (form.style.display === 'none') {
+                        form.style.display = 'block';
+                        showButton.style.display = 'none';
+                    } else {
+                        form.style.display = 'none';
+                        showButton.style.display = 'block';
+                    }
+                }
             function loadInitialData() {
                 // Load flights
                 fetch('/api/admin/flights')
@@ -1612,9 +1855,10 @@
 
         <section id="assignment-info">
           <h2>Quản lý phân công</h2>
-          
+          <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
+          <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormphancong()">Thêm phân công</button>
           <!-- Form thêm phân công -->
-          <form id="themPhanCongForm">
+          <form id="themPhanCongForm" style="display:none" id="add-phan-cong">
             <label for="employee-id">Mã nhân viên:</label>
             <select id="employee-id" name="employee-id" required>
                 <option value="">-- Chọn Mã nhân viên --</option>
@@ -1632,10 +1876,11 @@
             <input type="datetime-local" id="assignment-arrival-datetime" name="arrival-datetime" required readonly>
 
             <button type="submit">Thêm phân công</button>
+            <button type="button" onclick="toggleAddForm()">Hủy</button>
           </form>
-
+          <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormphancong()">Thêm thay đổi</button>
           <!-- Form sửa phân công -->  
-          <form id="suaPhanCongForm">
+          <form id="suaPhanCongForm" style="display: none;" id="add-phan-cong">
               <label for="edit-employee-id">Mã nhân viên:</label>
               <select id="edit-employee-id" name="employee-id" required>
                   <option value="">-- Chọn Mã nhân viên --</option>
@@ -1653,7 +1898,31 @@
               <input type="datetime-local" id="edit-assignment-arrival-datetime" name="arrival-datetime" required readonly>
 
               <button type="submit">Lưu thay đổi</button>
+              <button type="button" onclick="toggleAddFormphancong()">Hủy</button>
           </form>
+          <style>
+            .search-input {
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                display: block;
+                width: 100%;
+                min-width: 200px;
+                margin-bottom: 20px;
+            }
+            .btn-primary {
+                padding: 8px 16px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-bottom: 20px;
+                }
+            .btn-primary:hover {
+                background-color: #45a049;
+                }
+        </style>
 
           <!-- Bảng hiển thị thông tin phân công -->
           <table>
@@ -1676,6 +1945,17 @@
           </table>
 
           <script>
+             function toggleAddFormphancong() {
+                    const form = document.getElementById('add-phan-cong');
+                    const showButton = document.getElementById('show-add-form-btn');
+                    if (form.style.display === 'none') {
+                        form.style.display = 'block';
+                        showButton.style.display = 'none';
+                    } else {
+                        form.style.display = 'none';
+                        showButton.style.display = 'block';
+                    }
+                }
           function loadInitialData() {
               // Load employees
               fetch('/api/admin/employees')
