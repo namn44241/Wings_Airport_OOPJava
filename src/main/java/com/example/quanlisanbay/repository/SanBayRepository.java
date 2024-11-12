@@ -1,5 +1,6 @@
 package com.example.quanlisanbay.repository;
 
+import com.example.quanlisanbay.model.ChuyenBay;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public interface SanBayRepository {
+public interface SanBayRepository extends JpaRepository<ChuyenBay, String> {
     @Query(value = """
         SELECT 
             cb.MaChuyenBay, 
