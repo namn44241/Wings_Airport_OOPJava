@@ -1,4 +1,4 @@
-package com.example.quanlisanbay.controllers;
+package com.example.quanlisanbay.controllers.core;
 
 import com.example.quanlisanbay.config.LoginRequired;
 import org.springframework.web.bind.annotation.ResponseBody;

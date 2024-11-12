@@ -27,13 +27,26 @@ public class MayBayService {
             if (mayBayRepository.existsBySoHieu(soHieu)) {
                 return ResponseEntity.badRequest()
                     .body(Map.of("success", false, 
-                                "message", "Máy bay với số hiệu này đã tồn tại!"));
+                                "message", "Số hiệu máy bay đã tồn tại trong hệ thống"));
             }
 
             if (mayBayRepository.countLoaiMayBayByMaLoai(maLoai) == 0) {
                 return ResponseEntity.badRequest()
                     .body(Map.of("success", false, 
                                 "message", "Loại máy bay không tồn tại!"));
+            }
+
+            try {
+                int soGhe = Integer.parseInt(soGheNgoi);
+                if (soGhe <= 0) {
+                    return ResponseEntity.badRequest()
+                        .body(Map.of("success", false,
+                                    "message", "Số ghế ngồi phải lớn hơn 0"));
+                }
+            } catch (NumberFormatException e) {
+                return ResponseEntity.badRequest()
+                    .body(Map.of("success", false,
+                                "message", "Số ghế ngồi không hợp lệ"));
             }
 
             MayBay mayBay = new MayBay(soHieu, maLoai, Integer.parseInt(soGheNgoi));

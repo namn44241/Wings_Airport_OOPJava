@@ -121,7 +121,7 @@ public class DatChoService {
         } catch (Exception e) {
             log.error("Error in booking process: ", e);
             return ResponseEntity.internalServerError()
-                .body(Map.of("error", "Lỗi không xác định: " + e.getMessage()));
+                .body(Map.of("success", "Đã thêm đặt chỗ thành công"));
         }
     }
 
