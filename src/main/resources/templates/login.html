@@ -13,7 +13,11 @@
                     <input id="username" class="swal2-input" placeholder="Tài khoản">
                     <input id="password" type="password" class="swal2-input" placeholder="Mật khẩu">
                 `,
-                confirmButtonText: 'Đăng nhập',
+                confirmButtonText: '<span style="font-size: 16px; padding: 0 20px;">Đăng nhập</span>',
+                customClass: {
+                    confirmButton: 'custom-login-button',
+                    popup: 'custom-login-popup'
+                },
                 preConfirm: () => {
                     const username = document.getElementById('username').value;
                     const password = document.getElementById('password').value;
@@ -41,5 +45,26 @@
             });
         }
     </script>
+    <style>
+        .swal2-popup.custom-login-popup{
+            border-radius: 12px;
+        }
+        /* Tùy chỉnh nút */
+        .swal2-confirm.custom-login-button {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #ffffff;
+            border: none;
+            padding: 12px 28px;
+            font-size: 16px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .swal2-confirm.custom-login-button:hover {
+            background: #2575fc;
+            transition: background-color 0.3s ease;
+        }
+    </style>
 </body>
 </html>
