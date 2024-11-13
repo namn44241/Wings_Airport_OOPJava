@@ -38,25 +38,23 @@ public class EmailService {
 
     private String buildVietnameseEmailBody(String fullName) {
         return "<html><body>" +
-                "<h1>Xin chào " + fullName + ",</h1>" +
-                "<h3>Đây là Wings Airport, chúc bạn một ngày tốt lành!</h3>" +
-                "<img width=\"480\" height=\"269\" src=\"https://media.giphy.com/media/S2IfEQqgWc0AH4r6Al/giphy.gif\" alt=\"hello\">"
-                +
-                "<p>Wings Airport tự hào là Sân bay hàng không quốc tế 4 sao.<br>" +
-                "Xin trân trọng cảm ơn sự đồng hành của Quý khách và bạn hàng!</p>" +
-                "<p>Trân trọng,<br>Đội ngũ Wings Airport</p>" +
-                "</body></html>";
+               "<h1>Xin chào " + fullName + ",</h1>" +
+               "<h3>Đây là Wings Airport, chúc bạn một ngày tốt lành!</h3>" +
+               "<img width=\"480\" height=\"269\" src=\"https://media.giphy.com/media/S2IfEQqgWc0AH4r6Al/giphy.gif\" alt=\"hello\">" +
+               "<p>Wings Airport tự hào là Sân bay hàng không quốc tế 4 sao.<br>" +
+               "Xin trân trọng cảm ơn sự đồng hành của Quý khách và bạn hàng!</p>" +
+               "<p>Trân trọng,<br>Đội ngũ Wings Airport</p>" +
+               "</body></html>";
     }
 
     private String buildEnglishEmailBody(String fullName) {
         return "<html><body>" +
-                "<h1>Hello " + fullName + ",</h1>" +
-                "<h3>This is Wings Airport, have a great day!</h3>" +
-                "<img width=\"480\" height=\"269\" src=\"https://media.giphy.com/media/S2IfEQqgWc0AH4r6Al/giphy.gif\" alt=\"hello\">"
-                +
-                "<p>Wings Airport is proud to be a 4-star non-international airport.<br>" +
-                "We sincerely thank our valued customers and partners for their support!</p>" +
-                "<p>Best regards,<br>Wings Airport Team</p>" +
-                "</body></html>";
+               "<h1>Hello " + fullName + ",</h1>" +
+               "<h3>This is Wings Airport, have a great day!</h3>" +
+               "<img width=\"480\" height=\"269\" src=\"https://media.giphy.com/media/S2IfEQqgWc0AH4r6Al/giphy.gif\" alt=\"hello\">" +
+               "<p>Wings Airport is proud to be a 4-star non-international airport.<br>" +
+               "We sincerely thank our valued customers and partners for their support!</p>" +
+               "<p>Best regards,<br>Wings Airport Team</p>" +
+               "</body></html>";
     }
 }
