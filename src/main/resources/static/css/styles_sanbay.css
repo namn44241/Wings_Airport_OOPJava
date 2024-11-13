@@ -614,12 +614,11 @@ color: #0077ff; /* Màu chữ khi di chuột vào */
     display: flex; /* Thêm flexbox */
     justify-content: center; /* Căn giữa theo chiều ngang */
     align-items: center; /* Căn giữa theo chiều dọc */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
-.image-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
 .image-container.show {
     opacity: 1;
     transform: translateY(0);
@@ -631,10 +630,11 @@ color: #0077ff; /* Màu chữ khi di chuột vào */
     object-fit: cover;
     display: block;
     border-radius: 15px;
+    transition: transform 0.3s ease;
 }
 
 .image-container:hover img {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 .delete-button {
             color: #ccc;
@@ -757,7 +757,7 @@ color: #0077ff; /* Màu chữ khi di chuột vào */
     text-align: center;
     font-size: 24px;
     color: #333;
-    margin: 20px 0;
+    margin: 40px auto 20px;
 }
 .section-title::before,
 .section-title::after {
@@ -767,9 +767,17 @@ color: #0077ff; /* Màu chữ khi di chuột vào */
     margin: 0 10px;
 }
 
+.form-group1 input[type="email"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
 .section-title span {
     display: inline-block;
-    padding: 0 10px;
+    padding: 0 20px;
 }
 
 .slider-container {
@@ -1249,5 +1257,69 @@ main {
         display: flex;
         flex-direction: column;
         gap: 0;
+    }
+}
+
+.services-container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.horizontal {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(241, 199, 14, 0.182);
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    flex-wrap: wrap; /* Cho phép wrap khi màn hình nhỏ */
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 15px;
+    width: calc(16.66% - 20px);
+}
+
+.item img {
+    /* width: 60px;
+    height: 60px; */
+    margin-bottom: 15px;
+    object-fit: contain;
+}
+
+.item p {
+    margin: 0;
+    width: 100%;
+}
+
+.item a {
+    color: #333;
+    text-decoration: none;
+    font-size: 15px;
+    line-height: 1.3;
+    display: block;
+    word-wrap: break-word;
+    transition: color 0.3s ease;
+}
+
+.item a:hover {
+    color: #0077ff;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .horizontal {
+        width: 90%;
+    }
+    
+    .item {
+        width: calc(33.33% - 20px);
+        margin-bottom: 15px;
     }
 }
