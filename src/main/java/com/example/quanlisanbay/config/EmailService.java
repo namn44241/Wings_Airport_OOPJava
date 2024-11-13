@@ -37,26 +37,45 @@ public class EmailService {
     }
 
     private String buildVietnameseEmailBody(String fullName) {
-        return "<html><body>" +
-                "<h1>Xin chào " + fullName + ",</h1>" +
-                "<h3>Đây là Wings Airport, chúc bạn một ngày tốt lành!</h3>" +
-                "<img width=\"480\" height=\"269\" src=\"https://media.giphy.com/media/S2IfEQqgWc0AH4r6Al/giphy.gif\" alt=\"hello\">"
+        return "<html><body style=\"font-family: Arial, sans-serif; color: #333;\">" +
+                "<div style=\"max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;\">"
                 +
-                "<p>Wings Airport tự hào là Sân bay hàng không quốc tế 4 sao.<br>" +
+                "<h1 style=\"color: #4CAF50;\">Xin chào " + fullName + ",</h1>" +
+                "<p style=\"font-size: 16px;\">Đây là <strong>Wings Airport</strong>, chúc bạn một ngày tốt lành!</p>" +
+                "<div style=\"text-align: center;\">" +
+                "<img width=\"480\" height=\"269\" src=\"https://media.giphy.com/media/S2IfEQqgWc0AH4r6Al/giphy.gif\" alt=\"hello\" style=\"border-radius: 10px;\">"
+                +
+                "</div>" +
+                "<p style=\"font-size: 16px; line-height: 1.5;\">Wings Airport tự hào là Sân bay hàng không quốc tế 4 sao.<br>"
+                +
                 "Xin trân trọng cảm ơn sự đồng hành của Quý khách và bạn hàng!</p>" +
-                "<p>Trân trọng,<br>Đội ngũ Wings Airport</p>" +
+                "<p style=\"font-size: 16px;\">Trân trọng,<br><strong>Đội ngũ Wings Airport</strong></p>" +
+                "<hr style=\"border: 0; height: 1px; background-color: #ddd;\">" +
+                "<p style=\"font-size: 12px; color: #888;\">Lưu ý: Đây là email tự động. Vui lòng không trả lời email này.</p>"
+                +
+                "</div>" +
                 "</body></html>";
     }
 
     private String buildEnglishEmailBody(String fullName) {
-        return "<html><body>" +
-                "<h1>Hello " + fullName + ",</h1>" +
-                "<h3>This is Wings Airport, have a great day!</h3>" +
-                "<img width=\"480\" height=\"269\" src=\"https://media.giphy.com/media/S2IfEQqgWc0AH4r6Al/giphy.gif\" alt=\"hello\">"
+        return "<html><body style=\"font-family: Arial, sans-serif; color: #333;\">" +
+                "<div style=\"max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;\">"
                 +
-                "<p>Wings Airport is proud to be a 4-star non-international airport.<br>" +
+                "<h1 style=\"color: #4CAF50;\">Hello " + fullName + ",</h1>" +
+                "<p style=\"font-size: 16px;\">This is <strong>Wings Airport</strong>, have a great day!</p>" +
+                "<div style=\"text-align: center;\">" +
+                "<img width=\"480\" height=\"269\" src=\"https://media.giphy.com/media/S2IfEQqgWc0AH4r6Al/giphy.gif\" alt=\"hello\" style=\"border-radius: 10px;\">"
+                +
+                "</div>" +
+                "<p style=\"font-size: 16px; line-height: 1.5;\">Wings Airport is proud to be a 4-star international airport.<br>"
+                +
                 "We sincerely thank our valued customers and partners for their support!</p>" +
-                "<p>Best regards,<br>Wings Airport Team</p>" +
+                "<p style=\"font-size: 16px;\">Best regards,<br><strong>Wings Airport Team</strong></p>" +
+                "<hr style=\"border: 0; height: 1px; background-color: #ddd;\">" +
+                "<p style=\"font-size: 12px; color: #888;\">Note: This is an automated email. Please do not reply to this email.</p>"
+                +
+                "</div>" +
                 "</body></html>";
     }
+
 }

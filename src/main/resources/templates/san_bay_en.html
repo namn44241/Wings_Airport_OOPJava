@@ -605,7 +605,39 @@ window.onclick = function(event) {
         </form>
     </div><br>
     
-    <script src="js/san-bay/send-mail.js"></script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        // Khởi tạo EmailJS
+        emailjs.init("hhl7NaCYrYpAaS9v8"); // Thay YOUR_USER_ID bằng mã người dùng của bạn
+    
+        document.getElementById('newsletter-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngừng form gửi đi theo cách mặc định
+    
+            // Lấy dữ liệu từ form
+            const email = document.getElementById('email').value;
+            const language = document.getElementById('language').value;
+            const salutation = document.getElementById('salutation').value;
+            const last_name = document.getElementById('last_name').value;
+            const first_name = document.getElementById('first_name').value;
+            const country = document.getElementById('country').value;
+    
+            // Gửi email qua EmailJS
+            emailjs.send("service_dlk8np5", "template_1vh53bj", {
+                email: email,
+                language: language,
+                salutation: salutation,
+                last_name: last_name,
+                first_name: first_name,
+                country: country
+            })
+            .then((response) => {
+                alert("Email đã được gửi thành công!");
+            }, (error) => {
+                console.error("Lỗi khi gửi email:", error);
+                alert("Không thể gửi email. Vui lòng thử lại.");
+            });
+        });
+    </script>
     <!-- Footer -->
     <div class="header1">
         <img src="images/Remove-bg.ai_1719194895104.png" alt="header1">
