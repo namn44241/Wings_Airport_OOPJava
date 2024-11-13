@@ -7,6 +7,7 @@
 <link rel="icon" href="images/wings_logo.png" alt="logo" id="logo">
 <link rel="stylesheet" href="/css/styles_sanbay.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.latest.js"></script>
 </head>
 <style>
     header {
@@ -170,7 +171,7 @@
             </div>
             <div class="form-group">
                 <label for="manage-departure-datetime">Giờ đi:</label>
-                <input type="datetime-local" id="manage-departure-datetime" name="departure-datetime" required readonly>
+                <input type="datetime-local" id="manage-departure-datetime" name="departure-datetime" required readonly >
             </div>
             <div class="form-group">
                 <label for="manage-arrival-datetime">Giờ đến:</label>
@@ -186,7 +187,7 @@
         <form id="search-form" th:action="@{/api/search}" method="GET">
             <h3>Tìm kiếm thông tin chuyến bay</h3>
             <input type="text" name="query" placeholder="Siêu tìm kiếm (Mã chuyến bay, Sân bay, Số hiệu máy bay...)" required>
-            <button type="submit" class="btn-primary">Tìm kiếm</button>
+            <button type="submit" class="btn-primary" styel="margin-top: 15px">Tìm kiếm</button>
         </form>
         <div class="table-container">
             <table id="flight-table">
@@ -624,7 +625,6 @@ document.addEventListener('click', function(event) {
         </form>
     </div><br>
 
-    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var emailInput = document.getElementById('email');
