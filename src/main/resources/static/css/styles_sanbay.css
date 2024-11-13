@@ -539,6 +539,7 @@ color: #0077ff; /* Màu chữ khi di chuột vào */
     font-size: 16px;
     cursor: pointer;
     
+    
 }
 
 .nutbam {
@@ -639,6 +640,7 @@ color: #0077ff; /* Màu chữ khi di chuột vào */
 .dropdown {
     position: relative;
     display: inline-block;
+    margin-bottom: 20px;
 } 
 
 /* .padding: 12px 16px;
@@ -871,7 +873,8 @@ button:hover {
     text-decoration: underline;
 }
 .khampha {
-    text-align: center;
+    /* text-align: center; */
+    margin-left: 10%;
 }
 .explore-container {
     width: 80%;
@@ -990,16 +993,18 @@ margin-bottom: 10px;
 }
 .footer-info {
     font-size: 12px;
-    line-height: 1.4;
     color: white;
-    white-space: pre-wrap;
-    word-wrap: break-word;
     text-align: center;
     padding: 10px 5%;
     max-width: 100%;
     box-sizing: border-box;
-    margin-bottom: 5px;
+    margin: 10px auto;
     font-family: Arial;
+    line-height: 1.2; /* Giảm line-height xuống */
+}
+
+.footer-info p {
+    margin: 3px 0; /* Giảm margin giữa các đoạn */
 }
 
 @media (max-width: 768px) {
