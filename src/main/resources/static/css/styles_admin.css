@@ -494,66 +494,29 @@ main section:target {
     border-radius: 3px;
 }
 
-/* Centering the circular charts and enhancing chart styling */
-/* Container for all charts */
-.charts-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-}
-
-/* General styling for each chart item */
 .chart-item {
     background: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 100%;
-    max-width: 700px; /* Max width to ensure charts don’t get too large */
-    margin: 20px auto; /* Center align all items */
-    overflow: hidden;
-    position: relative;
     transition: transform 0.3s, box-shadow 0.3s;
     max-width: 800px;
     max-height: 600px;
     margin: 20px auto;
 }
 
-/* Hover effect */
 .chart-item:hover {
-    transform: scale(1.03);
+    transform: scale(1.02);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Title styling for chart titles */
 .chart-item > div:first-child {
     font-size: 1.5rem;
     color: #3a7bd5;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    text-align: center;
-    font-weight: bold;
-}
-
-/* Center circular charts (Pie and Doughnut) */
-canvas#loaiMayBayChart, canvas#nhanVienChart {
-    display: block;
-    margin: 0 auto;
-    max-width: 90%; /* Ensures charts don’t exceed the container width */
-}
-
-/* Title styling for charts */
-.chart-item > div:first-child {
-    font-size: 1.6rem;
-    color: #3a7bd5;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     text-align: center;
-    font-weight: bold;
 }
-
 
 
 @keyframes fadeIn {
@@ -581,51 +544,5 @@ canvas#loaiMayBayChart, canvas#nhanVienChart {
 
     nav ul li:hover > ul {
         display: block;
-    }
-}
-
-.search-input {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    display: block;
-    width: 100%;
-    min-width: 200px;
-    margin-bottom: 20px;
-}
-.btn-primary {
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 20px;
-    }
-.btn-primary:hover {
-    background-color: #45a049;
-    }
-.action-buttons {
-    display: flex;
-    gap: 8px;
-}
-.action-buttons button {
-    padding: 6px 12px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    }
-.action-buttons button:hover {
-    background-color: #45a049;
-    }
-@media (max-width: 992px) {
-    .action-buttons {
-        flex-direction: column;
-    }
-    .action-buttons button {
-        width: 100%;
-        margin-bottom: 8px;
     }
 }

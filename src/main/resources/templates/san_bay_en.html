@@ -119,67 +119,67 @@
     </div>
     <div class="overlay1" id="overlay1"></div>
 
+    <!-- Customer Registration -->
     <div class="container" id="booking-container" style="display: none;">
-        <form id="customer-form" th:action="@{/add_customer}" method="POST">
-            <h3>Customer Information</h3>
-            <div class="form-group">
-                <label for="customer-id">Customer ID</label>
-                <input type="text" id="customer-id" name="customer-id" readonly>
+        <form id="customer-form" th:action="@{/them_khach_hang}" method="POST">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="customer-id">Customer ID</label>
+                    <input type="text" id="customer-id" name="customer-id" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="customer-phone">Phone Number</label>
+                    <input type="tel" id="customer-phone" name="customer-phone" pattern="[0-9]{10}" required>
+                    <label for="customer-address">Address</label>
+                    <input type="text" id="customer-address" name="customer-address" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="customer-last-name">Last Name</label>
+                    <input type="text" id="customer-last-name" name="customer-last-name" required>
+                    <label for="customer-first-name">First Name</label>
+                    <input type="text" id="customer-first-name" name="customer-first-name" required>
+                </div>
             </div>
             <div class="form-group">
-                <label for="customer-phone">Phone Number</label>
-                <input type="tel" id="customer-phone" name="customer-phone" pattern="[0-9]{10}" required>
-            </div>
-            <div class="form-group">
-                <label for="customer-address">Address</label>
-                <input type="text" id="customer-address" name="customer-address" required>
-            </div>
-            <div class="form-group">
-                <label for="customer-last-name">Last Name</label>
-                <input type="text" id="customer-last-name" name="customer-last-name" required>
-            </div>
-            <div class="form-group">
-                <label for="customer-first-name">First Name</label>
-                <input type="text" id="customer-first-name" name="customer-first-name" required>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn-primary">Register</button>
+                <button type="submit" style="width: 150px;">Register</button>
             </div>
         </form>
     </div>
-    
-    <!-- Booking Management Form -->
+
+    <!-- Booking -->
     <div class="container" id="manage-container" style="display: none;">
-        <form id="bookingForm" th:action="@{/add_booking}" method="POST">
-            <h3>Booking Information</h3>
-            <div class="form-group">
-                <label for="customer-email">Email Address:</label>
-                <input type="email" id="customer-email" name="customer-email" required>
+        <form id="bookingForm" th:action="@{/them_dat_cho}" method="POST">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="customer-email">Email Address:</label>
+                    <input type="email" id="customer-email" name="customer-email" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="manage-customer-id">Customer ID:</label>
+                    <input type="text" id="manage-customer-id" name="customer-id" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="manage-flight-id">Flight ID:</label>
+                    <select id="manage-flight-id" name="flight-id" required>
+                        <option value="">-- Select Flight ID --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="manage-departure-datetime">Departure Time:</label>
+                    <input type="datetime-local" id="manage-departure-datetime" name="departure-datetime" required readonly>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="manage-arrival-datetime">Arrival Time:</label>
+                    <input type="datetime-local" id="manage-arrival-datetime" name="arrival-datetime" required readonly>
+                </div>
             </div>
             <div class="form-group">
-                <label for="manage-customer-id">Customer ID:</label>
-                <input type="text" id="manage-customer-id" name="customer-id" readonly>
-            </div>
-            <div class="form-group">
-                <label for="manage-flight-id">Flight ID:</label>
-                <select id="manage-flight-id" name="flight-id" required>
-                    <option value="">-- Select Flight ID --</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="manage-departure-datetime">Departure Time:</label>
-                <input type="datetime-local" id="manage-departure-datetime" name="departure-datetime" required readonly>
-            </div>
-            <div class="form-group">
-                <label for="manage-arrival-datetime">Arrival Time:</label>
-                <input type="datetime-local" id="manage-arrival-datetime" name="arrival-datetime" required readonly>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn-primary">Book</button>
+                <button type="submit">Book</button>
             </div>
         </form>
     </div>
-    
     <!-- Flight Search -->
 <div class="container" id="checkin-container" style="display: none;">
     <form id="search-form" th:action="@{/api/search}" method="GET">
@@ -259,240 +259,156 @@
 <hr style="height: 0.7px; background-color: rgb(0, 0, 0);">
 
 <!-- Explore Popular Flights -->
-<h2 class="khampha">Discover Our Most Popular Flights</h2>
-<div class="filters-container">
-    <!-- Route Dropdown -->
+<h2 class="khampha">Explore Our Most Popular Flights</h2>
+<div style="margin-left: 10.5%;">
     <div class="dropdown">
-        <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event, 'dropdownContent1')">
-            <span>Click here to show options</span>
-            <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 12 12">
-                <path d="M2 4 L6 8 L10 4" stroke="currentColor" fill="none" stroke-width="2"/>
-            </svg>
-        </a>
+        <a href="#" onclick="toggleDropdown(event, 'dropdownContent1')">Click here to show options</a>
         <div class="dropdown-content" id="dropdownContent1">
-            <!-- JavaScript will populate this -->
+            <!-- Options will be added here by JavaScript -->
         </div>
     </div>
-
-    <!-- Budget Dropdown -->
     <div class="dropdown">
-        <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event, 'dropdownContent2')">
-            <span>Budget</span>
-            <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 12 12">
-                <path d="M2 4 L6 8 L10 4" stroke="currentColor" fill="none" stroke-width="2"/>
-            </svg>
-        </a>
+        <a href="#" onclick="toggleDropdown(event, 'dropdownContent2')">Budget</a>
         <div class="dropdown-content" id="dropdownContent2">
-            <a href="#" onclick="filterByBudget(event, 'low')">Below 1 million VND</a>
+            <a href="#" onclick="filterByBudget(event, 'low')">Under 1 million VND</a>
             <a href="#" onclick="filterByBudget(event, 'medium')">1 - 1.5 million VND</a>
-            <a href="#" onclick="filterByBudget(event, 'high')">Above 1.5 million VND</a>
+            <a href="#" onclick="filterByBudget(event, 'high')">Over 1.5 million VND</a>
         </div>
     </div>
 </div>
-<section class="flight-grid">
-    <div class="image-grid">
-        <div class="row" id="row1"></div>
-        <div class="row" id="row2"></div>
-        <div class="row" id="row3"></div>
-    </div>
-</section>
+<div class="image-grid">
+    <div class="row" id="row1"></div>
+    <div class="row" id="row2" style="display: none;"></div>
+    <div class="row" id="row3" style="display: none;"></div>
+</div>
 <button style="margin-top: 1%;" id="view-more-btn" onclick="toggleAdditionalImages()">View More</button>
+
 <script>
     const flightRoutes = [
-  {
-    from: "Hà Nội",
-    to: "Đà Nẵng",
-    image: "images/danang1.jpg",
-    link: "https://pixabay.com/vi/images/search/%C4%91%C3%A0%20n%E1%BA%B5ng/",
-    price: "1,500,000 VND",
-  },
-  {
-    from: "Hà Nội",
-    to: "Hạ Long",
-    image: "images/halong1.jpg",
-    link: "https://pixabay.com/vi/images/search/v%E1%BB%8Bnh%20h%E1%BA%A1%20long/",
-    price: "800,000 VND",
-  },
-  {
-    from: "TP Hồ Chí Minh",
-    to: "Đà Nẵng",
-    image: "images/danang3.jpg",
-    link: "https://pixabay.com/vi/images/search/%C4%91%C3%A0%20n%E1%BA%B5ng/",
-    price: "1,200,000 VND",
-  },
-  {
-    from: "Hà Nội",
-    to: "TP Hồ Chí Minh",
-    image: "images/du-lich-sai-gon-1.webp",
-    link: "https://www.pexels.com/vi-vn/tim-kiem/th%C3%A0nh%20ph%E1%BB%91%20h%E1%BB%93%20ch%C3%AD%20minh/",
-    price: "1,800,000 VND",
-  },
-  {
-    from: "Hà Nội",
-    to: "Sa Pa",
-    image: "images/sapa.jpg",
-    link: "https://pixabay.com/vi/images/search/sapa/",
-    price: "1,000,000 VND",
-  },
-  {
-    from: "TP Hồ Chí Minh",
-    to: "Ninh Bình",
-    image: "images/ninhbinh.jpg",
-    link: "https://pixabay.com/vi/images/search/ninh%20binh/",
-    price: "1,600,000 VND",
-  },
-  {
-    from: "Hà Nội",
-    to: "Hội An",
-    image: "images/hoian.jpeg",
-    link: "https://anhdephd.vn/hinh-anh-hoi-an/",
-    price: "1,400,000 VND",
-  },
-  {
-    from: "TP Hồ Chí Minh",
-    to: "Hà Nội",
-    image: "images/dong-phong-nha.jpg",
-    link: "https://www.pexels.com/vi-vn/tim-kiem/h%C3%A0%20n%E1%BB%99i/",
-    price: "1,800,000 VND",
-  },
-  {
-    from: "Hà Nội",
-    to: "Nha Trang",
-    image: "images/nhatrang.jpg",
-    link: "https://toigingiuvedep.vn/hinh-anh-nha-trang/",
-    price: "1,700,000 VND",
-  },
-  {
-    from: "Huế",
-    to: "Hà Nội",
-    image: "images/hanoi1.jpg",
-    link: "https://www.pexels.com/vi-vn/tim-kiem/h%C3%A0%20n%E1%BB%99i/",
-    price: "1,500,000 VND",
-  },
-  {
-    from: "Hà Nội",
-    to: "Quảng Bình",
-    image: "images/dong-phong-nha.jpg",
-    link: "https://top10quangbinh.vn/hinh-anh-quang-binh/",
-    price: "1,300,000 VND",
-  },
-  {
-    from: "Đà Lạt",
-    to: "TP Hồ Chí Minh",
-    image: "images/hcm.jpg",
-    link: "https://www.pexels.com/vi-vn/tim-kiem/th%C3%A0nh%20ph%E1%BB%91%20h%E1%BB%93%20ch%C3%AD%20minh/",
-    price: "900,000 VND",
-  },
-];
-let showAllImages = false;
+        { from: "Hanoi", to: "Da Nang", image: "images/danang1.jpg", link: "https://pixabay.com/vi/images/search/%C4%91%C3%A0%20n%E1%BA%B5ng/", price: "1,500,000 VND" },
+        { from: "Hanoi", to: "Ha Long", image: "images/halong1.jpg", link: "https://pixabay.com/vi/images/search/v%E1%BB%8Bnh%20h%E1%BA%A1%20long/", price: "800,000 VND" },
+        { from: "Ho Chi Minh City", to: "Da Nang", image: "images/danang3.jpg", link: "https://pixabay.com/vi/images/search/%C4%91%C3%A0%20n%E1%BA%B5ng/", price: "1,200,000 VND" },
+        { from: "Hanoi", to: "Ho Chi Minh City", image: "images/du-lich-sai-gon-1.webp", link: "https://www.pexels.com/vi-vn/tim-kiem/th%C3%A0nh%20ph%E1%BB%91%20h%E1%BB%93%20ch%C3%AD%20minh/", price: "1,800,000 VND" },
+        { from: "Hanoi", to: "Sa Pa", image: "images/sapa.jpg", link: "https://pixabay.com/vi/images/search/sapa/", price: "1,000,000 VND" },
+        { from: "Ho Chi Minh City", to: "Ninh Binh", image: "images/ninhbinh.jpg", link: "https://pixabay.com/vi/images/search/ninh%20binh/", price: "1,600,000 VND" },
+        { from: "Hanoi", to: "Hoi An", image: "images/hoian.jpeg", link: "https://anhdephd.vn/hinh-anh-hoi-an/", price: "1,400,000 VND" },
+        { from: "Ho Chi Minh City", to: "Hanoi", image: "images/dong-phong-nha.jpg", link: "https://www.pexels.com/vi-vn/tim-kiem/h%C3%A0%20n%E1%BB%99i/", price: "1,800,000 VND" },
+        { from: "Hanoi", to: "Nha Trang", image: "images/nhatrang.jpg", link: "https://toigingiuvedep.vn/hinh-anh-nha-trang/", price: "1,700,000 VND" },
+        { from: "Hue", to: "Hanoi", image: "images/hanoi1.jpg", link: "https://www.pexels.com/vi-vn/tim-kiem/h%C3%A0%20n%E1%BB%99i/", price: "1,500,000 VND" },
+        { from: "Hanoi", to: "Quang Binh", image: "images/dong-phong-nha.jpg", link: "https://top10quangbinh.vn/hinh-anh-quang-binh/", price: "1,300,000 VND" },
+        { from: "Da Lat", to: "Ho Chi Minh City", image: "images/hcm.jpg", link: "https://www.pexels.com/vi-vn/tim-kiem/th%C3%A0nh%20ph%E1%BB%91%20h%E1%BB%93%20ch%C3%AD%20minh/", price: "900,000 VND" }
+    ];        
+    let showAllImages = false;
 
-function populateDropdown() {
-    const dropdown = document.getElementById('dropdownContent1');
-    const uniqueRoutes = [...new Set(flightRoutes.map(route => `${route.from} đến ${route.to}`))];
-    uniqueRoutes.forEach(route => {
-        const a = document.createElement('a');
-        a.href = '#';
-        a.textContent = route;
-        a.onclick = (event) => {
-            event.preventDefault();
-            filterImages(route);
-        };
-        dropdown.appendChild(a);
-    });
-}
-
-function filterImages(selectedRoute) {
-    const rows = [document.getElementById('row1'), document.getElementById('row2'), document.getElementById('row3')];
-    rows.forEach(row => row.innerHTML = '');
-    
-    const filteredRoutes = flightRoutes.filter(route => `${route.from} đến ${route.to}` === selectedRoute);
-    displayImages(filteredRoutes);
-}
-
-function displayImages(routes) {
-    const rows = [document.getElementById('row1'), document.getElementById('row2'), document.getElementById('row3')];
-    rows.forEach(row => {
-        row.innerHTML = '';
-        row.style.display = 'none';
-    });
-
-    const displayCount = showAllImages ? routes.length : Math.min(4, routes.length);
-
-    for (let i = 0; i < displayCount; i++) {
-        const route = routes[i];
-        const rowIndex = Math.floor(i / 4);
-        const row = rows[rowIndex];
-        row.style.display = 'flex';
-
-        const div = document.createElement('div');
-        div.className = 'image-container';
-        div.innerHTML = `
-            <a href="${route.link}" target="_blank">
-                <img src="${route.image}" alt="${route.from} to ${route.to}">
-            </a>
-            <div class="text">
-                <div>Từ ${route.from} đến ${route.to}</div>
-                <div class="price">${route.price}</div>
-            </div>
-        `;
-        row.appendChild(div);
-
-        setTimeout(() => {
-            div.classList.add('show');
-        }, 50 * i);
-    }
-}
-
-function toggleAdditionalImages() {
-    showAllImages = !showAllImages;
-    displayImages(flightRoutes);
-    document.getElementById('view-more-btn').textContent = showAllImages ? "Thu gọn" : "Xem thêm";
-}
-
-function toggleDropdown(event, id) {
-    event.preventDefault();
-    document.getElementById(id).classList.toggle("show");
-}
-
-function filterByBudget(event, budgetLevel) {
-    event.preventDefault();
-    let filteredRoutes;
-    switch (budgetLevel) {
-        case 'low':
-            filteredRoutes = flightRoutes.filter(route => parseInt(route.price.replace(/[^0-9]/g, '')) < 1000000);
-            break;
-        case 'medium':
-            filteredRoutes = flightRoutes.filter(route => {
-                const price = parseInt(route.price.replace(/[^0-9]/g, ''));
-                return price >= 1000000 && price <= 1500000;
+    function populateDropdown() {
+            const dropdown = document.getElementById('dropdownContent1');
+            const uniqueRoutes = [...new Set(flightRoutes.map(route => `${route.from} to ${route.to}`))];           
+            uniqueRoutes.forEach(route => {
+                const a = document.createElement('a');
+                a.href = '#';
+                a.textContent = route;
+                a.onclick = (event) => {
+                    event.preventDefault();
+                    filterImages(route);
+                };
+                dropdown.appendChild(a);
             });
-            break;
-        case 'high':
-            filteredRoutes = flightRoutes.filter(route => parseInt(route.price.replace(/[^0-9]/g, '')) > 1500000);
-            break;
-        default:
-            filteredRoutes = flightRoutes;
-    }
-    displayImages(filteredRoutes);
-}
+        }
+        
+        function filterImages(selectedRoute) {
+            const rows = [document.getElementById('row1'), document.getElementById('row2'), document.getElementById('row3')];
+            rows.forEach(row => row.innerHTML = '');
+            
+            const filteredRoutes = flightRoutes.filter(route => `${route.from} to ${route.to}` === selectedRoute);
+            displayImages(filteredRoutes);
+        }        
+        
+        function displayImages(routes) {
+            const rows = [document.getElementById('row1'), document.getElementById('row2'), document.getElementById('row3')];
+            rows.forEach(row => {
+                row.innerHTML = '';
+                row.style.display = 'none';
+            });
+            
+            const displayCount = showAllImages ? routes.length : Math.min(4, routes.length);
 
-document.addEventListener('DOMContentLoaded', () => {
-    populateDropdown();
-    displayImages(flightRoutes);
-});
-
-window.onclick = function(event) {
-    if (!event.target.matches('.dropdown a')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        for (var i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
+            for (let i = 0; i < displayCount; i++) {
+                const route = routes[i];
+                const rowIndex = Math.floor(i / 4);
+                const row = rows[rowIndex];
+                row.style.display = 'flex';
+                
+                const div = document.createElement('div');
+                div.className = 'image-container';
+                div.innerHTML = `
+                    <a href="${route.link}" target="_blank">
+                        <img src="${route.image}" alt="${route.from} to ${route.to}">
+                    </a>
+                    <div class="text">
+                        <div>From ${route.from} to ${route.to}</div>
+                        <div class="price">${route.price}</div>
+                    </div>
+                `;
+                row.appendChild(div);
+                
+                setTimeout(() => {
+                    div.classList.add('show');
+                }, 50 * i);
             }
         }
-    }
-}
-</script>
+
+        function toggleAdditionalImages() {
+            showAllImages = !showAllImages;
+            displayImages(flightRoutes);
+            document.getElementById('view-more-btn').textContent = showAllImages ? "Collapse" : "View More";
+        }
+        
+        function toggleDropdown(event, id) {
+            event.preventDefault();
+            document.getElementById(id).classList.toggle("show");
+        }
+        
+        function filterByBudget(event, budgetLevel) {
+            event.preventDefault();
+            let filteredRoutes;
+            switch (budgetLevel) {
+                case 'low':
+                    filteredRoutes = flightRoutes.filter(route => parseInt(route.price.replace(/[^0-9]/g, '')) < 1000000);
+                    break;
+                case 'medium':
+                    filteredRoutes = flightRoutes.filter(route => {
+                        const price = parseInt(route.price.replace(/[^0-9]/g, ''));
+                        return price >= 1000000 && price <= 1500000;
+                    });
+                    break;
+                case 'high':
+                    filteredRoutes = flightRoutes.filter(route => parseInt(route.price.replace(/[^0-9]/g, '')) > 1500000);
+                    break;
+                default:
+                    filteredRoutes = flightRoutes;
+            }
+            displayImages(filteredRoutes);
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            populateDropdown();
+            displayImages(flightRoutes);
+        });
+        
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown a')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+
+    <br><div class="dropdown-note" style="text-align: center; font-size: 11px;">*Displayed fares are collected within 48 hours and may no longer be valid at the time of booking. Additional fees and charges may apply for certain products and services.</div>
 
     <!-- Featured Information -->
     <div class="section-title">
@@ -542,6 +458,15 @@ window.onclick = function(event) {
     </div>
 
     <div class="dots1"></div>
+
+    <style>
+        .slide {
+            transition: transform 0.3s ease;
+        }
+        .slide:hover {
+            transform: scale(1.05);
+        }
+    </style>
     
     <script src="js/san-bay/slide-kham-pha.js"></script>
         
@@ -597,7 +522,7 @@ window.onclick = function(event) {
                     </select>
                 </div>
                 <div class="form-group">
-                    <input type="checkbox" id="privacy_policy" name="privacy_policy" class="input" required>
+                    <input type="checkbox" id="privacy_policy" name="privacy_policy" required>
                     <label for="privacy_policy">I have read and agree to the terms of the <a href="#">Privacy Policy</a> and confirm that I am at least 16 years old.</label>
                 </div>
                 <button type="submit">REGISTER</button>
@@ -704,7 +629,7 @@ window.onclick = function(event) {
     </div>
     <hr>
     <pre class="footer-info">© 2024 Wings Airlines JSC
-        VNUI Aviation Corporation - JSC. 999 Tran Binh Street, Nam Nguyen Ward, Vinh Quang District, Hanoi.
+        Binh Nam Aviation Corporation - JSC. 999 Tran Binh Street, Nam Nguyen Ward, Vinh Quang District, Hanoi.
         Phone: (+84-24) 38272289. Fax: (+84-24) 38722375.
         Business Registration Certificate, Enterprise Code: 0999999999, first registered on June 32, 2010, 9th amendment registered on January 32, 2022, issued by Hanoi Department of Planning and Investment.</pre>
     <div class="footer-column">

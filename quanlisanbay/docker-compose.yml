@@ -11,7 +11,7 @@ services:
       MYSQL_USER: adminqlsb
       MYSQL_PASSWORD: 1
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - mysql_data:/var/lib/mysql
