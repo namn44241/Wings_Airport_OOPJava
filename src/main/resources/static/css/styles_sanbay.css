@@ -18,6 +18,11 @@
     pointer-events: none;
 }
 
+body > * {
+    margin: 0;
+    padding: 0;
+}
+
 .spinner {
     width: 150px;
     height: 150px;
@@ -210,6 +215,7 @@ button:hover {
     height: 65vh;
     width: 100vw;
     overflow: hidden;
+    margin-bottom: 0; 
 }
 
 .slide1-wrapper {
@@ -235,6 +241,7 @@ button:hover {
     position: absolute;
     bottom: 20px;
     width: 100%;
+    margin: 0; 
 }
 .dot {
     cursor: pointer;
@@ -261,6 +268,7 @@ button:hover {
     font-weight: bold;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    margin-top: -5px;
 }
 
 .navbar div {
@@ -597,19 +605,17 @@ color: #0077ff; /* Màu chữ khi di chuột vào */
 }
 
 .image-container {
-    opacity: 0;
-    margin: 0;
-    transform: translateY(20px);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: 100%;
-    overflow: hidden;
+    flex: 0 0 300px; /* Kích thước cố định */
     position: relative;
-    display: inline-block;
+    width: 300px;
+    border-radius: 15px;
     overflow: hidden;
-    border-radius: 15px; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Điều chỉnh đổ bóng */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 0 auto;
+    display: flex; /* Thêm flexbox */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
 }
+
 .image-container:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
@@ -618,9 +624,13 @@ color: #0077ff; /* Màu chữ khi di chuột vào */
     opacity: 1;
     transform: translateY(0);
 }
+
 .image-container img {
-    transition: transform 0.3s ease;
-    margin: 0;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+    border-radius: 15px;
 }
 
 .image-container:hover img {
@@ -648,28 +658,24 @@ color: #0077ff; /* Màu chữ khi di chuột vào */
     display: block;
 } */
 .image-grid {
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
-
-
 
 .image-container .text {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    width: 100%;
     background-color: rgba(10, 35, 147, 0.729);
     color: white;
     padding: 10px;
-    max-height: 100px;
     text-align: center;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-    font-size: 14px; 
+    width: 100%;
 }
 
 .image-container .price {
@@ -680,9 +686,12 @@ color: #0077ff; /* Màu chữ khi di chuột vào */
 .row {
     display: flex;
     justify-content: center;
-    gap: 15px; /* Tăng khoảng cách giữa các ảnh */
-    margin-bottom: 25px; /* Tăng khoảng cách giữa các hàng */
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: 0 auto;
+    max-width: 1200px;
 }
+
 .dropdown > a::after {
     content: '🔽';
     font-size: 0.8em;
@@ -1011,5 +1020,234 @@ margin-bottom: 10px;
     .footer-info {
         font-size: 15px;
         padding: 8px 3%;
+    }
+}
+
+
+/* Responsive styles */
+
+/* Màn hình lớn (>1200px) */
+@media screen and (min-width: 1400px) {
+    .image-container {
+        flex: 0 0 calc(25% - 30px); /* 4 ảnh/hàng cho màn hình rất lớn */
+    }
+}
+
+/* Tablet và màn hình trung bình (768px - 1200px) */
+@media screen and (max-width: 1200px) {
+    /* Header */
+    header {
+        padding: 10px 20px;
+    }
+    
+    .airport-name {
+        font-size: 20px;
+    }
+    
+    nav ul {
+        gap: 15px;
+    }
+
+    /* Slider */
+    .slide1-container {
+        height: 50vh;
+    }
+
+    /* Forms */
+    .form-row {
+        flex-direction: column;
+    }
+
+    .col-md-4, .col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    /* Grid chuyến bay */
+    .row {
+        flex-wrap: wrap;
+    }
+
+    .image-container {
+        flex: 0 0 calc(50% - 15px); 
+    }
+}
+
+/* Mobile (< 768px) */
+@media screen and (max-width: 767px) {
+    /* Header */
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .headerdiv {
+        margin-bottom: 10px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Navbar */
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Bảng tra cứu */
+    .table-container {
+        overflow-x: auto;
+    }
+
+    #flight-table {
+        font-size: 14px;
+    }
+
+    /* Grid chuyến bay */
+    .image-container {
+        flex: 0 0 100%; 
+        max-width: 100%;
+    }
+
+    /* Footer */
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-column {
+        margin-bottom: 20px;
+    }
+
+    .image-grid {
+        width: 90%;
+    }
+}
+
+/* Mobile nhỏ (< 480px) */
+@media screen and (max-width: 479px) {
+    .airport-name {
+        font-size: 18px;
+    }
+
+    .sub-text {
+        font-size: 14px;
+    }
+
+    /* Forms */
+    .form-group input,
+    .form-group select {
+        font-size: 14px;
+    }
+
+    /* Notification bar */
+    .notification-bar {
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .notification-nav {
+        margin-top: 10px;
+    }
+}
+
+/* Xử lý khoảng trống khi màn hình nhỏ */
+@media screen and (max-width: 840px) {
+    .slide1-container {
+        height: auto; /* Thay đổi từ 65vh sang auto */
+        min-height: 300px; /* Đặt chiều cao tối thiểu */
+    }
+
+    .slide1 img {
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Đảm bảo navbar liền kề với slider */
+    .navbar {
+        margin-top: 0;
+        position: relative;
+    }
+
+    /* Loại bỏ khoảng trống giữa các phần */
+    .slide1-wrapper {
+        margin-bottom: 0;
+    }
+}
+
+/* Xử lý cho màn hình nhỏ hơn nữa */
+@media screen and (max-width: 732px) {
+    .slide1-container {
+        min-height: 250px; /* Giảm chiều cao tối thiểu */
+    }
+
+    /* Đảm bảo các phần tử nối tiếp nhau */
+    .navbar, 
+    .container, 
+    .notification-bar {
+        margin: 0;
+    }
+}
+
+/* Thêm flexbox để đảm bảo layout liền mạch */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Xử lý cho màn hình nhỏ hơn 590px */
+@media screen and (max-width: 590px) {
+    .slide1-container {
+        min-height: 200px; /* Giảm chiều cao tối thiểu */
+        margin: 0;
+        padding: 0;
+    }
+
+    .slide1-wrapper {
+        margin: 0;
+        padding: 0;
+    }
+
+    .slide1 {
+        height: auto;
+        margin: 0;
+        padding: 0;
+    }
+
+    .slide1 img {
+        width: 100%;
+        height: 200px; /* Cố định chiều cao ảnh */
+        object-fit: cover;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Đảm bảo không có khoảng trống giữa slider và navbar */
+    .navbar {
+        margin: 0;
+        border-radius: 0; /* Bỏ bo góc để tránh khoảng trống */
+    }
+
+    /* Đảm bảo các phần tử khác cũng không có margin */
+    .dots,
+    .notification-bar,
+    .container {
+        margin: 0;
+    }
+
+    /* Thêm flexbox container để kiểm soát layout tốt hơn */
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
     }
 }
