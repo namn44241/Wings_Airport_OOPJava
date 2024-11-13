@@ -526,71 +526,72 @@ th {
 .services-container {
     display: flex;
     justify-content: center;
-  }
-  
-  .horizontal {
+    width: 100%; /* Đảm bảo container chiếm toàn bộ chiều rộng */
+}
+
+.horizontal {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(6, 1fr); /* Đặt số cột là 6 để căn giữa các item */
     grid-gap: 10px;
     background-color: rgba(241, 199, 14, 0.182);
     border-radius: 10px;
-    padding: 20px;
-    width: 90%;
-  }
-  
-  .item {
+    padding: 30px;
+    max-width: 1200px; /* Giới hạn chiều rộng tối đa của khung */
+    margin: 0 auto; /* Căn giữa khung */
+}
+
+.item {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-  }
-  
-  .item img {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 10px;
-  }
-  
-  .item a {
+    margin: 10px;
+}
+
+.item img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 5px;
+}
+
+.item a {
     color: #333;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 12px;
     transition: color 0.3s ease;
-  }
-  
-  .item a:hover {
+}
+
+.item a:hover {
     color: #0077ff;
-  }
-  
-  @media (max-width: 768px) {
+}
+
+@media (max-width: 1024px) {
     .horizontal {
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .horizontal {
+        grid-template-columns: repeat(3, 1fr); /* Chuyển thành 3 cột cho màn hình tablet */
+    }
+}
+
+@media (max-width: 480px) {
+    .horizontal {
+        grid-template-columns: repeat(2, 1fr); /* Chuyển thành 2 cột cho màn hình nhỏ */
     }
   
     .item img {
-      width: 50px;
-      height: 50px;
+        width: 50px;
+        height: 50px;
     }
   
     .item a {
-      font-size: 13px;
+        font-size: 12px;
     }
-  }
-  
-  @media (max-width: 480px) {
-    .horizontal {
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    }
-  
-    .item img {
-      width: 40px;
-      height: 40px;
-    }
-  
-    .item a {
-      font-size: 12px;
-    }
-  }
+}
+
 
 /* Tin tức */
 /* Styles for notification section */
