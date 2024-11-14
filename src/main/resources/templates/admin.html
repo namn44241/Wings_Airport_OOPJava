@@ -289,9 +289,9 @@
             <!-- Hiển thị thông báo -->
             <div th:if="${message}" th:class="'alert alert-' + ${messageType}" th:text="${message}"></div>
             <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
-            <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormflight()">Thêm chuyến bay</button>
+            <button id="show-add-form-btn" class="btn-primary" type="button" onclick="toggleAddFormflight()">Thêm chuyến bay</button>
             <!-- Form thêm chuyến bay -->
-            <form id="add-flight-form" method="POST" th:action="@{/them_cb}" onsubmit="return validateForm()">
+            <form id="add-flight-form" method="POST" th:action="@{/them_cb}" onsubmit="return validateForm()" style="display: none;">
                 <label for="flight-id">Mã chuyến bay:</label>
                 <input type="text" required pattern="^CB.*$" id="flight-id" name="flight-id" readonly><br>
         
@@ -504,8 +504,8 @@
             <div th:if="${message}" th:class="'alert alert-' + ${messageType}" th:text="${message}"></div>
             <h2>Quản lý thông tin loại máy bay</h2>
             <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
-            <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormtypeflight()">Thêm thông tin loại máy bay</button>
-            <form id="add-plane-type-form" method="POST" th:action="@{/them_loai_mb}">
+            <button id="show-add-form-btn" class="btn-primary" type="button" onclick="toggleAddFormtypeflight()">Thêm thông tin loại máy bay</button>
+            <form id="add-plane-type-form" method="POST" th:action="@{/them_loai_mb}" style="display: none;">
                 <label for="plane-type-id">Mã loại:</label>
                 <input type="text" id="plane-type-id" name="plane-type-id" th:value="${next_plane_type_id}" readonly><br>
                 <label for="manufacturer">Hãng sản xuất:</label>
@@ -669,11 +669,11 @@
             <h2>Quản lý thông tin đặt chỗ</h2>
             <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
             <div class="btn-group">
-                <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormdatcho()">Thêm thông tin đặt chỗ</button>
-                <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormdatcho2()">Thêm chỉnh sửa</button>
+                <button id="show-add-form-btn" class="btn-primary" type="button" onclick="toggleAddFormdatcho()">Thêm thông tin đặt chỗ</button>
+                <button id="show-add-form-btn" class="btn-primary" type="button" onclick="toggleAddFormdatcho2()">Thêm chỉnh sửa</button>
             </div>
             <!-- Form thêm đặt chỗ -->
-            <form id="themDatChoForm">
+            <form id="themDatChoForm" style="display: none;">
                 <label for="customer-id">Mã khách hàng:</label>
                 <select id="customer-id" name="customer-id" required>
                     <option value="">-- Chọn Mã khách hàng --</option>
@@ -715,7 +715,7 @@
                 }
             </style>
             <!-- Form sửa đặt chỗ -->
-            <form id="suaDatChoForm">
+            <form id="suaDatChoForm" style="display: none;">
                 <label for="edit-customer-id">Mã khách hàng:</label>
                 <select id="edit-customer-id" name="customer-id" required>
                     <option value="">-- Chọn Mã khách hàng --</option>
@@ -999,7 +999,7 @@
           <section id="aircraft-info">
             <h2>Quản lý thông tin máy bay</h2>
             <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
-            <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormaddflight()">Thêm máy bay mới</button>
+            <button id="show-add-form-btn" class="btn-primary" type="button" onclick="toggleAddFormaddflight()">Thêm máy bay mới</button>
             <form id="add-plane-form" style="display:none">
                 <label for="plane-id">Số hiệu:</label>
                 <input type="text" id="plane-id" name="plane-id" placeholder="Nhập số hiệu" required><br>
@@ -1203,7 +1203,7 @@
           
           <h2>Quản lý thông tin khách hàng</h2>
           <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
-          <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormclient()">Thêm thông tin khách hàng</button>
+          <button id="show-add-form-btn" class="btn-primary" type="button" onclick="toggleAddFormclient()">Thêm thông tin khách hàng</button>
           <form id="add-client-form" method="POST" th:action="@{/them_kh}" style="display: none;">
               <!-- Trong form HTML -->
               <label for="customer-id">Mã khách hàng:</label>
@@ -1379,7 +1379,7 @@
             <h2>Quản lý thông tin nhân viên</h2>
             <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
 
-            <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddForm()">Thêm nhân viên</button>
+            <button id="show-add-form-btn" class="btn-primary" type="button" onclick="toggleAddForm()">Thêm nhân viên</button>
             
             <form id="add-employee-form" method="POST" th:action="@{/them_nv}" style="display: none;">
                 <label for="employee-id">Mã nhân viên:</label>
@@ -1412,23 +1412,24 @@
             </form>
             <style>
                 .search-input {
-                    padding: 8px;
+                    padding: 20px;
                     border: 1px solid #ddd;
                     border-radius: 4px;
                     display: block;
-                    width: 100%;
+                    width: 96%;
                     min-width: 200px;
                     margin-bottom: 20px;
                 }
                 .btn-primary {
-                    padding: 8px 16px;
+                    padding: 15px;
                     background-color: #4CAF50;
                     color: white;
                     border: none;
-                    border-radius: 4px;
+                    border-radius: 8px;
+                    font-size: 16px;
                     cursor: pointer;
                     margin-bottom: 20px;
-                    }
+                }
                 .btn-primary:hover {
                     background-color: #45a049;
                     }
@@ -1653,8 +1654,8 @@
             <h2>Quản lý lịch bay</h2>
             <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
             <div class="btn-group">
-                <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormlichbay()">Thêm lịch bay mới</button>
-                <button id="show-edit-form-btn" class="btn-primary" onclick="toggleAddFormlichbayedit()">Thêm chỉnh sửa</button>
+                <button id="show-add-form-btn" class="btn-primary" type="button" onclick="toggleAddFormlichbay()">Thêm lịch bay mới</button>
+                <button id="show-edit-form-btn" class="btn-primary" type="button" onclick="toggleAddFormlichbayedit()">Thêm chỉnh sửa</button>
               </div>
             <!-- Form thêm lịch bay -->
             <form id="themLichForm" style="display: none">
@@ -1925,11 +1926,11 @@
           <h2>Quản lý phân công</h2>
           <input type="text" id="searchInput" placeholder="Nhập từ khóa tìm kiếm..." class="search-input">
           <div class="btn-group">
-            <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormphancong()">Thêm phân công</button>
-            <button id="show-add-form-btn" class="btn-primary" onclick="toggleAddFormphancong2()">Thêm thay đổi</button>
+            <button id="show-add-form-btn" class="btn-primary" type="button" onclick="toggleAddFormphancong()">Thêm phân công</button>
+            <button id="show-add-form-btn" class="btn-primary" type="button" onclick="toggleAddFormphancong2()">Thêm thay đổi</button>
           </div>
           <!-- Form thêm phân công -->
-          <form id="themPhanCongForm">
+          <form id="themPhanCongForm" style="display: none;">
             <label for="employee-id">Mã nhân viên:</label>
             <select id="employee-id" name="employee-id" required>
                 <option value="">-- Chọn Mã nhân viên --</option>
@@ -1950,7 +1951,7 @@
             <button type="button" onclick="toggleAddFormphancong()">Hủy</button>
           </form>
           <!-- Form sửa phân công -->  
-          <form id="suaPhanCongForm">
+          <form id="suaPhanCongForm" style="display: none;">
               <label for="edit-employee-id">Mã nhân viên:</label>
               <select id="edit-employee-id" name="employee-id" required>
                   <option value="">-- Chọn Mã nhân viên --</option>
