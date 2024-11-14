@@ -488,7 +488,7 @@ body {
 .notification-content {
     flex: 1;
     margin-left: 10px;
-    color: blue;
+    color: #4a90e2;
 }
 
 .notification-type {
@@ -511,6 +511,9 @@ body {
 
 .notification-nav button:focus {
     outline: none;
+}
+.notification-nav button:hover {
+    background-color: #4a90e2; /* Màu xanh nhạt hơn khi hover */
 }
 
 .notification-more {
@@ -1182,11 +1185,7 @@ margin-bottom: 10px;
         font-size: 14px;
     }
 
-    /* Forms */
-    .form-group input,
-    .form-group select {
-        font-size: 14px;
-    }
+
 
     /* Notification bar */
     .notification-bar {
