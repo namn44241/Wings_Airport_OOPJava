@@ -454,6 +454,35 @@ body {
     margin: 20px;
     width: 66.67%; /* Chiếm 2/3 chiều rộng màn hình */
     margin: 0 auto; /* Căn giữa khối */
+    
+}
+@media screen and (max-width: 768px) {
+    .notification-bar {
+        width: 90%;
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 10px auto;
+    }
+
+    .notification-content {
+        text-align: center;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .notification-nav {
+        margin: 10px 0;
+    }
+
+    #notification-count {
+        margin: 0 10px;
+    }
+
+    .notification-more {
+        margin-top: 10px;
+    }
 }
 
 .notification-content {
@@ -694,15 +723,12 @@ color: #0077ff; /* Màu chữ khi di chuột vào */
     margin: 0 auto;
     max-width: 1200px;
     margin-bottom: 30px; /* Thêm margin-bottom để tạo khoảng cách giữa các row */
-
 }
-
 
 /* Loại bỏ margin-bottom cho row cuối cùng */
 .row:last-child {
     margin-bottom: 0;
 }
-
 
 .dropdown > a::after {
     content: '🔽';
