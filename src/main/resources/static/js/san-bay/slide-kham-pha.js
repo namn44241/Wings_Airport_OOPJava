@@ -2,57 +2,64 @@ const slides1 = document.querySelectorAll(".slide");
 const slider = document.querySelector(".slider");
 const dotsContainer1 = document.querySelector(".dots1");
 let currentSlide = 0;
-const slidesPerPage = 3;
+const slidesPerPage = 4;
 
-// Tạo dấu chấm động chỉ khi cần thiết
-const numDots = Math.ceil(slides1.length / slidesPerPage);
-if (numDots > 1) {
-  // Chỉ tạo dấu chấm nếu số lượng dấu chấm cần thiết lớn hơn 1
-  for (let i = 0; i < numDots; i++) {
-    const dot = document.createElement("span");
-    dot.classList.add("dot");
-    if (i === 0) {
-      dot.classList.add("active");
-    }
-    dotsContainer1.appendChild(dot);
+// Calculate actual number of dots needed based on unique slides
+const uniqueSlides = Array.from(
+  new Set(Array.from(slides1).map((slide) => slide.querySelector("img").src))
+).length;
+const numDots = Math.ceil(uniqueSlides / slidesPerPage);
+
+// Clear and create new dots
+dotsContainer1.innerHTML = "";
+for (let i = 0; i < numDots; i++) {
+  const dot = document.createElement("span");
+  dot.classList.add("dot");
+  if (i === 0) {
+    dot.classList.add("active");
   }
+  dotsContainer1.appendChild(dot);
 }
 
 const dots1 = document.querySelectorAll(".dot");
 
-// Hàm hiển thị slide dựa trên chỉ số n (số thứ tự của dấu chấm)
 function showSlide(n) {
   currentSlide = n;
   const slideWidth = slides1[0].offsetWidth + 20;
-  const maxTranslate = -(
-    Math.floor((slides1.length - 1) / slidesPerPage) *
-    slidesPerPage *
-    slideWidth
-  );
+
+  // Calculate maximum translation
+  const maxTranslate = -(uniqueSlides - slidesPerPage) * slideWidth;
+
+  // Calculate desired translation
   let translateX = -n * slidesPerPage * slideWidth;
-  translateX = Math.max(maxTranslate, Math.min(0, translateX));
+
+  // Ensure we don't translate beyond the last unique slide
+  translateX = Math.max(translateX, maxTranslate);
 
   slider.style.transform = `translateX(${translateX}px)`;
 
+  // Update active dot
   dots1.forEach((dot, index) => {
     dot.classList.toggle("active", index === n);
   });
 }
 
-// Hàm chuyển sang slide tiếp theo (khi hết slide sẽ quay lại slide đầu tiên)
 function nextSlide() {
   currentSlide = (currentSlide + 1) % numDots;
   showSlide(currentSlide);
 }
 
-showSlide(currentSlide);
+// Initialize slider
+showSlide(0);
 
-let slideInterval = setInterval(nextSlide, 2000);
+// Auto slide
+let slideInterval = setInterval(nextSlide, 3000);
 
+// Handle dot clicks
 dots1.forEach((dot, index) => {
   dot.addEventListener("click", () => {
     clearInterval(slideInterval);
     showSlide(index);
-    slideInterval = setInterval(nextSlide, 2000);
+    slideInterval = setInterval(nextSlide, 3000);
   });
 });

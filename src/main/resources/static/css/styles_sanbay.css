@@ -930,19 +930,29 @@ th {
     font-size: 16px;
 }
 
+.slide.clone {
+    opacity: 1; /* Đảm bảo slide clone hiển thị giống slide gốc */
+}
+
+/* Style cho dots giữ nguyên */
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #bbb;
+    margin: 0 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dot.active {
+    background-color: #05B3FE;
+}
+
 .dots1 {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
-}
-
-.dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #bbb;
-    margin: 0 5px;
-    cursor: pointer;
+    margin-top: 20px;
 }
 /* form send gmail */
 .container1 {
