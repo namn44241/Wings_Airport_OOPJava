@@ -287,7 +287,7 @@
         const flightRoutes = [
             { from: "Hà Nội", to: "Đà Nẵng", image: "images/danang1.jpg", link: "https://pixabay.com/vi/images/search/%C4%91%C3%A0%20n%E1%BA%B5ng/", price: "1,500,000 VND" },
             { from: "Hà Nội", to: "Hạ Long", image: "images/halong1.jpg", link: "https://pixabay.com/vi/images/search/v%E1%BB%8Bnh%20h%E1%BA%A1%20long/", price: "800,000 VND" },
-            { from: "Hà Nội", to: "Đà Nẵng", image: "images/danang3.jpg", link: "https://pixabay.com/vi/images/search/%C4%91%C3%A0%20n%E1%BA%B5ng/", price: "1,200,000 VND" },
+            { from: "Hà Nội", to: "Đà Nẵng", image: "images/danang3.jpg", link: "https://pixabay.com/vi/images/search/%C4%91%C3%A0%20n%E1%BA%B5ng/", price: "2,000,000 VND" },
             { from: "Hà Nội", to: "TP Hồ Chí Minh", image: "images/du-lich-sai-gon-1.webp", link: "https://www.pexels.com/vi-vn/tim-kiem/th%C3%A0nh%20ph%E1%BB%91%20h%E1%BB%93%20ch%C3%AD%20minh/", price: "1,800,000 VND" },
             { from: "Hà Nội", to: "Sa Pa", image: "images/sapa.jpg", link: "https://pixabay.com/vi/images/search/sapa/", price: "1,000,000 VND" },
             { from: "Hà Nội", to: "Ninh Bình", image: "images/ninhbinh.jpg", link: "https://pixabay.com/vi/images/search/ninh%20binh/", price: "1,600,000 VND" },
@@ -323,43 +323,57 @@
             displayImages(filteredRoutes);
         }        
         function displayImages(routes) {
-        const rows = [document.getElementById('row1'), document.getElementById('row2'), document.getElementById('row3')];
-        rows.forEach(row => {
-            row.innerHTML = '';
-            row.style.display = 'none';
-        });
-        
-        const displayCount = showAllImages ? routes.length : Math.min(4, routes.length);
+            const rows = [document.getElementById('row1'), document.getElementById('row2'), document.getElementById('row3')];
+            rows.forEach(row => {
+                row.innerHTML = '';
+                row.style.display = 'none';
+            });
+            
+            const displayCount = showAllImages ? routes.length : Math.min(3, routes.length); // Chỉ hiển thị 3 ảnh ban đầu
+            const viewMoreBtn = document.getElementById('view-more-btn');
+            
+            // Ẩn nút nếu không có đủ ảnh để xem thêm
+            if (routes.length <= 3) {
+                viewMoreBtn.style.display = 'none';
+            } else {
+                viewMoreBtn.style.display = 'block';
+                viewMoreBtn.textContent = showAllImages ? "Thu gọn" : "Xem thêm";
+            }
 
-        for (let i = 0; i < displayCount; i++) {
-            const route = routes[i];
-            const rowIndex = Math.floor(i / 4);
-            const row = rows[rowIndex];
-            row.style.display = 'flex';
-            
-            const div = document.createElement('div');
-            div.className = 'image-container';
-            div.innerHTML = `
-                <a href="${route.link}" target="_blank">
-                    <img src="${route.image}" alt="${route.from} to ${route.to}">
-                </a>
-                <div class="text">
-                    <div>Từ ${route.from} đến ${route.to}</div>
-                    <div class="price">${route.price}</div>
-                </div>
-            `;
-            row.appendChild(div);
-            
-            setTimeout(() => {
-                div.classList.add('show');
-            }, 50 * i);
+            for (let i = 0; i < displayCount; i++) {
+                const route = routes[i];
+                const rowIndex = Math.floor(i / 3);
+                const row = rows[rowIndex];
+                row.style.display = 'flex';
+                
+                const div = document.createElement('div');
+                div.className = 'image-container';
+                div.innerHTML = `
+                    <a href="${route.link}" target="_blank">
+                        <img src="${route.image}" alt="${route.from} to ${route.to}">
+                    </a>
+                    <div class="text">
+                        <div>Từ ${route.from} đến ${route.to}</div>
+                        <div class="price">${route.price}</div>
+                    </div>
+                `;
+                row.appendChild(div);
+                
+                setTimeout(() => {
+                    div.classList.add('show');
+                }, 50 * i);
+            }
         }
-    }
+
         function toggleAdditionalImages() {
             showAllImages = !showAllImages;
             displayImages(flightRoutes);
-            document.getElementById('view-more-btn').textContent = showAllImages ? "Thu gọn" : "Xem thêm";
         }
+        // function toggleAdditionalImages() {
+        //     showAllImages = !showAllImages;
+        //     displayImages(flightRoutes);
+        //     document.getElementById('view-more-btn').textContent = showAllImages ? "Thu gọn" : "Xem thêm";
+        // }
         
         function toggleDropdown(event, id) {
             event.preventDefault();
