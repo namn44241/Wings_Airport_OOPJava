@@ -53,13 +53,13 @@ function nextSlide() {
 showSlide(0);
 
 // Auto slide
-let slideInterval = setInterval(nextSlide, 3000);
+let slideInterval = setInterval(nextSlide, 5000);
 
 // Handle dot clicks
 dots1.forEach((dot, index) => {
   dot.addEventListener("click", () => {
     clearInterval(slideInterval);
     showSlide(index);
-    slideInterval = setInterval(nextSlide, 3000);
+    slideInterval = setInterval(nextSlide, 5000);
   });
 });
