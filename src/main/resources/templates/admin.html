@@ -160,17 +160,26 @@
               </tr>
             </table>
 
-            <div class="chart-item">
-              <canvas id="topChuyenBayChart"></canvas>
-            </div>
-            <div class="chart-item">
-                <canvas id="chuyenBayThangChart"></canvas>
-            </div>
-            <div class="chart-item">
-                <canvas id="loaiMayBayChart"></canvas>
-            </div>
-            <div class="chart-item">
-                <canvas id="nhanVienChart"></canvas>
+            <div class="chart-container">
+                <!-- Biểu đồ tròn 1 -->
+                <div class="chart-item">
+                    <canvas id="loaiMayBayChart"></canvas>
+                </div>
+                
+                <!-- Biểu đồ tròn 2 -->
+                <div class="chart-item">
+                    <canvas id="nhanVienChart"></canvas>
+                </div>
+                
+                <!-- Biểu đồ cột -->
+                <div class="chart-item">
+                    <canvas id="topChuyenBayChart"></canvas>
+                </div>
+                
+                <!-- Biểu đồ line -->
+                <div class="chart-item">
+                    <canvas id="chuyenBayThangChart"></canvas>
+                </div>
             </div>
 
             <script th:inline="javascript">
@@ -284,7 +293,9 @@
 
         <section id="flight-info" xmlns:th="http://www.thymeleaf.org">
             <h2>Quản lý thông tin chuyến bay</h2>
-            
+
+            <button id="toggleFormBtn4" class="toggle-btn">Ẩn/Hiện Form Đăng Ký</button>
+
             <!-- Hiển thị thông báo -->
             <div th:if="${message}" th:class="'alert alert-' + ${messageType}" th:text="${message}"></div>
             
@@ -325,6 +336,18 @@
             </table>
         
             <script th:inline="javascript">
+                document.addEventListener('DOMContentLoaded', function() {
+                    const toggleBtn = document.getElementById('toggleFormBtn4');
+                    const form = document.getElementById('add-flight-form');
+                    form.classList.add('hidden');         
+                    toggleBtn.addEventListener('click', function() {
+                        form.classList.toggle('hidden');
+                        // Thay đổi text của nút
+                        toggleBtn.textContent = form.classList.contains('hidden') 
+                            ? 'Hiện Form Đăng Ký' 
+                            : 'Ẩn Form Đăng Ký';
+                    });
+                });
                 // Load dữ liệu ban đầu
                 function loadInitialFlightData() {
                     fetch('/api/admin/flights')
@@ -483,6 +506,9 @@
             <div th:if="${message}" th:class="'alert alert-' + ${messageType}" th:text="${message}"></div>
         
             <h2>Quản lý thông tin loại máy bay</h2>
+
+            <button id="toggleFormBtn2" class="toggle-btn">Ẩn/Hiện Form Đăng Ký</button>
+
             <form id="add-plane-type-form" method="POST" th:action="@{/them_loai_mb}">
                 <label for="plane-type-id">Mã loại:</label>
                 <input type="text" id="plane-type-id" name="plane-type-id" th:value="${next_plane_type_id}" readonly><br>
@@ -504,6 +530,18 @@
             </table>
         
             <script th:inline="javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                const toggleBtn = document.getElementById('toggleFormBtn2');
+                const form = document.getElementById('add-plane-type-form');
+                form.classList.add('hidden');
+                toggleBtn.addEventListener('click', function() {
+                    form.classList.toggle('hidden');
+                    // Thay đổi text của nút
+                    toggleBtn.textContent = form.classList.contains('hidden') 
+                        ? 'Hiện Form Đăng Ký' 
+                        : 'Ẩn Form Đăng Ký';
+                });
+            });
             function loadInitialPlaneTypeData() {
                 fetch('/api/admin/aircraft')
                 .then(response => response.json()) 
@@ -626,9 +664,14 @@
 
         <section id="airline-info">
             <h2>Quản lý thông tin đặt chỗ</h2>
+
+            <div class="form-controls">
+                <button class="form-toggle" data-form="add">Form Thêm Mới</button>
+                <button class="form-toggle" data-form="edit">Form Chỉnh Sửa</button>
+            </div>
             
             <!-- Form thêm đặt chỗ -->
-            <form id="themDatChoForm">
+            <form id="themDatChoForm" class="form-container hidden">
                 <label for="customer-id">Mã khách hàng:</label>
                 <select id="customer-id" name="customer-id" required>
                     <option value="">-- Chọn Mã khách hàng --</option>
@@ -649,7 +692,7 @@
             </form>
         
             <!-- Form sửa đặt chỗ -->
-            <form id="suaDatChoForm">
+            <form id="suaDatChoForm" class="form-container hidden">
                 <label for="edit-customer-id">Mã khách hàng:</label>
                 <select id="edit-customer-id" name="customer-id" required>
                     <option value="">-- Chọn Mã khách hàng --</option>
@@ -688,6 +731,38 @@
             </table>
         
             <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const section = document.getElementById('airline-info');
+                const toggleButtons = section.querySelectorAll('.form-toggle');
+                const forms = section.querySelectorAll('.form-container');
+                
+                // Mặc định ẩn tất cả form
+                forms.forEach(form => {
+                    form.classList.add('hidden');
+                });
+                
+                // Xử lý sự kiện click nút
+                toggleButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const formType = this.dataset.form;
+                        const targetForm = formType === 'add' ? 
+                            document.getElementById('themDatChoForm') : 
+                            document.getElementById('suaDatChoForm');
+                        
+                        // Nếu nút đang active và form đang hiện
+                        if (this.classList.contains('active') && !targetForm.classList.contains('hidden')) {
+                            // Ẩn form và bỏ active của nút
+                            targetForm.classList.add('hidden');
+                            this.classList.remove('active');
+                        } else {
+                            // Nếu nút chưa active hoặc form đang ẩn
+                            // Hiện form được chọn và active nút tương ứng
+                            targetForm.classList.remove('hidden');
+                            this.classList.add('active');
+                        }
+                    });
+                });
+            });
             async function loadInitialData() {
                 try {
                     // Load customers first
@@ -872,6 +947,8 @@
           <section id="aircraft-info">
             <h2>Quản lý thông tin máy bay</h2>
         
+            <button id="toggleFormBtn3" class="toggle-btn">Ẩn/Hiện Form Đăng Ký</button>
+
             <form id="add-plane-form">
                 <label for="plane-id">Số hiệu:</label>
                 <input type="text" id="plane-id" name="plane-id" placeholder="Nhập số hiệu" required><br>
@@ -905,6 +982,18 @@
         </section>
     
         <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('toggleFormBtn3');
+            const form = document.getElementById('add-plane-form');
+            form.classList.add('hidden');         
+            toggleBtn.addEventListener('click', function() {
+                form.classList.toggle('hidden');
+                // Thay đổi text của nút
+                toggleBtn.textContent = form.classList.contains('hidden') 
+                    ? 'Hiện Form Đăng Ký' 
+                    : 'Ẩn Form Đăng Ký';
+            });
+        });
         function loadInitialAircraftData() {
             fetch('/api/admin/aircraft')
             .then(response => response.json())
@@ -1054,9 +1143,12 @@
         <!-- Quản lý thông tin khách hàng -->
         <section id="customer-info" xmlns:th="http://www.thymeleaf.org">
           <div th:if="${message}" th:class="'alert alert-' + ${messageType}" th:text="${message}"></div>
-          
+
           <h2>Quản lý thông tin khách hàng</h2>
-          <form method="POST" th:action="@{/them_kh}">
+
+          <button id="toggleFormBtn" class="toggle-btn">Ẩn/Hiện Form Đăng Ký</button>
+
+          <form id="customerForm" method="POST" th:action="@{/them_kh}">
               <!-- Trong form HTML -->
               <label for="customer-id">Mã khách hàng:</label>
               <input type="text" required pattern="^KH.*$" id="customer-id" name="customer-id" readonly>
@@ -1093,6 +1185,18 @@
           </table>
 
           <script th:inline="javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                const toggleBtn = document.getElementById('toggleFormBtn');
+                const form = document.getElementById('customerForm');
+                form.classList.add('hidden');         
+                toggleBtn.addEventListener('click', function() {
+                    form.classList.toggle('hidden');
+                    // Thay đổi text của nút
+                    toggleBtn.textContent = form.classList.contains('hidden') 
+                        ? 'Hiện Form Đăng Ký' 
+                        : 'Ẩn Form Đăng Ký';
+                });
+            });
           function loadInitialCustomerData() {
               fetch('/api/admin/bookings')
               .then(response => response.json())
@@ -1211,6 +1315,9 @@
               <div th:if="${message}" th:class="'alert alert-' + ${messageType}" th:text="${message}"></div>
               
               <h2>Quản lý thông tin nhân viên</h2>
+
+              <button id="toggleFormBtn1" class="toggle-btn">Ẩn/Hiện Form Đăng Ký</button>
+
               <form id="add-employee-form" method="POST" th:action="@{/them_nv}">
                   <label for="employee-id">Mã nhân viên:</label>
                   <input type="text" required pattern="^NV.*$" id="employee-id" name="employee-id" th:value="${next_employee_id}" readonly><br>
@@ -1258,6 +1365,18 @@
               </table>
           
               <script th:inline="javascript">
+                document.addEventListener('DOMContentLoaded', function() {
+                    const toggleBtn = document.getElementById('toggleFormBtn1');
+                    const form = document.getElementById('add-employee-form');
+                    form.classList.add('hidden');
+                    toggleBtn.addEventListener('click', function() {
+                        form.classList.toggle('hidden');
+                        // Thay đổi text của nút
+                        toggleBtn.textContent = form.classList.contains('hidden') 
+                            ? 'Hiện Form Đăng Ký' 
+                            : 'Ẩn Form Đăng Ký';
+                    });
+                });
               function loadInitialEmployeeData() {
                   fetch('/api/admin/employees')
                   .then(response => response.json())
@@ -1412,10 +1531,15 @@
           </section> 
 
           <section id="schedule-info">
-            <h2>Quản lý lịch bay</h2>
+            <h2>Quản lý thông tin lịch bay</h2>  
             
-            <!-- Form thêm lịch bay -->
-            <form id="themLichForm">
+            <div class="form-controls">
+                <button class="form-toggle" data-form="add">Form Thêm Mới</button>
+                <button class="form-toggle" data-form="edit">Form Chỉnh Sửa</button>
+            </div>
+            
+            <!-- Form thêm -->
+            <form id="themLichForm" class="form-container">
                 <label for="schedule-flight-id">Mã chuyến bay:</label>
                 <select id="schedule-flight-id" name="flight-id" required>
                     <option value="">-- Chọn Mã chuyến bay --</option>
@@ -1430,7 +1554,7 @@
             </form>
         
             <!-- Form sửa lịch bay -->
-            <form id="suaLichForm">
+            <form id="suaLichForm" class="form-container">
                 <label for="edit-schedule-flight-id">Mã chuyến bay:</label>
                 <select id="edit-schedule-flight-id" name="flight-id" required>
                     <option value="">-- Chọn Mã chuyến bay --</option>
@@ -1465,6 +1589,38 @@
             </table>
         
             <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const section = document.getElementById('schedule-info');
+                const toggleButtons = section.querySelectorAll('.form-toggle');
+                const forms = section.querySelectorAll('.form-container');
+                
+                // Mặc định ẩn tất cả form
+                forms.forEach(form => {
+                    form.classList.add('hidden');
+                });
+                
+                // Xử lý sự kiện click nút
+                toggleButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const formType = this.dataset.form;
+                        const targetForm = formType === 'add' ? 
+                            document.getElementById('themLichForm') : 
+                            document.getElementById('suaLichForm');
+                        
+                        // Nếu nút đang active và form đang hiện
+                        if (this.classList.contains('active') && !targetForm.classList.contains('hidden')) {
+                            // Ẩn form và bỏ active của nút
+                            targetForm.classList.add('hidden');
+                            this.classList.remove('active');
+                        } else {
+                            // Nếu nút chưa active hoặc form đang ẩn
+                            // Hiện form được chọn và active nút tương ứng
+                            targetForm.classList.remove('hidden');
+                            this.classList.add('active');
+                        }
+                    });
+                });
+            });
             function loadInitialData() {
                 // Load flights
                 fetch('/api/admin/flights')
@@ -1625,10 +1781,15 @@
         </section>
 
         <section id="assignment-info">
-          <h2>Quản lý phân công</h2>
+          <h2>Quản lý thông tin phân công</h2>
+
+          <div class="form-controls">
+            <button class="form-toggle" data-form="add">Form Thêm Mới</button>
+            <button class="form-toggle" data-form="edit">Form Chỉnh Sửa</button>
+        </div>
           
           <!-- Form thêm phân công -->
-          <form id="themPhanCongForm">
+          <form id="themPhanCongForm" class="form-container hidden">
             <label for="employee-id">Mã nhân viên:</label>
             <select id="employee-id" name="employee-id" required>
                 <option value="">-- Chọn Mã nhân viên --</option>
@@ -1649,7 +1810,7 @@
           </form>
 
           <!-- Form sửa phân công -->  
-          <form id="suaPhanCongForm">
+          <form id="suaPhanCongForm" class="form-container hidden">
               <label for="edit-employee-id">Mã nhân viên:</label>
               <select id="edit-employee-id" name="employee-id" required>
                   <option value="">-- Chọn Mã nhân viên --</option>
@@ -1690,6 +1851,38 @@
           </table>
 
           <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Xử lý ẩn/hiện form
+                const section = document.getElementById('assignment-info');
+                const toggleButtons = section.querySelectorAll('.form-toggle');
+                const forms = section.querySelectorAll('.form-container');
+                
+                // Mặc định ẩn tất cả form
+                forms.forEach(form => {
+                    form.classList.add('hidden');
+                });
+                
+                // Xử lý sự kiện click nút
+                toggleButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const formType = this.dataset.form;
+                        const targetForm = formType === 'add' ? 
+                            document.getElementById('themPhanCongForm') : 
+                            document.getElementById('suaPhanCongForm');
+                        
+                        if (this.classList.contains('active') && !targetForm.classList.contains('hidden')) {
+                            targetForm.classList.add('hidden');
+                            this.classList.remove('active');
+                        } else {
+                            targetForm.classList.remove('hidden');
+                            this.classList.add('active');
+                        }
+                    });
+                });
+
+                // Load dữ liệu ban đầu
+                loadInitialData();
+            });
           function loadInitialData() {
               // Load employees
               fetch('/api/admin/employees')
