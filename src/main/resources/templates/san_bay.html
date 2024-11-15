@@ -142,7 +142,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <button type="submit" style="width: 150px;">Đăng ký</button>
+                <button type="submit">Đăng ký</button>
             </div>
         </form>
     </div>
@@ -185,6 +185,7 @@
 
     <!-- Tra cứu chuyến bay -->
     <div class="container" id="checkin-container" style="display: none;">
+        <h2 class="form-title">Tra cứu thông tin</h2>
         <form id="search-form" th:action="@{/api/search}" method="GET">
             <p>Tìm kiếm thông tin:</p>
             <input type="text" name="query" placeholder="Siêu tìm kiếm (Mã chuyến bay, Sân bay, Số hiệu máy bay, Giờ đi, Ngày đến...)" required>
@@ -253,7 +254,7 @@
             <button onclick="nextNotification()">&#9654;</button>
         </div>
         <div class="notification-more">
-            <a href="https://www.vietnamairlines.com/vn/vi/vietnam-airlines/press-room/news" id="notification-more-link">Xem thêm</a>
+            <a href="https://www.vietnamairlines.com/vn/vi/vietnam-airlines/press-room/news" id="notification-more-link" style="color: #4a90e2;">Xem thêm</a>
         </div>
     </div>
 
