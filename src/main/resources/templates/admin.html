@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/styles_admin.css}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
   
@@ -516,6 +517,14 @@
                 <input type="text" id="manufacturer" name="manufacturer" placeholder="Nhập tên hãng sản xuất" required><br>
                 <button type="button" onclick="addPlaneType()">Thêm thông tin Loại máy bay</button>
             </form>
+
+            <div class="search-container">
+                <input type="text" id="searchPlaneTypeInput" class="search-input" placeholder="Tìm kiếm theo mã loại, hãng sản xuất...">
+                <button class="search-button">
+                    <i class="fas fa-search"></i>
+                    Tìm kiếm
+                </button>
+            </div>
         
             <table>
                 <thead>
@@ -540,6 +549,75 @@
                     toggleBtn.textContent = form.classList.contains('hidden') 
                         ? 'Hiện Form Đăng Ký' 
                         : 'Ẩn Form Đăng Ký';
+                });
+                const searchInput = document.getElementById('searchPlaneTypeInput');
+                const searchButton = document.querySelector('#airport-info .search-button');
+
+                function performPlaneTypeSearch(query) {
+                    fetch(`/api/admin/search-plane-types?query=${encodeURIComponent(query)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                const tableBody = document.querySelector('#airport-info table tbody');
+                                tableBody.innerHTML = '';
+                                
+                                if (data.data.length === 0) {
+                                    tableBody.innerHTML = '<tr><td colspan="3">Không tìm thấy kết quả</td></tr>';
+                                    return;
+                                }
+
+                                data.data.forEach(plane => {
+                                    const row = `
+                                        <tr>
+                                            <td>${plane.MaLoai}</td>
+                                            <td>${plane.HangSanXuat}</td>
+                                            <td>
+                                                <button onclick="showEditForm('${plane.MaLoai}')">Sửa</button>
+                                                <button onclick="deletePlaneType('${plane.MaLoai}')">Xóa</button>
+                                                <form id="edit-form-${plane.MaLoai}" style="display: none;" 
+                                                    onsubmit="return editPlaneType('${plane.MaLoai}')">
+                                                    <input type="hidden" name="plane-type-id" value="${plane.MaLoai}">
+                                                    <label for="edit-manufacturer-${plane.MaLoai}">Hãng sản xuất:</label>
+                                                    <input type="text" id="edit-manufacturer-${plane.MaLoai}" 
+                                                        name="manufacturer" value="${plane.HangSanXuat}" required><br>
+                                                    <button type="submit">Lưu thay đổi</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    `;
+                                    tableBody.insertAdjacentHTML('beforeend', row);
+                                });
+                            } else {
+                                alert('Có lỗi xảy ra khi tìm kiếm: ' + data.error);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Có lỗi xảy ra khi tìm kiếm');
+                        });
+                }
+
+                // Xử lý sự kiện click nút tìm kiếm
+                searchButton.addEventListener('click', function() {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        performPlaneTypeSearch(query);
+                    } else {
+                        loadInitialPlaneTypeData();
+                    }
+                });
+
+                // Xử lý sự kiện nhấn Enter trong ô tìm kiếm
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = this.value.trim();
+                        if (query) {
+                            performPlaneTypeSearch(query);
+                        } else {
+                            loadInitialPlaneTypeData();
+                        }
+                    }
                 });
             });
             function loadInitialPlaneTypeData() {
@@ -1168,6 +1246,14 @@
               <button type="submit">Thêm thông tin khách hàng</button>
           </form>
 
+          <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Tìm kiếm theo mã KH, tên, số điện thoại...">
+            <button class="search-button">
+                <i class="fas fa-search"></i>
+                Tìm kiếm
+            </button>
+        </div>
+
           <table>
               <thead>
                   <tr>
@@ -1195,6 +1281,75 @@
                     toggleBtn.textContent = form.classList.contains('hidden') 
                         ? 'Hiện Form Đăng Ký' 
                         : 'Ẩn Form Đăng Ký';
+                });
+                const searchInput = document.getElementById('searchInput');
+                const searchButton = document.querySelector('.search-button');
+
+                function performSearch(query) {
+                    fetch(`/api/admin/search-customers?query=${encodeURIComponent(query)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                const tableBody = document.querySelector('#customer-info table tbody');
+                                tableBody.innerHTML = ''; // Xóa dữ liệu cũ
+                                
+                                if (data.data.length === 0) {
+                                    tableBody.innerHTML = '<tr><td colspan="6">Không tìm thấy kết quả</td></tr>';
+                                    return;
+                                }
+
+                                // Hiển thị kết quả với animation
+                                data.data.forEach(customer => {
+                                    const row = `
+                                        <tr>
+                                            <td>${customer.MaKH}</td>
+                                            <td>${customer.SDT}</td>
+                                            <td>${customer.HoDem}</td>
+                                            <td>${customer.Ten}</td>
+                                            <td>${customer.DiaChi}</td>
+                                            <td>
+                                                <button onclick="deleteCustomer('${customer.MaKH}')">Xóa</button>
+                                                <button onclick="showEditForm('${customer.MaKH}')">Sửa</button>
+                                                <form id="edit-form-${customer.MaKH}" style="display: none;" 
+                                                    onsubmit="return editCustomer('${customer.MaKH}')">
+                                                    <!-- Form content -->
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    `;
+                                    tableBody.insertAdjacentHTML('beforeend', row);
+                                });
+                            } else {
+                                alert('Có lỗi xảy ra khi tìm kiếm: ' + data.error);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Có lỗi xảy ra khi tìm kiếm');
+                        });
+                }
+
+                // Xử lý sự kiện click nút tìm kiếm
+                searchButton.addEventListener('click', function() {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        performSearch(query);
+                    } else {
+                        loadInitialCustomerData(); // Load lại dữ liệu ban đầu nếu ô tìm kiếm trống
+                    }
+                });
+
+                // Xử lý sự kiện nhấn Enter trong ô tìm kiếm
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = this.value.trim();
+                        if (query) {
+                            performSearch(query);
+                        } else {
+                            loadInitialCustomerData();
+                        }
+                    }
                 });
             });
           function loadInitialCustomerData() {
@@ -1346,6 +1501,14 @@
                   
                   <button type="button" onclick="addEmployee()">Thêm thông tin nhân viên</button>
               </form>
+
+              <div class="search-container">
+                <input type="text" id="searchEmployeeInput" class="search-input" placeholder="Tìm kiếm theo mã NV, tên, số điện thoại, loại NV...">
+                <button class="search-button">
+                    <i class="fas fa-search"></i>
+                    Tìm kiếm
+                </button>
+            </div>
           
               <table>
                   <thead>
@@ -1375,6 +1538,76 @@
                         toggleBtn.textContent = form.classList.contains('hidden') 
                             ? 'Hiện Form Đăng Ký' 
                             : 'Ẩn Form Đăng Ký';
+                    });
+                    const searchInput = document.getElementById('searchEmployeeInput');
+                    const searchButton = document.querySelector('#employee-info .search-button');
+
+                    function performEmployeeSearch(query) {
+                        fetch(`/api/admin/search-employees?query=${encodeURIComponent(query)}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    const tableBody = document.querySelector('#employee-info table tbody');
+                                    tableBody.innerHTML = '';
+                                    
+                                    if (data.data.length === 0) {
+                                        tableBody.innerHTML = '<tr><td colspan="8">Không tìm thấy kết quả</td></tr>';
+                                        return;
+                                    }
+
+                                    data.data.forEach(employee => {
+                                        const row = `
+                                            <tr>
+                                                <td>${employee.MaNV}</td>
+                                                <td>${employee.HoDem}</td>
+                                                <td>${employee.Ten}</td>
+                                                <td>${employee.SDT}</td>
+                                                <td>${employee.DiaChi}</td>
+                                                <td>${employee.Luong}</td>
+                                                <td>${employee.LoaiNV}</td>
+                                                <td>
+                                                    <button onclick="deleteEmployee('${employee.MaNV}')">Xóa</button>
+                                                    <button onclick="showEditForm('${employee.MaNV}')">Sửa</button>
+                                                    <form id="edit-form-${employee.MaNV}" style="display: none;" 
+                                                        onsubmit="return editEmployee('${employee.MaNV}')">
+                                                        <!-- Form content -->
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        `;
+                                        tableBody.insertAdjacentHTML('beforeend', row);
+                                    });
+                                } else {
+                                    alert('Có lỗi xảy ra khi tìm kiếm: ' + data.error);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                alert('Có lỗi xảy ra khi tìm kiếm');
+                            });
+                    }
+
+                    // Xử lý sự kiện click nút tìm kiếm
+                    searchButton.addEventListener('click', function() {
+                        const query = searchInput.value.trim();
+                        if (query) {
+                            performEmployeeSearch(query);
+                        } else {
+                            loadInitialEmployeeData();
+                        }
+                    });
+
+                    // Xử lý sự kiện nhấn Enter trong ô tìm kiếm
+                    searchInput.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            const query = this.value.trim();
+                            if (query) {
+                                performEmployeeSearch(query);
+                            } else {
+                                loadInitialEmployeeData();
+                            }
+                        }
                     });
                 });
               function loadInitialEmployeeData() {

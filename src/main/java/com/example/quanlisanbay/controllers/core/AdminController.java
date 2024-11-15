@@ -3,6 +3,7 @@ package com.example.quanlisanbay.controllers.core;
 import com.example.quanlisanbay.config.LoginRequired;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -89,6 +90,40 @@ public class AdminController {
        return response;
    }
 
+    @GetMapping("/api/admin/search-plane-types")
+    @ResponseBody
+    public Map<String, Object> searchPlaneTypes(@RequestParam("query") String query) {
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            String searchQuery = """
+                SELECT 
+                    MaLoai,
+                    HangSanXuat
+                FROM LoaiMayBay
+                WHERE 
+                    MaLoai LIKE ? OR
+                    HangSanXuat LIKE ?
+                ORDER BY MaLoai
+            """;
+
+            String searchPattern = "%" + query + "%";
+            List<Map<String, Object>> results = jdbcTemplate.queryForList(
+                searchQuery,
+                searchPattern, searchPattern
+            );
+
+            response.put("success", true);
+            response.put("data", results);
+            
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("error", e.getMessage());
+        }
+        
+        return response;
+    }
+
    // API lấy thông tin đặt chỗ và khách hàng 
    @GetMapping("/api/admin/bookings")
    @ResponseBody
@@ -128,6 +163,50 @@ public class AdminController {
         String query = "SELECT GioDi as departure_time, GioDen as arrival_time FROM ChuyenBay WHERE MaChuyenBay = ?";
         return jdbcTemplate.queryForMap(query, flight_id);
     }
+
+    @GetMapping("/api/admin/search-customers")
+    @ResponseBody
+    public Map<String, Object> searchCustomers(@RequestParam("query") String query) {
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            String searchQuery = """
+                SELECT 
+                    kh.MaKH,
+                    kh.SDT,
+                    kh.HoDem,
+                    kh.Ten,
+                    kh.DiaChi,
+                    COUNT(dc.MaKH) as SoLuotDat
+                FROM KhachHang kh
+                LEFT JOIN DatCho dc ON kh.MaKH = dc.MaKH
+                WHERE 
+                    kh.MaKH LIKE ? OR
+                    kh.SDT LIKE ? OR
+                    kh.HoDem LIKE ? OR
+                    kh.Ten LIKE ? OR
+                    kh.DiaChi LIKE ?
+                GROUP BY kh.MaKH, kh.SDT, kh.HoDem, kh.Ten, kh.DiaChi
+                ORDER BY kh.MaKH DESC
+            """;
+
+            String searchPattern = "%" + query + "%";
+            List<Map<String, Object>> results = jdbcTemplate.queryForList(
+                searchQuery,
+                searchPattern, searchPattern, searchPattern, 
+                searchPattern, searchPattern
+            );
+
+            response.put("success", true);
+            response.put("data", results);
+            
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("error", e.getMessage());
+        }
+        
+        return response;
+    }
     
    // API lấy thông tin nhân viên và phân công
    @GetMapping("/api/admin/employees") 
@@ -161,6 +240,50 @@ public class AdminController {
        response.put("assignmentInfo", assignmentInfo);
        return response;
    }
+
+    @GetMapping("/api/admin/search-employees")
+    @ResponseBody
+    public Map<String, Object> searchEmployees(@RequestParam("query") String query) {
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            String searchQuery = """
+                SELECT 
+                    nv.MaNV,
+                    nv.SDT,
+                    nv.HoDem,
+                    nv.Ten,
+                    nv.DiaChi,
+                    nv.Luong,
+                    nv.LoaiNV
+                FROM NhanVien nv
+                WHERE 
+                    nv.MaNV LIKE ? OR
+                    nv.SDT LIKE ? OR
+                    nv.HoDem LIKE ? OR
+                    nv.Ten LIKE ? OR
+                    nv.DiaChi LIKE ? OR
+                    nv.LoaiNV LIKE ?
+                ORDER BY nv.MaNV DESC
+            """;
+
+            String searchPattern = "%" + query + "%";
+            List<Map<String, Object>> results = jdbcTemplate.queryForList(
+                searchQuery,
+                searchPattern, searchPattern, searchPattern, 
+                searchPattern, searchPattern, searchPattern
+            );
+
+            response.put("success", true);
+            response.put("data", results);
+            
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("error", e.getMessage());
+        }
+        
+        return response;
+    }
 
    // API lấy thống kê
    @GetMapping("/api/admin/stats")
