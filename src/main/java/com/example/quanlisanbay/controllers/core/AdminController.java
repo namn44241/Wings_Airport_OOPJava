@@ -189,14 +189,15 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
                 WHERE 
                     mb.SoHieu LIKE ? OR
                     mb.MaLoai LIKE ? OR
-                    lmb.HangSanXuat LIKE ?
+                    lmb.HangSanXuat LIKE ? OR
+                    CAST(mb.SoGheNgoi AS CHAR) LIKE ?
                 ORDER BY mb.SoHieu
             """;
 
             String searchPattern = "%" + query + "%";
             List<Map<String, Object>> results = jdbcTemplate.queryForList(
                 searchQuery,
-                searchPattern, searchPattern, searchPattern
+                searchPattern, searchPattern, searchPattern, searchPattern
             );
 
             response.put("success", true);
@@ -387,49 +388,51 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
        return response;
    }
 
-    @GetMapping("/api/admin/search-employees")
-    @ResponseBody
-    public Map<String, Object> searchEmployees(@RequestParam("query") String query) {
-        Map<String, Object> response = new HashMap<>();
-        
-        try {
-            String searchQuery = """
-                SELECT 
-                    nv.MaNV,
-                    nv.SDT,
-                    nv.HoDem,
-                    nv.Ten,
-                    nv.DiaChi,
-                    nv.Luong,
-                    nv.LoaiNV
-                FROM NhanVien nv
-                WHERE 
-                    nv.MaNV LIKE ? OR
-                    nv.SDT LIKE ? OR
-                    nv.HoDem LIKE ? OR
-                    nv.Ten LIKE ? OR
-                    nv.DiaChi LIKE ? OR
-                    nv.LoaiNV LIKE ?
-                ORDER BY nv.MaNV DESC
-            """;
-
-            String searchPattern = "%" + query + "%";
-            List<Map<String, Object>> results = jdbcTemplate.queryForList(
-                searchQuery,
-                searchPattern, searchPattern, searchPattern, 
-                searchPattern, searchPattern, searchPattern
-            );
-
-            response.put("success", true);
-            response.put("data", results);
-            
-        } catch (Exception e) {
-            response.put("success", false);
-            response.put("error", e.getMessage());
-        }
-        
-        return response;
-    }
+   @GetMapping("/api/admin/search-employees")
+   @ResponseBody
+   public Map<String, Object> searchEmployees(@RequestParam("query") String query) {
+       Map<String, Object> response = new HashMap<>();
+       
+       try {
+           String searchQuery = """
+               SELECT 
+                   nv.MaNV,
+                   nv.SDT,
+                   nv.HoDem,
+                   nv.Ten,
+                   nv.DiaChi,
+                   nv.Luong,
+                   nv.LoaiNV
+               FROM NhanVien nv
+               WHERE 
+                   nv.MaNV LIKE ? OR
+                   nv.SDT LIKE ? OR
+                   nv.HoDem LIKE ? OR
+                   nv.Ten LIKE ? OR
+                   nv.DiaChi LIKE ? OR
+                   nv.LoaiNV LIKE ? OR
+                   CAST(nv.Luong AS CHAR) LIKE ?
+               ORDER BY nv.MaNV DESC
+           """;
+   
+           String searchPattern = "%" + query + "%";
+           List<Map<String, Object>> results = jdbcTemplate.queryForList(
+               searchQuery,
+               searchPattern, searchPattern, searchPattern, 
+               searchPattern, searchPattern, searchPattern,
+               searchPattern
+           );
+   
+           response.put("success", true);
+           response.put("data", results);
+           
+       } catch (Exception e) {
+           response.put("success", false);
+           response.put("error", e.getMessage());
+       }
+       
+       return response;
+   }
 
     @GetMapping("/api/admin/search-assignments")
     @ResponseBody
