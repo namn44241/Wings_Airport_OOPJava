@@ -225,6 +225,9 @@ Wings_Airport_OOPJava/
 │   │           │           ├── slide-anhto.js
 │   │           │           ├── slide-khampha.js   
 │   │           │           └── tin-tuc.js 
+│   │           ├── lang/
+│   │           │    ├── english.json
+│   │           │    └── tieng-viet.json
 │   │           ├── templates/
 │   │           │    ├── admin.html
 │   │           │    ├── login.html
