@@ -83,6 +83,7 @@ body, html {
     padding: 0;
     font-family: Arial, sans-serif;
 }
+/* Style cho modal */
 .modal {
     display: none;
     position: fixed;
@@ -91,65 +92,123 @@ body, html {
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
     background-color: rgba(0,0,0,0.4);
 }
 
+/* Style cho nội dung modal */
 .modal-content {
-    background-color: #ffffff;
-    margin: 15% auto;
-    padding: 25px;
-    border: 1px solid #080909;
-    width: 320px; /* Tăng chiều rộng từ 250px lên 320px */
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    width: 80%;
+    max-width: 500px;
+    margin: 10% auto; /* Điều chỉnh margin-top để đưa modal xuống thấp hơn */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.close {
-    color: #0d0e0f;
-    float: right;
+/* Style cho container bên trong modal */
+.modal-content > div {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 15px;
+}
+/* Style cho container bên trong modal */
+.modal-content > div:not(:first-child) {
+    background: #f8f9fa;
+    padding: 25px;
+    margin-bottom: -20px; /* Để các div kề nhau */
+   
+}
+
+/* Chỉ bo góc cho div đầu tiên trong nhóm */
+.modal-content > div:nth-child(2) {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+/* Chỉ bo góc cho div cuối cùng trong nhóm */
+.modal-content > div:last-child {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    margin-bottom: 0;
+}
+/* Style cho tiêu đề */
+.modal-content h2 {
+    color: #0c7de6;
+    text-align: center;
     font-size: 24px;
     font-weight: bold;
-    cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-    color: #0056b3;
-    text-decoration: none;
-}
-
-.modal-content h2 {
-    color: #007bff;
-    font-size: 20px; /* Tăng kích thước font chữ tiêu đề */
     margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e1e5eb;
 }
 
-#country, #language {
+/* Style cho labels */
+.modal-content label {
+    display: block;
+    color: #495057;
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+/* Style cho selects */
+.modal-content select {
     width: 100%;
-    padding: 10px;
+    height: 45px;
+    padding: 8px 15px;
+    border: 2px solid #e1e5eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #495057;
+    background-color: white;
+    transition: all 0.3s ease;
     margin-bottom: 15px;
-    border: 1px solid #0f1114;
-    border-radius: 4px;
-    font-size: 15px;
 }
 
+.modal-content select:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    outline: none;
+}
+
+/* Style cho button */
 #applyChoice {
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
     color: white;
     border: none;
-    border-radius: 4px;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    align-items: center;
-    width: 150px;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 20px auto 0;
+    width: 120px;
+    margin-bottom: 10px;
 }
 
 #applyChoice:hover {
-    background-color: #0056b3;
+    background: linear-gradient(135deg, #357abd 0%, #2d6da3 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.2);
+}
+
+/* Style cho nút đóng */
+.close {
+    float: right;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: -10px;
+    margin-right: -10px;
+}
+
+.close:hover {
+    color: #0c7de6;
 }
 
 label {
@@ -498,7 +557,7 @@ body {
 
     .notification-more {
         margin-top: 10px;
-        background-color: #4a90e2;
+        
     }
 }
 
