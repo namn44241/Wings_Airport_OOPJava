@@ -472,7 +472,7 @@ body {
     margin: 0 auto; /* Căn giữa khối */
     
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
     .notification-bar {
         width: 90%;
         text-align: center;
@@ -1038,7 +1038,7 @@ footer {
     text-decoration: underline;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .footer-container {
         flex-direction: column;
     }
@@ -1085,7 +1085,7 @@ margin-bottom: 10px;
     margin: 3px 0; /* Giảm margin giữa các đoạn */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .footer-info {
         font-size: 15px;
         padding: 8px 3%;
@@ -1096,14 +1096,14 @@ margin-bottom: 10px;
 /* Responsive styles */
 
 /* Màn hình lớn (>1200px) */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
     .image-container {
         flex: 0 0 calc(50% - 30px); /* 4 ảnh/hàng cho màn hình rất lớn */
     }
 }
 
 /* Tablet và màn hình trung bình (768px - 1200px) */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
     /* Header */
     header {
         padding: 10px 20px;
@@ -1143,7 +1143,7 @@ margin-bottom: 10px;
 }
 
 /* Mobile (< 768px) */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
     /* Header */
     header {
         flex-direction: column;
@@ -1213,7 +1213,7 @@ margin-bottom: 10px;
 }
 
 /* Mobile nhỏ (< 480px) */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
     .airport-name {
         font-size: 18px;
     }
@@ -1236,7 +1236,7 @@ margin-bottom: 10px;
 }
 
 /* Xử lý khoảng trống khi màn hình nhỏ */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
     .slide1-container {
         height: auto; /* Thay đổi từ 65vh sang auto */
         min-height: 300px; /* Đặt chiều cao tối thiểu */
@@ -1260,7 +1260,7 @@ margin-bottom: 10px;
 }
 
 /* Xử lý cho màn hình nhỏ hơn nữa */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
     .slide1-container {
         min-height: 250px; /* Giảm chiều cao tối thiểu */
     }
@@ -1287,7 +1287,7 @@ main {
 }
 
 /* Xử lý cho màn hình nhỏ hơn 590px */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
     .slide1-container {
         min-height: 200px; /* Giảm chiều cao tối thiểu */
         margin: 0;
@@ -1387,7 +1387,7 @@ main {
 }
 
 /* Responsive */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
     .horizontal {
         width: 90%;
     }
@@ -1518,7 +1518,7 @@ main {
     width: 120px;
 }
 /* Responsive adjustments */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
     #booking-container, #manage-container, #checkin-container {
         width: 95%;
         padding: 20px;
