@@ -1,3 +1,5 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
 /* Preloader styles */
 #preloader {
     position: fixed;
@@ -445,10 +447,11 @@ main section:target {
 }
 
 #dashboard .chart-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin: 20px 0;
 }
 
 #dashboard canvas {
@@ -495,29 +498,33 @@ main section:target {
 }
 
 .chart-item {
+    flex: 1;
+    min-width: 300px;
+    max-width: calc(50% - 20px); /* 50% trừ đi một nửa khoảng gap */
     background: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     transition: transform 0.3s, box-shadow 0.3s;
-    max-width: 800px;
-    max-height: 600px;
-    margin: 20px auto;
 }
 
+/* Biểu đồ dạng line chart sẽ chiếm full width */
+.chart-item:nth-child(n+3) {
+    max-width: 100%;
+}
+
+/* Hiệu ứng hover */
 .chart-item:hover {
-    transform: scale(1.02);
+    transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.chart-item > div:first-child {
-    font-size: 1.5rem;
-    color: #3a7bd5;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    text-align: center;
+/* Responsive */
+@media (max-width: 768px) {
+    .chart-item {
+        max-width: 100%;
+    }
 }
-
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-20px); }
@@ -545,4 +552,341 @@ main section:target {
     nav ul li:hover > ul {
         display: block;
     }
+}
+
+/* CSS cho nút toggle */
+.toggle-btn {
+    background: linear-gradient(90deg, rgba(58,123,213,1) 0%, rgba(0,210,255,1) 100%);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.toggle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* CSS cho animation form */
+#customerForm, #add-employee-form, #add-plane-type-form, #add-plane-form, #add-flight-form  {
+    transition: all 0.3s ease;
+    max-height: 1000px; /* Điều chỉnh theo chiều cao thực tế của form */
+    overflow: hidden;
+}
+
+#customerForm.hidden, #add-employee-form.hidden, #add-plane-type-form.hidden, #add-plane-form.hidden, #add-flight-form.hidden {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* CSS cho section có 2 form */
+#schedule-info .form-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#schedule-info .form-toggle {
+    background: linear-gradient(90deg, rgba(58,123,213,1) 0%, rgba(0,210,255,1) 100%);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+#schedule-info .form-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#schedule-info .form-toggle.active {
+    background: #ff6f61;
+}
+
+#schedule-info .form-container {
+    transition: all 0.3s ease;
+    max-height: 1000px;
+    overflow: hidden;
+    opacity: 1;
+    margin-bottom: 20px;
+}
+
+#schedule-info .form-container.hidden {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* CSS cho form đặt chỗ */
+#airline-info .form-controls {
+    margin-bottom: 20px;
+}
+
+#airline-info .form-toggle {
+    background: linear-gradient(90deg, rgba(58,123,213,1) 0%, rgba(0,210,255,1) 100%);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+#airline-info .form-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#airline-info .form-toggle.active {
+    background: #ff6f61;
+}
+
+#airline-info .form-container {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    max-height: 1000px;
+    opacity: 1;
+}
+
+#airline-info .form-container.hidden {
+    max-height: 0;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+#airline-info select,
+#airline-info input[type="datetime-local"] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#airline-info label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+#airline-info button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+#airline-info button[type="submit"]:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+/* Animation cho form */
+#airline-info .form-container {
+    transition: all 0.3s ease;
+    max-height: 1000px;
+    opacity: 1;
+}
+
+#airline-info .form-container.hidden {
+    max-height: 0;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+#assignment-info .form-controls {
+    margin-bottom: 20px;
+}
+
+#assignment-info .form-toggle {
+    background: linear-gradient(90deg, rgba(58,123,213,1) 0%, rgba(0,210,255,1) 100%);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+#assignment-info .form-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#assignment-info .form-toggle.active {
+    background: #ff6f61;
+}
+
+#assignment-info .form-container {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    max-height: 1000px;
+    opacity: 1;
+}
+
+#assignment-info .form-container.hidden {
+    max-height: 0;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Container tổng cho tất cả biểu đồ */
+.chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin: 20px 0;
+}
+
+/* Style cho từng chart item */
+.chart-item {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  margin-bottom: 30px;
+}
+
+/* Style cho 2 biểu đồ tròn */
+.chart-item:nth-child(1),
+.chart-item:nth-child(2) {
+  flex: 1;
+  min-width: 300px;
+  max-width: calc(50% - 15px);
+}
+
+/* Style cho biểu đồ cột và đường */
+.chart-item:nth-child(3),
+.chart-item:nth-child(4) {
+  width: 100%;
+  flex-basis: 100%;
+}
+
+/* Hiệu ứng hover */
+.chart-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .chart-item:nth-child(1),
+  .chart-item:nth-child(2) {
+    max-width: 100%;
+  }
+}
+
+/* CSS cho phần tìm kiếm */
+.search-container {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #3a7bd5;
+    outline: none;
+    box-shadow: 0 0 5px rgba(58,123,213,0.3);
+}
+
+.search-button {
+    padding: 12px 20px;
+    background: linear-gradient(90deg, rgba(58,123,213,1) 0%, rgba(0,210,255,1) 100%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s ease;
+}
+
+.search-button:hover {
+    transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#customer-info table tbody tr {
+    animation: fadeIn 0.5s ease-in;
+}
+
+#employee-info table tbody tr {
+    animation: fadeIn 0.5s ease-in;
+}
+
+#airport-info table tbody tr {
+    animation: fadeIn 0.5s ease-in;
+}
+
+#aircraft-info table tbody tr {
+    animation: fadeIn 0.5s ease-in;
+}
+
+#flight-info table tbody tr {
+    animation: fadeIn 0.5s ease-in;
+}
+
+#schedule-info table tbody tr {
+    animation: fadeIn 0.5s ease-in;
+}
+
+#airline-info table tbody tr {
+    animation: fadeIn 0.5s ease-in;
+}
+
+#assignment-info table tbody tr {
+    animation: fadeIn 0.5s ease-in;
 }
