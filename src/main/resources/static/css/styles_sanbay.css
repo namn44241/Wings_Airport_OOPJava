@@ -714,7 +714,7 @@ color: #0077ff; /* Màu chữ khi di chuột vào */
 
 }
 
-.image-container .text {
+/* .image-container .text {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -724,7 +724,7 @@ color: #0077ff; /* Màu chữ khi di chuột vào */
     padding: 10px;
     text-align: center;
     width: 100%;
-}
+} */
 
 .image-container .price {
     font-weight: bold;
@@ -964,6 +964,7 @@ button:hover {
     bottom: 0;
     left: 0;
     right: 0;
+    width: 100%;
     background-color: rgba(5, 179, 254, 0.7);
     color: white;
     padding: 10px;
@@ -1092,9 +1093,9 @@ margin-bottom: 10px;
 /* Responsive styles */
 
 /* Màn hình lớn (>1200px) */
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 768px) {
     .image-container {
-        flex: 0 0 calc(25% - 30px); /* 4 ảnh/hàng cho màn hình rất lớn */
+        flex: 0 0 calc(50% - 30px); /* 4 ảnh/hàng cho màn hình rất lớn */
     }
 }
 
