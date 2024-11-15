@@ -39,6 +39,7 @@ public class AdminController {
 
    // API lấy thông tin chuyến bay
    @GetMapping("/api/admin/flights")
+   @LoginRequired 
    @ResponseBody
    public Map<String, Object> getFlights() {
        Map<String, Object> response = new HashMap<>();
@@ -59,60 +60,62 @@ public class AdminController {
        return response;
    }
 
-   @GetMapping("/api/admin/search-flights")
-@ResponseBody
-public Map<String, Object> searchFlights(@RequestParam("query") String query) {
-    Map<String, Object> response = new HashMap<>();
-    
-    try {
-        // Kiểm tra xem query có phải là định dạng ngày dd/MM/yyyy không
-        if (query.matches("\\d{1,2}/\\d{1,2}/\\d{4}")) {
-            // Chuyển đổi định dạng ngày từ dd/MM/yyyy sang yyyy-MM-dd
-            String[] dateParts = query.split("/");
-            String formattedDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
-            query = formattedDate;
-        }
-
-        String searchQuery = """
-            SELECT 
-                MaChuyenBay,
-                TenSanBayDi,
-                TenSanBayDen,
-                GioDi,
-                GioDen
-            FROM ChuyenBay
-            WHERE 
-                MaChuyenBay LIKE ? OR
-                TenSanBayDi LIKE ? OR
-                TenSanBayDen LIKE ? OR
-                DATE_FORMAT(GioDi, '%H:%i:%s') LIKE ? OR
-                DATE_FORMAT(GioDen, '%H:%i:%s') LIKE ? OR
-                DATE(GioDi) = STR_TO_DATE(?, '%Y-%m-%d') OR
-                DATE(GioDen) = STR_TO_DATE(?, '%Y-%m-%d')
-            ORDER BY GioDi DESC
-        """;
-
-        String searchPattern = "%" + query + "%";
-        List<Map<String, Object>> results = jdbcTemplate.queryForList(
-            searchQuery,
-            searchPattern, searchPattern, searchPattern, 
-            searchPattern, searchPattern,
-            query, query
-        );
-
-        response.put("success", true);
-        response.put("data", results);
+    @GetMapping("/api/admin/search-flights")
+    @LoginRequired 
+    @ResponseBody
+    public Map<String, Object> searchFlights(@RequestParam("query") String query) {
+        Map<String, Object> response = new HashMap<>();
         
-    } catch (Exception e) {
-        response.put("success", false);
-        response.put("error", e.getMessage());
+        try {
+            // Kiểm tra xem query có phải là định dạng ngày dd/MM/yyyy không
+            if (query.matches("\\d{1,2}/\\d{1,2}/\\d{4}")) {
+                // Chuyển đổi định dạng ngày từ dd/MM/yyyy sang yyyy-MM-dd
+                String[] dateParts = query.split("/");
+                String formattedDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
+                query = formattedDate;
+            }
+
+            String searchQuery = """
+                SELECT 
+                    MaChuyenBay,
+                    TenSanBayDi,
+                    TenSanBayDen,
+                    GioDi,
+                    GioDen
+                FROM ChuyenBay
+                WHERE 
+                    MaChuyenBay LIKE ? OR
+                    TenSanBayDi LIKE ? OR
+                    TenSanBayDen LIKE ? OR
+                    DATE_FORMAT(GioDi, '%H:%i:%s') LIKE ? OR
+                    DATE_FORMAT(GioDen, '%H:%i:%s') LIKE ? OR
+                    DATE(GioDi) = STR_TO_DATE(?, '%Y-%m-%d') OR
+                    DATE(GioDen) = STR_TO_DATE(?, '%Y-%m-%d')
+                ORDER BY GioDi DESC
+            """;
+
+            String searchPattern = "%" + query + "%";
+            List<Map<String, Object>> results = jdbcTemplate.queryForList(
+                searchQuery,
+                searchPattern, searchPattern, searchPattern, 
+                searchPattern, searchPattern,
+                query, query
+            );
+
+            response.put("success", true);
+            response.put("data", results);
+            
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("error", e.getMessage());
+        }
+        
+        return response;
     }
-    
-    return response;
-}
 
    // API lấy thông tin máy bay
    @GetMapping("/api/admin/aircraft")
+   @LoginRequired 
    @ResponseBody
    public Map<String, Object> getAircraft() {
        Map<String, Object> response = new HashMap<>();
@@ -143,6 +146,7 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
    }
 
     @GetMapping("/api/admin/search-plane-types")
+    @LoginRequired 
     @ResponseBody
     public Map<String, Object> searchPlaneTypes(@RequestParam("query") String query) {
         Map<String, Object> response = new HashMap<>();
@@ -177,6 +181,7 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
     }
 
     @GetMapping("/api/admin/search-aircraft")
+    @LoginRequired 
     @ResponseBody
     public Map<String, Object> searchAircraft(@RequestParam("query") String query) {
         Map<String, Object> response = new HashMap<>();
@@ -213,6 +218,7 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
 
    // API lấy thông tin đặt chỗ và khách hàng 
    @GetMapping("/api/admin/bookings")
+   @LoginRequired 
    @ResponseBody
    public Map<String, Object> getBookings() {
        Map<String, Object> response = new HashMap<>();
@@ -245,6 +251,7 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
    }
    
     @GetMapping("/api/admin/flight-details")
+    @LoginRequired 
     @ResponseBody 
     public Map<String, Object> getFlightDetails(@RequestParam String flight_id) {
         String query = "SELECT GioDi as departure_time, GioDen as arrival_time FROM ChuyenBay WHERE MaChuyenBay = ?";
@@ -252,6 +259,7 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
     }
 
     @GetMapping("/api/admin/search-customers")
+    @LoginRequired 
     @ResponseBody
     public Map<String, Object> searchCustomers(@RequestParam("query") String query) {
         Map<String, Object> response = new HashMap<>();
@@ -296,6 +304,7 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
     }
 
     @GetMapping("/api/admin/search-bookings")
+    @LoginRequired 
     @ResponseBody
     public Map<String, Object> searchBookings(@RequestParam("query") String query) {
         Map<String, Object> response = new HashMap<>();
@@ -357,6 +366,7 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
     
    // API lấy thông tin nhân viên và phân công
    @GetMapping("/api/admin/employees") 
+   @LoginRequired 
    @ResponseBody
    public Map<String, Object> getEmployees() {
        Map<String, Object> response = new HashMap<>();
@@ -389,6 +399,7 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
    }
 
    @GetMapping("/api/admin/search-employees")
+   @LoginRequired 
    @ResponseBody
    public Map<String, Object> searchEmployees(@RequestParam("query") String query) {
        Map<String, Object> response = new HashMap<>();
@@ -435,6 +446,7 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
    }
 
     @GetMapping("/api/admin/search-assignments")
+    @LoginRequired 
     @ResponseBody
     public Map<String, Object> searchAssignments(@RequestParam("query") String query) {
         Map<String, Object> response = new HashMap<>();
@@ -497,6 +509,7 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
 
    // API lấy thống kê
    @GetMapping("/api/admin/stats")
+   @LoginRequired 
    @ResponseBody 
    public Map<String, Object> getStats() {
        Map<String, Object> stats = new HashMap<>();
@@ -590,6 +603,7 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
 
    // API lấy thông tin lịch bay
    @GetMapping("/api/admin/schedules")
+   @LoginRequired 
    @ResponseBody
    public Map<String, Object> getSchedules() {
        Map<String, Object> response = new HashMap<>();
@@ -617,6 +631,7 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
    }
 
     @GetMapping("/api/admin/search-schedules")
+    @LoginRequired 
     @ResponseBody
     public Map<String, Object> searchSchedules(@RequestParam("query") String query) {
         Map<String, Object> response = new HashMap<>();
