@@ -2,7 +2,7 @@
 
 Wings_Airport_OOPJava/
 ├── .idea/
-│   ├── profiles_setting.xml/
+│   ├── inspectionProfiles/
 │   │   └── profiles_setting.xml
 │   ├── misc.xml
 │   ├── modules.xml  
@@ -33,7 +33,9 @@ Wings_Airport_OOPJava/
 │   │       │           │   ├── LoginRequiredInterceptor.java    
 │   │       │           │   └── WebMvcConfig.java
 │   │       │           ├── controllers/
-│   │       │           │   ├── AdminController.java
+│   │       │           │   ├── core/
+│   │       │           │   │   ├── AdminController.java
+│   │       │           │   │   └── SanBayController.java
 │   │       │           │   ├── AsignmentController.java
 │   │       │           │   ├── AuthController.java
 │   │       │           │   ├── BookingController.java
@@ -46,12 +48,36 @@ Wings_Airport_OOPJava/
 │   │       │           │   ├── LanguageController.java
 │   │       │           │   ├── MainController.java
 │   │       │           │   ├── PlaneController.java
-│   │       │           │   ├── PlaneTypeController.java
-│   │       │           │   └── SanBayController.java
+│   │       │           │   └── PlaneTypeController.java
 │   │       │           ├── model/
+│   │       │           │   ├── ChuyenBay.java
+│   │       │           │   ├── DatCho.java
 │   │       │           │   ├── EmailRequest.java
 │   │       │           │   ├── EmailResponse.java
+│   │       │           │   ├── KhachHang.java
+│   │       │           │   ├── LichBay.Java
+│   │       │           │   ├── LoaiMayBay.java
+│   │       │           │   ├── MayBay.java
+│   │       │           │   ├── NhanVien.java
 │   │       │           │   └── PhanCong.java
+│   │       │           ├── repository/
+│   │       │           │   ├── ChuyenBayRepository.java
+│   │       │           │   ├── DatChoRepository.java
+│   │       │           │   ├── KhackHangRepository.java
+│   │       │           │   ├── LichBayRepository.java
+│   │       │           │   ├── LoaiMayBayRepository.java
+│   │       │           │   ├── MayBayRepository.java
+│   │       │           │   ├── NhanVienRepository.java
+│   │       │           │   └── PhanCongRepository.java
+│   │       │           ├── repository/
+│   │       │           │   ├── ChuyenBayService.java
+│   │       │           │   ├── DatChoService.java
+│   │       │           │   ├── KhackHangService.java
+│   │       │           │   ├── LichBayService.java
+│   │       │           │   ├── LoaiMayBayService.java
+│   │       │           │   ├── MayBayService.java
+│   │       │           │   ├── NhanVienService.java
+│   │       │           │   └── PhanCongService.java
 │   │       │           └── QuanlisanbayApplication.java
 │   │       └── resources/
 │   │           ├── static/
@@ -59,23 +85,20 @@ Wings_Airport_OOPJava/
 │   │           │   │   ├── styles_admin.css                
 │   │           │   │   └── styles_sanbay.css
 │   │           │   ├── images/
-│   │           │   ├── js/
-│   │           │   │   └── sanbay/
-│   │           │   │       ├── alert-noti.js
-│   │           │   │       ├── an-khi-tat.js
-│   │           │   │       ├── dom-preload.js
-│   │           │   │       ├── dom-xoay.js
-│   │           │   │       ├── fe-link-be.js
-│   │           │   │       ├── language-switcher.js
-│   │           │   │       ├── menu-helplink-languages.js
-│   │           │   │       ├── send-mail.js
-│   │           │   │       ├── slide-khampha.js   
-│   │           │   │       ├── slide-anhto.js
-│   │           │   │       ├── slide-khampha.js   
-│   │           │   │       └── tin-tuc.js 
-│   │           │   └── lang/
-│   │           │       ├── english.json
-│   │           │       └── tieng-viet.json
+│   │           │   └── js/
+│   │           │       └── sanbay/
+│   │           │           ├── alert-noti.js
+│   │           │           ├── an-khi-tat.js
+│   │           │           ├── dom-preload.js
+│   │           │           ├── dom-xoay.js
+│   │           │           ├── fe-link-be.js
+│   │           │           ├── language-switcher.js
+│   │           │           ├── menu-helplink-languages.js
+│   │           │           ├── send-mail.js
+│   │           │           ├── slide-khampha.js   
+│   │           │           ├── slide-anhto.js
+│   │           │           ├── slide-khampha.js   
+│   │           │           └── tin-tuc.js 
 │   │           ├── templates/
 │   │           │    ├── admin.html
 │   │           │    ├── login.html
@@ -89,6 +112,7 @@ Wings_Airport_OOPJava/
 │                   └── quanlisanbay/
 │                       └── QuanlisanbayApplicationTests.java
 ├── api_collection.json
+├── Filestructure.md
 ├── mvnw.cmd
 ├── pom.xml
 ├── readme-hdsd.md

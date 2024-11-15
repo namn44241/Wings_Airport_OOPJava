@@ -59,7 +59,7 @@ Mặc dù còn nhiều hạn chế, nhưng chúng em đã cố gắng hết sứ
 
 # 1.5. Hướng dẫn sử dụng
 
-## Cho người dùng Window
+## Cho người dùng Visual Studio Code
 ## 1.5.1. Cài đặt Docker, Java, Maven, và các extension cần thiết
 ### Java:
 - Truy cập vào trang chủ của Oracle và download phiên bản Oracle [Java 8](https://www.java.com/en/download/)
@@ -110,72 +110,6 @@ Mặc dù còn nhiều hạn chế, nhưng chúng em đã cố gắng hết sứ
 - Website mặc định chạy ở http://localhost:8888 và PHP server chạy ở http://localhost:8080
 - Tài khoản và mật khẩu của admin website là 1
 - PHP server tài khoản: adminqlsb; mật khầu: 1
-
-
-
-<!-- ## 1.5.2. Cài đặt CSDL
-
-### Bước 1:
-Chạy Sql Sever Configuration Manager
-Nhấn "SQL Sever Services"
-Kiểm tra xem 2 dòng đầu đang Running hay Stopped, Stopped thì chuột phải ấn Run
-
-![image-1.png](./main/static/images/readme/image-3.png)
-
-### Bước 2:
-Chạy SSMS
-Connect sever: 
-- Sever name: Localhost
-- Authen: Giữ nguyên
-- Tick vào "Trust sever.."
-Ấn Connect:
-
-### Bước 3:
-Nhấn "New Query"
-Trong Main \ Query SQL \ Dán lần lượt QuanLiSanBay.sql ; insert... 
-Cho chạy từng dòng, khéo không lỗi
-
-![image-1.png](./main/static/images/readme/image-4.png)
-
-## 1.5.3. Cài đặt DSN
-
-### Bước 1:
-Tìm ODBC Data Source 32/64bit -> System DSN -> Add -> ODBC Driver .. for SQL Sever 
-
-Name: Đặt tên
-Des..: Bỏ qua
-Sever: localhost
-
-![image-1.png](./main/static/images/readme/image.png)
-
-### Bước 2:
-Next -> Next
-Tick ô "Change the default.."
-Mũi tên xuống
-Chọn QuanLiSanBay
-
-![image-1.png](./main/static/images/readme/image-1.png)
-
-### Bước 3:
-Next -> Next
-Test Data Source...
-Test Complete succ.. là xong
-
-![image-1.png](./main/static/images/readme/image-2.png)
-
-Bấm Finish
-
-## 1.5.4. Chạy Project
-
-### Bước 1.
-- Mở dự án trong IDE, ví dụ VSCode
-- Bật terminal
-- Chạy ``` qlsb_venv\Scripts\activate ``` 
-- Chạy ``` cd main ```
-- Chạy ``` pip install -r requirements.txt ```
-- Chạy ``` python app.py ``` và truy cập theo địa chỉ ```localhost:5000``` hoặc ```127.0.0.1:5000``` hoặc ```{ip_của_mày}:5000``` để chạ -->
-
-<!-- ![image-1.png](./src/main/resources/static/images/readme/image-5.png) -->
 
 ---
 
