@@ -59,6 +59,58 @@ public class AdminController {
        return response;
    }
 
+   @GetMapping("/api/admin/search-flights")
+@ResponseBody
+public Map<String, Object> searchFlights(@RequestParam("query") String query) {
+    Map<String, Object> response = new HashMap<>();
+    
+    try {
+        // Kiểm tra xem query có phải là định dạng ngày dd/MM/yyyy không
+        if (query.matches("\\d{1,2}/\\d{1,2}/\\d{4}")) {
+            // Chuyển đổi định dạng ngày từ dd/MM/yyyy sang yyyy-MM-dd
+            String[] dateParts = query.split("/");
+            String formattedDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
+            query = formattedDate;
+        }
+
+        String searchQuery = """
+            SELECT 
+                MaChuyenBay,
+                TenSanBayDi,
+                TenSanBayDen,
+                GioDi,
+                GioDen
+            FROM ChuyenBay
+            WHERE 
+                MaChuyenBay LIKE ? OR
+                TenSanBayDi LIKE ? OR
+                TenSanBayDen LIKE ? OR
+                DATE_FORMAT(GioDi, '%H:%i:%s') LIKE ? OR
+                DATE_FORMAT(GioDen, '%H:%i:%s') LIKE ? OR
+                DATE(GioDi) = STR_TO_DATE(?, '%Y-%m-%d') OR
+                DATE(GioDen) = STR_TO_DATE(?, '%Y-%m-%d')
+            ORDER BY GioDi DESC
+        """;
+
+        String searchPattern = "%" + query + "%";
+        List<Map<String, Object>> results = jdbcTemplate.queryForList(
+            searchQuery,
+            searchPattern, searchPattern, searchPattern, 
+            searchPattern, searchPattern,
+            query, query
+        );
+
+        response.put("success", true);
+        response.put("data", results);
+        
+    } catch (Exception e) {
+        response.put("success", false);
+        response.put("error", e.getMessage());
+    }
+    
+    return response;
+}
+
    // API lấy thông tin máy bay
    @GetMapping("/api/admin/aircraft")
    @ResponseBody
@@ -111,6 +163,40 @@ public class AdminController {
             List<Map<String, Object>> results = jdbcTemplate.queryForList(
                 searchQuery,
                 searchPattern, searchPattern
+            );
+
+            response.put("success", true);
+            response.put("data", results);
+            
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("error", e.getMessage());
+        }
+        
+        return response;
+    }
+
+    @GetMapping("/api/admin/search-aircraft")
+    @ResponseBody
+    public Map<String, Object> searchAircraft(@RequestParam("query") String query) {
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            String searchQuery = """
+                SELECT mb.SoHieu, mb.MaLoai, lmb.HangSanXuat, mb.SoGheNgoi 
+                FROM MayBay mb 
+                JOIN LoaiMayBay lmb ON mb.MaLoai = lmb.MaLoai
+                WHERE 
+                    mb.SoHieu LIKE ? OR
+                    mb.MaLoai LIKE ? OR
+                    lmb.HangSanXuat LIKE ?
+                ORDER BY mb.SoHieu
+            """;
+
+            String searchPattern = "%" + query + "%";
+            List<Map<String, Object>> results = jdbcTemplate.queryForList(
+                searchQuery,
+                searchPattern, searchPattern, searchPattern
             );
 
             response.put("success", true);

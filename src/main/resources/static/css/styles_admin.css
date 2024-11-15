@@ -870,3 +870,11 @@ main section:target {
 #airport-info table tbody tr {
     animation: fadeIn 0.5s ease-in;
 }
+
+#aircraft-info table tbody tr {
+    animation: fadeIn 0.5s ease-in;
+}
+
+#flight-info table tbody tr {
+    animation: fadeIn 0.5s ease-in;
+}

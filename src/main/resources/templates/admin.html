@@ -319,6 +319,14 @@
         
                 <button type="submit">Thêm chuyến bay mới</button>
             </form>
+
+            <div class="search-container">
+                <input type="text" id="searchFlightInput" class="search-input" placeholder="Tìm kiếm theo mã chuyến bay, sân bay đi/đến...">
+                <button class="search-button">
+                    <i class="fas fa-search"></i>
+                    Tìm kiếm
+                </button>
+            </div>
         
             <!-- Bảng hiển thị chuyến bay -->
             <table>
@@ -347,6 +355,87 @@
                         toggleBtn.textContent = form.classList.contains('hidden') 
                             ? 'Hiện Form Đăng Ký' 
                             : 'Ẩn Form Đăng Ký';
+                    });
+                    const searchInput = document.getElementById('searchFlightInput');
+                    const searchButton = document.querySelector('#flight-info .search-button');
+
+                    function performFlightSearch(query) {
+                        fetch(`/api/admin/search-flights?query=${encodeURIComponent(query)}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    const tableBody = document.querySelector('#flight-info table tbody');
+                                    tableBody.innerHTML = '';
+                                    
+                                    if (data.data.length === 0) {
+                                        tableBody.innerHTML = '<tr><td colspan="6">Không tìm thấy kết quả</td></tr>';
+                                        return;
+                                    }
+
+                                    data.data.forEach(flight => {
+                                        const row = `
+                                            <tr>
+                                                <td>${flight.MaChuyenBay}</td>
+                                                <td>${flight.TenSanBayDi}</td>
+                                                <td>${flight.TenSanBayDen}</td>
+                                                <td>${new Date(flight.GioDi).toLocaleString()}</td>
+                                                <td>${new Date(flight.GioDen).toLocaleString()}</td>
+                                                <td>
+                                                    <button onclick="showEditForm('${flight.MaChuyenBay}')">Sửa</button>
+                                                    <button onclick="deleteFlightConfirm('${flight.MaChuyenBay}')">Xóa</button>
+                                                    <form id="edit-form-${flight.MaChuyenBay}" style="display: none;" 
+                                                        onsubmit="return editFlight('${flight.MaChuyenBay}')">
+                                                        <input type="hidden" name="flight-id" value="${flight.MaChuyenBay}">
+                                                        <label>Sân bay đi:</label>
+                                                        <input type="text" name="departure-airport" 
+                                                            value="${flight.TenSanBayDi}" required><br>
+                                                        <label>Sân bay đến:</label>
+                                                        <input type="text" name="arrival-airport" 
+                                                            value="${flight.TenSanBayDen}" required><br>
+                                                        <label>Giờ đi:</label>
+                                                        <input type="datetime-local" name="departure-time" 
+                                                            value="${flight.GioDi.slice(0,16)}" required><br>
+                                                        <label>Giờ đến:</label>
+                                                        <input type="datetime-local" name="arrival-time" 
+                                                            value="${flight.GioDen.slice(0,16)}" required><br>
+                                                        <button type="submit">Lưu thay đổi</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        `;
+                                        tableBody.insertAdjacentHTML('beforeend', row);
+                                    });
+                                } else {
+                                    alert('Có lỗi xảy ra khi tìm kiếm: ' + data.error);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                alert('Có lỗi xảy ra khi tìm kiếm');
+                            });
+                    }
+
+                    // Xử lý sự kiện click nút tìm kiếm
+                    searchButton.addEventListener('click', function() {
+                        const query = searchInput.value.trim();
+                        if (query) {
+                            performFlightSearch(query);
+                        } else {
+                            loadInitialFlightData();
+                        }
+                    });
+
+                    // Xử lý sự kiện nhấn Enter trong ô tìm kiếm
+                    searchInput.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            const query = this.value.trim();
+                            if (query) {
+                                performFlightSearch(query);
+                            } else {
+                                loadInitialFlightData();
+                            }
+                        }
                     });
                 });
                 // Load dữ liệu ban đầu
@@ -1042,6 +1131,14 @@
                 
                 <button type="submit">Thêm máy bay mới</button>
             </form>
+
+            <div class="search-container">
+                <input type="text" id="searchAircraftInput" class="search-input" placeholder="Tìm kiếm theo số hiệu, mã loại...">
+                <button class="search-button">
+                    <i class="fas fa-search"></i>
+                    Tìm kiếm
+                </button>
+            </div>
         
             <!-- Bảng hiển thị thông tin máy bay -->
             <table>
@@ -1070,6 +1167,72 @@
                 toggleBtn.textContent = form.classList.contains('hidden') 
                     ? 'Hiện Form Đăng Ký' 
                     : 'Ẩn Form Đăng Ký';
+            });
+            const searchInput = document.getElementById('searchAircraftInput');
+            const searchButton = document.querySelector('#aircraft-info .search-button');
+
+            function performAircraftSearch(query) {
+                fetch(`/api/admin/search-aircraft?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const tableBody = document.querySelector('#aircraft-info table tbody');
+                            tableBody.innerHTML = '';
+                            
+                            if (data.data.length === 0) {
+                                tableBody.innerHTML = '<tr><td colspan="4">Không tìm thấy kết quả</td></tr>';
+                                return;
+                            }
+
+                            data.data.forEach(plane => {
+                                const row = `
+                                    <tr>
+                                        <td>${plane.SoHieu}</td>
+                                        <td>${plane.MaLoai} - ${plane.HangSanXuat}</td>
+                                        <td>${plane.SoGheNgoi}</td>
+                                        <td>
+                                            <button onclick="showEditForm('${plane.SoHieu}')">Sửa</button>
+                                            <button onclick="deletePlane('${plane.SoHieu}')">Xóa</button>
+                                            <form id="edit-form-${plane.SoHieu}" style="display: none;" 
+                                                onsubmit="return editPlane('${plane.SoHieu}')">
+                                                <!-- Form content -->
+                                            </form>
+                                        </td>
+                                    </tr>
+                                `;
+                                tableBody.insertAdjacentHTML('beforeend', row);
+                            });
+                        } else {
+                            alert('Có lỗi xảy ra khi tìm kiếm: ' + data.error);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Có lỗi xảy ra khi tìm kiếm');
+                    });
+            }
+
+            // Xử lý sự kiện click nút tìm kiếm
+            searchButton.addEventListener('click', function() {
+                const query = searchInput.value.trim();
+                if (query) {
+                    performAircraftSearch(query);
+                } else {
+                    loadInitialAircraftData();
+                }
+            });
+
+            // Xử lý sự kiện nhấn Enter trong ô tìm kiếm
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const query = this.value.trim();
+                    if (query) {
+                        performAircraftSearch(query);
+                    } else {
+                        loadInitialAircraftData();
+                    }
+                }
             });
         });
         function loadInitialAircraftData() {
