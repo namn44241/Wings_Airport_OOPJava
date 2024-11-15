@@ -293,6 +293,66 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
         
         return response;
     }
+
+    @GetMapping("/api/admin/search-bookings")
+    @ResponseBody
+    public Map<String, Object> searchBookings(@RequestParam("query") String query) {
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            // Kiểm tra xem query có phải là định dạng ngày dd/MM/yyyy không
+            if (query.matches("\\d{1,2}/\\d{1,2}/\\d{4}")) {
+                String[] dateParts = query.split("/");
+                query = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
+            }
+
+            String searchQuery = """
+                SELECT 
+                    kh.MaKH,
+                    kh.HoDem,
+                    kh.Ten,
+                    kh.SDT,
+                    dc.MaChuyenBay,
+                    cb.TenSanBayDi,
+                    cb.TenSanBayDen,
+                    cb.GioDi,
+                    cb.GioDen,
+                    dc.NgayDi
+                FROM DatCho dc
+                JOIN KhachHang kh ON dc.MaKH = kh.MaKH
+                JOIN ChuyenBay cb ON dc.MaChuyenBay = cb.MaChuyenBay
+                WHERE 
+                    kh.MaKH LIKE ? OR
+                    CONCAT(kh.HoDem, ' ', kh.Ten) LIKE ? OR
+                    kh.SDT LIKE ? OR
+                    dc.MaChuyenBay LIKE ? OR
+                    cb.TenSanBayDi LIKE ? OR
+                    cb.TenSanBayDen LIKE ? OR
+                    DATE_FORMAT(cb.GioDi, '%H:%i:%s') LIKE ? OR
+                    DATE_FORMAT(cb.GioDen, '%H:%i:%s') LIKE ? OR
+                    DATE(cb.GioDi) = STR_TO_DATE(?, '%Y-%m-%d') OR
+                    DATE(cb.GioDen) = STR_TO_DATE(?, '%Y-%m-%d')
+                ORDER BY cb.GioDi DESC
+            """;
+
+            String searchPattern = "%" + query + "%";
+            List<Map<String, Object>> results = jdbcTemplate.queryForList(
+                searchQuery,
+                searchPattern, searchPattern, searchPattern,
+                searchPattern, searchPattern, searchPattern,
+                searchPattern, searchPattern, query, query
+            );
+
+            response.put("success", true);
+            response.put("data", results);
+            
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("error", e.getMessage());
+        }
+        
+        return response;
+    }
     
    // API lấy thông tin nhân viên và phân công
    @GetMapping("/api/admin/employees") 
@@ -358,6 +418,67 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
                 searchQuery,
                 searchPattern, searchPattern, searchPattern, 
                 searchPattern, searchPattern, searchPattern
+            );
+
+            response.put("success", true);
+            response.put("data", results);
+            
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("error", e.getMessage());
+        }
+        
+        return response;
+    }
+
+    @GetMapping("/api/admin/search-assignments")
+    @ResponseBody
+    public Map<String, Object> searchAssignments(@RequestParam("query") String query) {
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            // Kiểm tra xem query có phải là định dạng ngày dd/MM/yyyy không
+            if (query.matches("\\d{1,2}/\\d{1,2}/\\d{4}")) {
+                String[] dateParts = query.split("/");
+                query = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
+            }
+
+            String searchQuery = """
+                SELECT 
+                    nv.MaNV,
+                    CONCAT(nv.HoDem, ' ', nv.Ten) as HoTen,
+                    nv.SDT,
+                    nv.LoaiNV,
+                    pc.MaChuyenBay,
+                    cb.TenSanBayDi,
+                    cb.TenSanBayDen,
+                    cb.GioDi,
+                    cb.GioDen,
+                    pc.NgayDi
+                FROM PhanCong pc
+                JOIN NhanVien nv ON pc.MaNV = nv.MaNV
+                JOIN ChuyenBay cb ON pc.MaChuyenBay = cb.MaChuyenBay
+                WHERE 
+                    nv.MaNV LIKE ? OR
+                    CONCAT(nv.HoDem, ' ', nv.Ten) LIKE ? OR
+                    nv.SDT LIKE ? OR
+                    nv.LoaiNV LIKE ? OR
+                    pc.MaChuyenBay LIKE ? OR
+                    cb.TenSanBayDi LIKE ? OR
+                    cb.TenSanBayDen LIKE ? OR
+                    DATE_FORMAT(cb.GioDi, '%H:%i:%s') LIKE ? OR
+                    DATE_FORMAT(cb.GioDen, '%H:%i:%s') LIKE ? OR
+                    DATE(cb.GioDi) = STR_TO_DATE(?, '%Y-%m-%d') OR
+                    DATE(cb.GioDen) = STR_TO_DATE(?, '%Y-%m-%d')
+                ORDER BY cb.GioDi DESC
+            """;
+
+            String searchPattern = "%" + query + "%";
+            List<Map<String, Object>> results = jdbcTemplate.queryForList(
+                searchQuery,
+                searchPattern, searchPattern, searchPattern, searchPattern,
+                searchPattern, searchPattern, searchPattern,
+                searchPattern, searchPattern, query, query
             );
 
             response.put("success", true);
@@ -491,4 +612,63 @@ public Map<String, Object> searchFlights(@RequestParam("query") String query) {
        response.put("schedules", schedules);
        return response;
    }
+
+    @GetMapping("/api/admin/search-schedules")
+    @ResponseBody
+    public Map<String, Object> searchSchedules(@RequestParam("query") String query) {
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            // Kiểm tra xem query có phải là định dạng ngày dd/MM/yyyy không
+            if (query.matches("\\d{1,2}/\\d{1,2}/\\d{4}")) {
+                String[] dateParts = query.split("/");
+                query = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
+            }
+
+            String searchQuery = """
+                SELECT 
+                    lb.MaChuyenBay,
+                    lb.SoHieu,
+                    mb.MaLoai,
+                    lmb.HangSanXuat,
+                    mb.SoGheNgoi,
+                    cb.TenSanBayDi,
+                    cb.TenSanBayDen,
+                    cb.GioDi,
+                    cb.GioDen
+                FROM LichBay lb
+                JOIN MayBay mb ON lb.SoHieu = mb.SoHieu
+                JOIN LoaiMayBay lmb ON mb.MaLoai = lmb.MaLoai
+                JOIN ChuyenBay cb ON lb.MaChuyenBay = cb.MaChuyenBay
+                WHERE 
+                    lb.MaChuyenBay LIKE ? OR
+                    lb.SoHieu LIKE ? OR
+                    lmb.HangSanXuat LIKE ? OR
+                    cb.TenSanBayDi LIKE ? OR
+                    cb.TenSanBayDen LIKE ? OR
+                    DATE_FORMAT(cb.GioDi, '%H:%i:%s') LIKE ? OR
+                    DATE_FORMAT(cb.GioDen, '%H:%i:%s') LIKE ? OR
+                    DATE(cb.GioDi) = STR_TO_DATE(?, '%Y-%m-%d') OR
+                    DATE(cb.GioDen) = STR_TO_DATE(?, '%Y-%m-%d')
+                ORDER BY cb.GioDi DESC
+            """;
+
+            String searchPattern = "%" + query + "%";
+            List<Map<String, Object>> results = jdbcTemplate.queryForList(
+                searchQuery,
+                searchPattern, searchPattern, searchPattern, 
+                searchPattern, searchPattern, searchPattern,
+                searchPattern, query, query
+            );
+
+            response.put("success", true);
+            response.put("data", results);
+            
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("error", e.getMessage());
+        }
+        
+        return response;
+    }
 }

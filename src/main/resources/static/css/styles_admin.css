@@ -878,3 +878,15 @@ main section:target {
 #flight-info table tbody tr {
     animation: fadeIn 0.5s ease-in;
 }
+
+#schedule-info table tbody tr {
+    animation: fadeIn 0.5s ease-in;
+}
+
+#airline-info table tbody tr {
+    animation: fadeIn 0.5s ease-in;
+}
+
+#assignment-info table tbody tr {
+    animation: fadeIn 0.5s ease-in;
+}

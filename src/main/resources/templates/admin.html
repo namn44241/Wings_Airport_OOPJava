@@ -878,6 +878,14 @@
         
                 <button type="submit">Lưu thay đổi</button>
             </form>
+
+            <div class="search-container">
+                <input type="text" id="searchBookingInput" class="search-input" placeholder="Tìm kiếm theo mã KH, tên KH, SĐT, mã chuyến bay, sân bay...">
+                <button class="search-button">
+                    <i class="fas fa-search"></i>
+                    Tìm kiếm
+                </button>
+            </div>
         
             <!-- Bảng hiển thị -->
             <table>
@@ -928,6 +936,69 @@
                             this.classList.add('active');
                         }
                     });
+                });
+                const searchInput = document.getElementById('searchBookingInput');
+                const searchButton = document.querySelector('#airline-info .search-button');
+
+                function performBookingSearch(query) {
+                    fetch(`/api/admin/search-bookings?query=${encodeURIComponent(query)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                const tbody = document.getElementById('booking-table-body');
+                                tbody.innerHTML = '';
+                                
+                                if (data.data.length === 0) {
+                                    tbody.innerHTML = '<tr><td colspan="8">Không tìm thấy kết quả</td></tr>';
+                                    return;
+                                }
+
+                                data.data.forEach(booking => {
+                                    const row = tbody.insertRow();
+                                    row.innerHTML = `
+                                        <td>${booking.MaKH}</td>
+                                        <td>${booking.HoDem} ${booking.Ten}</td>
+                                        <td>${booking.SDT}</td>
+                                        <td>${booking.MaChuyenBay}</td>
+                                        <td>${booking.TenSanBayDi} -> ${booking.TenSanBayDen}</td>
+                                        <td>${booking.GioDi}</td>
+                                        <td>${booking.GioDen}</td>
+                                        <td>
+                                            <button onclick="deleteBooking('${booking.MaKH}', '${booking.MaChuyenBay}', '${booking.NgayDi}')">
+                                                Xóa
+                                            </button>
+                                        </td>
+                                    `;
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Có lỗi xảy ra khi tìm kiếm');
+                        });
+                }
+
+                // Xử lý sự kiện click nút tìm kiếm
+                searchButton.addEventListener('click', function() {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        performBookingSearch(query);
+                    } else {
+                        updateBookingTable();
+                    }
+                });
+
+                // Xử lý sự kiện nhấn Enter trong ô tìm kiếm
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = this.value.trim();
+                        if (query) {
+                            performBookingSearch(query);
+                        } else {
+                            updateBookingTable();
+                        }
+                    }
                 });
             });
             async function loadInitialData() {
@@ -1963,6 +2034,14 @@
         
                 <button type="submit">Lưu thay đổi</button>
             </form>
+
+            <div class="search-container">
+                <input type="text" id="searchScheduleInput" class="search-input" placeholder="Tìm kiếm theo mã chuyến bay, số hiệu, sân bay, giờ bay...">
+                <button class="search-button">
+                    <i class="fas fa-search"></i>
+                    Tìm kiếm
+                </button>
+            </div>
         
             <!-- Bảng hiển thị lịch bay -->
             <table>
@@ -2015,6 +2094,70 @@
                             this.classList.add('active');
                         }
                     });
+                });
+
+                const searchInput = document.getElementById('searchScheduleInput');
+                const searchButton = document.querySelector('#schedule-info .search-button');
+
+                function performScheduleSearch(query) {
+                    fetch(`/api/admin/search-schedules?query=${encodeURIComponent(query)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                const tbody = document.getElementById('schedule-table-body');
+                                tbody.innerHTML = '';
+                                
+                                if (data.data.length === 0) {
+                                    tbody.innerHTML = '<tr><td colspan="10">Không tìm thấy kết quả</td></tr>';
+                                    return;
+                                }
+
+                                data.data.forEach(schedule => {
+                                    const row = tbody.insertRow();
+                                    row.innerHTML = `
+                                        <td>${schedule.MaChuyenBay}</td>
+                                        <td>${schedule.SoHieu}</td>
+                                        <td>${schedule.MaLoai}</td>
+                                        <td>${schedule.HangSanXuat}</td>
+                                        <td>${schedule.SoGheNgoi}</td>
+                                        <td>${schedule.TenSanBayDi}</td>
+                                        <td>${schedule.TenSanBayDen}</td>
+                                        <td>${schedule.GioDi}</td>
+                                        <td>${schedule.GioDen}</td>
+                                        <td>
+                                            <button onclick="deleteSchedule('${schedule.MaChuyenBay}', '${schedule.SoHieu}')">Xóa</button>
+                                        </td>
+                                    `;
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Có lỗi xảy ra khi tìm kiếm');
+                        });
+                }
+
+                // Xử lý sự kiện click nút tìm kiếm
+                searchButton.addEventListener('click', function() {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        performScheduleSearch(query);
+                    } else {
+                        updateScheduleTable();
+                    }
+                });
+
+                // Xử lý sự kiện nhấn Enter trong ô tìm kiếm
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = this.value.trim();
+                        if (query) {
+                            performScheduleSearch(query);
+                        } else {
+                            updateScheduleTable();
+                        }
+                    }
                 });
             });
             function loadInitialData() {
@@ -2226,6 +2369,14 @@
               <button type="submit">Lưu thay đổi</button>
           </form>
 
+          <div class="search-container">
+            <input type="text" id="searchAssignmentInput" class="search-input" placeholder="Tìm kiếm theo mã NV, tên NV, loại NV, mã chuyến bay, sân bay...">
+            <button class="search-button">
+                <i class="fas fa-search"></i>
+                Tìm kiếm
+            </button>
+        </div>
+
           <!-- Bảng hiển thị thông tin phân công -->
           <table>
               <thead>
@@ -2274,6 +2425,72 @@
                             this.classList.add('active');
                         }
                     });
+                });
+
+                const searchInput = document.getElementById('searchAssignmentInput');
+                const searchButton = document.querySelector('#assignment-info .search-button');
+
+                function performAssignmentSearch(query) {
+                    fetch(`/api/admin/search-assignments?query=${encodeURIComponent(query)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                const tbody = document.getElementById('assignment-table-body');
+                                tbody.innerHTML = '';
+                                
+                                if (data.data.length === 0) {
+                                    tbody.innerHTML = '<tr><td colspan="10">Không tìm thấy kết quả</td></tr>';
+                                    return;
+                                }
+
+                                data.data.forEach(assignment => {
+                                    const row = tbody.insertRow();
+                                    row.innerHTML = `
+                                        <td>${assignment.MaNV}</td>
+                                        <td>${assignment.HoTen}</td>
+                                        <td>${assignment.SDT}</td>
+                                        <td>${assignment.LoaiNV}</td>
+                                        <td>${assignment.MaChuyenBay}</td>
+                                        <td>${assignment.TenSanBayDi}</td>
+                                        <td>${assignment.TenSanBayDen}</td>
+                                        <td>${assignment.GioDi}</td>
+                                        <td>${assignment.GioDen}</td>
+                                        <td>
+                                            <button onclick="deleteAssignment('${assignment.MaNV}', '${assignment.MaChuyenBay}', '${assignment.NgayDi}')">
+                                                Xóa
+                                            </button>
+                                        </td>
+                                    `;
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Có lỗi xảy ra khi tìm kiếm');
+                        });
+                }
+
+                // Xử lý sự kiện click nút tìm kiếm
+                searchButton.addEventListener('click', function() {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        performAssignmentSearch(query);
+                    } else {
+                        updateAssignmentTable();
+                    }
+                });
+
+                // Xử lý sự kiện nhấn Enter trong ô tìm kiếm
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = this.value.trim();
+                        if (query) {
+                            performAssignmentSearch(query);
+                        } else {
+                            updateAssignmentTable();
+                        }
+                    }
                 });
 
                 // Load dữ liệu ban đầu
@@ -2484,7 +2701,7 @@
 
     </main>
     <footer>
-        <p>&copy; 2024 Quản lí sân bay. All rights reserved by Nam Nguyen & Tran Binh.</p>
+        <p>&copy; 2024 Quản lí sân bay. All rights reserved by Team Wings Airport developers.</p>
     </footer>
     <!-- Preloader và xử lý sự kiện trang đã tải xong: -->
     <script>
