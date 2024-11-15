@@ -125,7 +125,7 @@ Có thể thêm các trường dữ liệu từ "Query MySQL/insertinto.sql" và
 ![insert](./src/main/resources/static/images/readme/insert.png)
 
 # Wings_Airport_OOPJava File Structure
-
+```
 Wings_Airport_OOPJava/
 ├── .idea/
 │   ├── inspectionProfiles/
@@ -242,4 +242,4 @@ Wings_Airport_OOPJava/
 ├── mvnw.cmd
 ├── pom.xml
 ├── readme-hdsd.md
-└── README.md
+└── README.md ```
