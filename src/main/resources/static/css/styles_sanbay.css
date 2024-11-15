@@ -352,7 +352,7 @@ button:hover {
 
 .form-group input,
 .form-group select,
-.form-group button {
+.form-group button{
     width: 100%;
     padding: 10px;
     margin-top: 10px;
@@ -362,7 +362,9 @@ button:hover {
 }
 
 .form-group button:hover {
-    background-color: #ffc107;
+    background: linear-gradient(135deg, #357abd 0%, #2d6da3 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.2);
 }
 
 .info-text {
@@ -1392,5 +1394,168 @@ main {
     .item {
         width: calc(33.33% - 20px);
         margin-bottom: 15px;
+    }
+}
+/* Thêm styles mới cho container và form */
+#booking-container {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    width: 80%;
+    max-width: 1000px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+    color: #0c7de6;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: bold;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e1e5eb;
+}
+
+#customer-form {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 30px 30px 15px 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+#customer-form label {
+    color: #495057;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 1px;
+    text-align: left;
+}
+#customer-form .form-group input {
+    margin-bottom: 20px;  /* Thêm khoảng cách dưới mỗi input */
+}
+
+#customer-form .form-group input:last-of-type {
+    margin-bottom: 0;  /* Loại bỏ margin cho input cuối cùng */
+}
+
+#customer-form .form-group label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    #booking-container {
+        width: 95%;
+        padding: 20px;
+    }
+    
+    .form-title {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+}
+/* Styles cho form đặt chỗ */
+#manage-container {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    width: 80%;
+    max-width: 1000px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+}
+
+#bookingForm {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 30px 30px 15px 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+ 
+}
+
+#bookingForm .form-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+#bookingForm .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#bookingForm label {
+    color: #495057;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 1px;
+    text-align: left;
+}
+
+#bookingForm input,
+#bookingForm select {
+    width: 100%;
+    height: 45px;
+    padding: 10px 15px;
+    border: 2px solid #e1e5eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+#bookingForm input:focus,
+#bookingForm select:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    outline: none;
+}
+
+#bookingForm button[type="submit"] {
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    color: white;
+    border: none;
+    padding: 10px 25px; /* Giảm padding */
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem; /* Giảm kích thước chữ */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 20px auto 0;
+    width: 120px;
+}
+
+#bookingForm button[type="submit"]:hover {
+    background: linear-gradient(135deg, #357abd 0%, #2d6da3 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.2);
+}
+#bookingForm .form-group:last-child {
+    margin-top: 5px; /* Giảm khoảng cách trên nút */
+    margin-bottom: 20px; /* Giảm khoảng cách dưới nút */
+}
+
+/* Điều chỉnh khoảng cách của form-row cuối */
+#bookingForm .form-row:last-of-type {
+    margin-bottom: 20px; /* Giảm khoảng cách giữa form-row cuối và nút */
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    #manage-container {
+        width: 95%;
+        padding: 20px;
+    }
+    
+    #bookingForm .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    #bookingForm button[type="submit"] {
+        width: 100%;
     }
 }
