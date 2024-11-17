@@ -124,7 +124,7 @@ Wings_Airport_OOPJava/
 
 # Wings_Airport_OOPJava API Documentation
 
-https://www.postman.com/descent-module-pilot-94690019/my-workspace/collection/38988190-965ce511-d183-4da0-8774-8a0cca93e420?action=share&creator=38988190
+https://www.postman.com/projectoop/my-workspace/collection/vtw0wov/api-for-wings-airport-management
 
 # 1.1. Tổng quan về sân bay Wings Airport
 
