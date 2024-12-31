@@ -124,7 +124,7 @@ Wings_Airport_OOPJava/
 
 ## Demo
 
-https://youtu.be/K2YkdsIrUj4?si=Urct4GC01cYleQJe
+https://www.youtube.com/watch?v=OMuo4THObPM
 
 ## Deploy
 
