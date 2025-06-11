@@ -1,0 +1,175 @@
+Project Structure: Wings_Airport_OOPJava
+Path: C:\Users\ASUS\Documents\GitHub\Wings_Airport_OOPJava
+============================================================
+|-- [DIR] .mvn/
+|   `-- [DIR] wrapper/
+|       `-- [FILE] maven-wrapper.properties
+|-- [DIR] Query MySQL/
+|   |-- [SQL] QuanLiSanBay.sql
+|   |-- [SQL] TruyVannn.sql
+|   `-- [SQL] insertinto.sql
+|-- [MD] README.md
+|-- [FILE] Report Java OOP _ Wings Airport _ Final.pdf
+|-- [JSON] api_collection.json
+|-- [JS] get-project-structure.js
+|-- [FILE] mvnw
+|-- [FILE] mvnw.cmd
+|-- [FILE] pom.xml
+|-- [DIR] quanlisanbay/
+|   |-- [FILE] Dockerfile
+|   |-- [YML] docker-compose.yml
+|   `-- [SQL] init.sql
+|-- [MD] readme-hdsd.md
+|-- [DIR] src/
+|   |-- [DIR] main/
+|   |   |-- [DIR] java/
+|   |   |   `-- [DIR] com/
+|   |   |       `-- [DIR] example/
+|   |   |           `-- [DIR] quanlisanbay/
+|   |   |               |-- [FILE] QuanlisanbayApplication.java
+|   |   |               |-- [DIR] config/
+|   |   |               |   |-- [FILE] EmailService.java
+|   |   |               |   |-- [FILE] LoginRequired.java
+|   |   |               |   |-- [FILE] LoginRequiredInterceptor.java
+|   |   |               |   `-- [FILE] WebMvcConfig.java
+|   |   |               |-- [DIR] controllers/
+|   |   |               |   |-- [FILE] AssignmentController.java
+|   |   |               |   |-- [FILE] AuthController.java
+|   |   |               |   |-- [FILE] BookingController.java
+|   |   |               |   |-- [FILE] CustomerController.java
+|   |   |               |   |-- [FILE] DatabaseConnectionController.java
+|   |   |               |   |-- [FILE] EmailController.java
+|   |   |               |   |-- [FILE] EmployeeController.java
+|   |   |               |   |-- [FILE] FlightController.java
+|   |   |               |   |-- [FILE] FlightScheduleController.java
+|   |   |               |   |-- [FILE] LanguageController.java
+|   |   |               |   |-- [FILE] MainController.java
+|   |   |               |   |-- [FILE] PlaneController.java
+|   |   |               |   |-- [FILE] PlaneTypeController.java
+|   |   |               |   `-- [DIR] core/
+|   |   |               |       |-- [FILE] AdminController.java
+|   |   |               |       `-- [FILE] SanBayController.java
+|   |   |               |-- [DIR] model/
+|   |   |               |   |-- [FILE] ChuyenBay.java
+|   |   |               |   |-- [FILE] DatCho.java
+|   |   |               |   |-- [FILE] EmailRequest.java
+|   |   |               |   |-- [FILE] EmailResponse.java
+|   |   |               |   |-- [FILE] KhachHang.java
+|   |   |               |   |-- [FILE] LichBay.java
+|   |   |               |   |-- [FILE] LoaiMayBay.java
+|   |   |               |   |-- [FILE] MayBay.java
+|   |   |               |   |-- [FILE] NhanVien.java
+|   |   |               |   `-- [FILE] PhanCong.java
+|   |   |               |-- [DIR] repository/
+|   |   |               |   |-- [FILE] ChuyenBayRepository.java
+|   |   |               |   |-- [FILE] DatChoRepository.java
+|   |   |               |   |-- [FILE] KhachHangRepository.java
+|   |   |               |   |-- [FILE] LichBayRepository.java
+|   |   |               |   |-- [FILE] LoaiMayBayRepository.java
+|   |   |               |   |-- [FILE] MayBayRepository.java
+|   |   |               |   |-- [FILE] NhanVienRepository.java
+|   |   |               |   `-- [FILE] PhanCongRepository.java
+|   |   |               `-- [DIR] service/
+|   |   |                   |-- [FILE] ChuyenBayService.java
+|   |   |                   |-- [FILE] DatChoService.java
+|   |   |                   |-- [FILE] KhachHangService.java
+|   |   |                   |-- [FILE] LichBayService.java
+|   |   |                   |-- [FILE] LoaiMayBayService.java
+|   |   |                   |-- [FILE] MayBayService.java
+|   |   |                   |-- [FILE] NhanVienService.java
+|   |   |                   `-- [FILE] PhanCongService.java
+|   |   `-- [DIR] resources/
+|   |       |-- [FILE] application.properties
+|   |       |-- [DIR] static/ (content skipped)
+|   |       `-- [DIR] templates/
+|   |           |-- [HTML] admin.html
+|   |           |-- [HTML] san_bay.html
+|   |           `-- [HTML] san_bay_en.html
+|   `-- [DIR] test/
+|       `-- [DIR] java/
+|           `-- [DIR] com/
+|               `-- [DIR] example/
+|                   `-- [DIR] quanlisanbay/
+|                       `-- [FILE] QuanlisanbayApplicationTests.java
+`-- [DIR] target/
+    |-- [DIR] classes/
+    |   |-- [FILE] application.properties
+    |   |-- [DIR] com/
+    |   |   `-- [DIR] example/
+    |   |       `-- [DIR] quanlisanbay/
+    |   |           |-- [FILE] QuanlisanbayApplication.class
+    |   |           |-- [DIR] config/
+    |   |           |   |-- [FILE] EmailService.class
+    |   |           |   |-- [FILE] LoginRequired.class
+    |   |           |   |-- [FILE] LoginRequiredInterceptor.class
+    |   |           |   `-- [FILE] WebMvcConfig.class
+    |   |           |-- [DIR] controllers/
+    |   |           |   |-- [FILE] AssignmentController.class
+    |   |           |   |-- [FILE] AuthController.class
+    |   |           |   |-- [FILE] BookingController.class
+    |   |           |   |-- [FILE] CustomerController.class
+    |   |           |   |-- [FILE] DatabaseConnectionController.class
+    |   |           |   |-- [FILE] EmailController.class
+    |   |           |   |-- [FILE] EmployeeController.class
+    |   |           |   |-- [FILE] FlightController.class
+    |   |           |   |-- [FILE] FlightScheduleController.class
+    |   |           |   |-- [FILE] LanguageController.class
+    |   |           |   |-- [FILE] MainController.class
+    |   |           |   |-- [FILE] PlaneController.class
+    |   |           |   |-- [FILE] PlaneTypeController.class
+    |   |           |   `-- [DIR] core/
+    |   |           |       |-- [FILE] AdminController.class
+    |   |           |       `-- [FILE] SanBayController.class
+    |   |           |-- [DIR] model/
+    |   |           |   |-- [FILE] ChuyenBay.class
+    |   |           |   |-- [FILE] DatCho.class
+    |   |           |   |-- [FILE] EmailRequest.class
+    |   |           |   |-- [FILE] EmailResponse.class
+    |   |           |   |-- [FILE] KhachHang.class
+    |   |           |   |-- [FILE] LichBay.class
+    |   |           |   |-- [FILE] LoaiMayBay.class
+    |   |           |   |-- [FILE] MayBay.class
+    |   |           |   |-- [FILE] NhanVien.class
+    |   |           |   `-- [FILE] PhanCong.class
+    |   |           |-- [DIR] repository/
+    |   |           |   |-- [FILE] ChuyenBayRepository.class
+    |   |           |   |-- [FILE] DatChoRepository.class
+    |   |           |   |-- [FILE] KhachHangRepository.class
+    |   |           |   |-- [FILE] LichBayRepository.class
+    |   |           |   |-- [FILE] LoaiMayBayRepository.class
+    |   |           |   |-- [FILE] MayBayRepository.class
+    |   |           |   |-- [FILE] NhanVienRepository.class
+    |   |           |   `-- [FILE] PhanCongRepository.class
+    |   |           `-- [DIR] service/
+    |   |               |-- [FILE] ChuyenBayService.class
+    |   |               |-- [FILE] DatChoService.class
+    |   |               |-- [FILE] KhachHangService.class
+    |   |               |-- [FILE] LichBayService.class
+    |   |               |-- [FILE] LoaiMayBayService.class
+    |   |               |-- [FILE] MayBayService.class
+    |   |               |-- [FILE] NhanVienService.class
+    |   |               `-- [FILE] PhanCongService.class
+    |   |-- [DIR] static/ (content skipped)
+    |   `-- [DIR] templates/
+    |       |-- [HTML] admin.html
+    |       |-- [HTML] san_bay.html
+    |       `-- [HTML] san_bay_en.html
+    |-- [DIR] generated-sources/
+    |   `-- [DIR] annotations/
+    |-- [DIR] generated-test-sources/
+    |   `-- [DIR] test-annotations/
+    |-- [DIR] maven-status/
+    |   `-- [DIR] maven-compiler-plugin/
+    |       |-- [DIR] compile/
+    |       |   `-- [DIR] default-compile/
+    |       |       |-- [FILE] createdFiles.lst
+    |       |       `-- [FILE] inputFiles.lst
+    |       `-- [DIR] testCompile/
+    |           `-- [DIR] default-testCompile/
+    |               |-- [FILE] createdFiles.lst
+    |               `-- [FILE] inputFiles.lst
+    `-- [DIR] test-classes/
+        `-- [DIR] com/
+            `-- [DIR] example/
+                `-- [DIR] quanlisanbay/
+                    `-- [FILE] QuanlisanbayApplicationTests.class
