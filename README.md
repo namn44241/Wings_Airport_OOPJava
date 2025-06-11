@@ -122,6 +122,14 @@ Wings_Airport_OOPJava/
 └── README.md 
 ```
 
+## Demo
+
+https://www.youtube.com/watch?v=OMuo4THObPM
+
+## Deploy
+
+https://wingsairportproduction.up.railway.app/san_bay
+
 # Wings_Airport_OOPJava API Documentation
 
 https://www.postman.com/projectoop/my-workspace/collection/vtw0wov/api-for-wings-airport-management
