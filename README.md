@@ -128,7 +128,8 @@ https://www.youtube.com/watch?v=OMuo4THObPM
 
 ## Deploy
 
-https://wingsairportproduction.up.railway.app/san_bay
+[https://wingsairportproduction.up.railway.app/san_bay
+](https://wings.namtech.me/)
 
 # Wings_Airport_OOPJava API Documentation
 
